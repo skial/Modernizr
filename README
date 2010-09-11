@@ -1,0 +1,20 @@
+haXe wrapper for Modernizr. Modernizr is a script that will detect native CSS3 and 
+HTML5 features available in the current UA and provide an object containing all 
+features with a true/false value, depending on whether the UA has native support 
+for it or not.
+
+INFO
+------
+http://www.modernizr.com/
+http://github.com/Modernizr/Modernizr
+
+Only one check is missing. Modernizr.inputtypes.datetime-local. haXe cant have '-' in
+a variable name. Still thinking if I can force this somehow...
+
+
+CLIENT
+------
+Use compile.hxml to create javascript source. Then launch example/index.html
+You will see all values printed to screen. This values depend on what your browser supports.
+
+Files in folder bin/ are javascript files, but file ending changed to .hx for no reason.

@@ -4,7 +4,7 @@
   <output>
     <movie disabled="False" />
     <movie input="" />
-    <movie path="bin\haXemodernizr.js" />
+    <movie path="bin\haXemodernizr.hx" />
     <movie fps="0" />
     <movie width="0" />
     <movie height="0" />

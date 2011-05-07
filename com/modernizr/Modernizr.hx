@@ -4,25 +4,29 @@
  */
 
 package com.modernizr;
+import haxe.macro.Tools;
 
 @:native('Modernizr')
 extern class Modernizr {
 
 	static public function __init__():Void untyped {
-		window.Modernizr  = Modernizr;
+		#if !noEmbedJS
+			Tools.includeFile(
+				#if m1.5 
+					'modernizr/modernizr-1.5.min.js'
+				#else 
+					'modernizr/modernizr-1.7.min.js'
+				#end
+			);
+		#else
+			window.Modernizr = Modernizr;
+		#end
 	}
 	
 	/**
 	 * CSS classes .fontface/ .no-fontface
 	 */
 	public static var fontface:Bool;
-	
-	/**
-	 * 
-	 * @param	fn		-	The function which will be callback and passed the value
-	 * 						of fontface
-	 */
-	public static function _fontfaceready(fn:Dynamic):Void;
 	
 	/**
 	 * CSS classes .canvas/ .no-canvas
@@ -33,6 +37,11 @@ extern class Modernizr {
 	 * CSS classes .canvastext/ .no-canvastext
 	 */
 	public static var canvastext:Bool;
+	
+	/**
+	 * CSS classes .webgl/ .no-webgl
+	 */
+	public static var webgl:Bool;
 	
 	/**
 	 * CSS classes .audio/ .no-audio
@@ -70,6 +79,11 @@ extern class Modernizr {
 	 * CSS classes .boxshadow/ .no-boxshadow
 	 */
 	public static var boxshadow:Bool;
+	
+	/**
+	 * CSS classes .textshadow/ .no-textshadow
+	 */
+	public static var textshadow:Bool;
 	
 	/**
 	 * CSS classes .multiplebgs/ .no-multiplebgs
@@ -117,6 +131,11 @@ extern class Modernizr {
 	public static var csstransforms3d:Bool;
 	
 	/**
+	 * CSS classes ./flexbox .no-flexbox
+	 */
+	public static var flexbox:Bool;
+	
+	/**
 	 * CSS classes .csstransitions/ .no-csstransitions
 	 */
 	public static var csstransitions:Bool;
@@ -160,6 +179,11 @@ extern class Modernizr {
 	 * CSS classes .svg/ .no-svg
 	 */
 	public static var svg:Bool;
+	
+	/**
+	 * CSS classes .inlinesvg/ .no-inlinesvg
+	 */
+	public static var inlinesvg:Bool;
 	
 	/**
 	 * CSS classes .svgclippaths/ .no-svgclippaths
@@ -207,12 +231,17 @@ extern class Modernizr {
 	public static var crosswindowmessaging:Bool;
 	
 	/**
+	 * CSS classes .touch/ .no-touch
+	 */
+	public static var touch:Bool;
+	
+	/**
 	 * 
 	 * @param	str	-	What you want to test for eg 'text-shadow'
 	 * @param	fn		-	The function containing the test
 	 * @return
 	 */
-	public static function addText(str:String, fn:Dynamic):Bool;
+	public static function addTest(str:String, fn:Dynamic):Bool;
 }
 
 @:native('Modernizr.audio')

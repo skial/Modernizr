@@ -197,67 +197,61 @@ js.Lib.setErrorHandler = function(f) {
 	js.Lib.onerror = f;
 }
 js.Lib.prototype.__class__ = js.Lib;
-if(typeof haxe=='undefined') haxe = {}
-haxe.Log = function() { }
-haxe.Log.__name__ = ["haxe","Log"];
-haxe.Log.trace = function(v,infos) {
-	js.Boot.__trace(v,infos);
-}
-haxe.Log.clear = function() {
-	js.Boot.__clear_trace();
-}
-haxe.Log.prototype.__class__ = haxe.Log;
 Main = function() { }
 Main.__name__ = ["Main"];
 Main.main = function() {
-	haxe.Log.trace("@font-face: \t\t\t\t\t" + Modernizr.fontface,{ fileName : "Main.hx", lineNumber : 14, className : "Main", methodName : "main"});
-	haxe.Log.trace("canvas: \t\t\t\t\t\t" + Modernizr.canvas,{ fileName : "Main.hx", lineNumber : 15, className : "Main", methodName : "main"});
-	haxe.Log.trace("canvas text: \t\t\t\t" + Modernizr.canvastext,{ fileName : "Main.hx", lineNumber : 16, className : "Main", methodName : "main"});
-	haxe.Log.trace("webgl:\t\t\t\t\t\t" + Modernizr.webgl,{ fileName : "Main.hx", lineNumber : 17, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 audio: \t\t\t\t" + Modernizr.audio,{ fileName : "Main.hx", lineNumber : 18, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 audio format ogg: \t\t" + Modernizr.audio.ogg,{ fileName : "Main.hx", lineNumber : 19, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 audio format wav: \t\t" + Modernizr.audio.wav,{ fileName : "Main.hx", lineNumber : 20, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 audio format mp3: \t\t" + Modernizr.audio.mp3,{ fileName : "Main.hx", lineNumber : 21, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 audio format m4a: \t\t" + Modernizr.audio.m4a,{ fileName : "Main.hx", lineNumber : 22, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 video: \t\t\t\t" + Modernizr.video,{ fileName : "Main.hx", lineNumber : 23, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 video format ogg: \t\t" + Modernizr.video.ogg,{ fileName : "Main.hx", lineNumber : 24, className : "Main", methodName : "main"});
-	haxe.Log.trace("html5 video format h264: \t" + Modernizr.video.h264,{ fileName : "Main.hx", lineNumber : 25, className : "Main", methodName : "main"});
-	haxe.Log.trace("rgba: \t\t\t\t\t\t" + Modernizr.rgba,{ fileName : "Main.hx", lineNumber : 26, className : "Main", methodName : "main"});
-	haxe.Log.trace("hsla: \t\t\t\t\t\t" + Modernizr.hsla,{ fileName : "Main.hx", lineNumber : 27, className : "Main", methodName : "main"});
-	haxe.Log.trace("border-image: \t\t\t\t" + Modernizr.borderimage,{ fileName : "Main.hx", lineNumber : 28, className : "Main", methodName : "main"});
-	haxe.Log.trace("border-radius: \t\t\t\t" + Modernizr.borderradius,{ fileName : "Main.hx", lineNumber : 29, className : "Main", methodName : "main"});
-	haxe.Log.trace("box-shadow: \t\t\t\t\t" + Modernizr.boxshadow,{ fileName : "Main.hx", lineNumber : 30, className : "Main", methodName : "main"});
-	haxe.Log.trace("text-shadow:\t\t\t\t\t" + Modernizr.textshadow,{ fileName : "Main.hx", lineNumber : 31, className : "Main", methodName : "main"});
-	haxe.Log.trace("multiple-backgrounds: \t\t" + Modernizr.multiplebgs,{ fileName : "Main.hx", lineNumber : 32, className : "Main", methodName : "main"});
-	haxe.Log.trace("backgroundsize: \t\t\t\t" + Modernizr.backgroundsize,{ fileName : "Main.hx", lineNumber : 33, className : "Main", methodName : "main"});
-	haxe.Log.trace("opacity: \t\t\t\t\t" + Modernizr.opacity,{ fileName : "Main.hx", lineNumber : 34, className : "Main", methodName : "main"});
-	haxe.Log.trace("css animations: \t\t\t\t" + Modernizr.cssanimations,{ fileName : "Main.hx", lineNumber : 35, className : "Main", methodName : "main"});
-	haxe.Log.trace("css columns: \t\t\t\t" + Modernizr.csscolumns,{ fileName : "Main.hx", lineNumber : 36, className : "Main", methodName : "main"});
-	haxe.Log.trace("css gradients: \t\t\t\t" + Modernizr.cssgradients,{ fileName : "Main.hx", lineNumber : 37, className : "Main", methodName : "main"});
-	haxe.Log.trace("css reflections: \t\t\t" + Modernizr.cssreflections,{ fileName : "Main.hx", lineNumber : 38, className : "Main", methodName : "main"});
-	haxe.Log.trace("css 2d transforms: \t\t\t" + Modernizr.csstransforms,{ fileName : "Main.hx", lineNumber : 39, className : "Main", methodName : "main"});
-	haxe.Log.trace("css 3d transforms: \t\t\t" + Modernizr.csstransforms3d,{ fileName : "Main.hx", lineNumber : 40, className : "Main", methodName : "main"});
-	haxe.Log.trace("flexable box model:\t\t\t" + Modernizr.flexbox,{ fileName : "Main.hx", lineNumber : 41, className : "Main", methodName : "main"});
-	haxe.Log.trace("css transitions: \t\t\t" + Modernizr.csstransitions,{ fileName : "Main.hx", lineNumber : 42, className : "Main", methodName : "main"});
-	haxe.Log.trace("geolocation: \t\t\t\t" + Modernizr.geolocation,{ fileName : "Main.hx", lineNumber : 43, className : "Main", methodName : "main"});
-	haxe.Log.trace(Modernizr.inputtypes,{ fileName : "Main.hx", lineNumber : 44, className : "Main", methodName : "main"});
-	haxe.Log.trace(Modernizr.input,{ fileName : "Main.hx", lineNumber : 45, className : "Main", methodName : "main"});
-	haxe.Log.trace("local storage: \t\t\t\t" + Modernizr.localstorage,{ fileName : "Main.hx", lineNumber : 46, className : "Main", methodName : "main"});
-	haxe.Log.trace("session storage: \t\t\t" + Modernizr.sessionstorage,{ fileName : "Main.hx", lineNumber : 47, className : "Main", methodName : "main"});
-	haxe.Log.trace("web workers: \t\t\t\t" + Modernizr.webworkers,{ fileName : "Main.hx", lineNumber : 48, className : "Main", methodName : "main"});
-	haxe.Log.trace("application cache: \t\t\t" + Modernizr.applicationcache,{ fileName : "Main.hx", lineNumber : 49, className : "Main", methodName : "main"});
-	haxe.Log.trace("svg: \t\t\t\t\t\t" + Modernizr.svg,{ fileName : "Main.hx", lineNumber : 50, className : "Main", methodName : "main"});
-	haxe.Log.trace("inline svg:\t\t\t\t\t" + Modernizr.inlinesvg,{ fileName : "Main.hx", lineNumber : 51, className : "Main", methodName : "main"});
-	haxe.Log.trace("svg clip paths: \t\t\t\t" + Modernizr.svgclippaths,{ fileName : "Main.hx", lineNumber : 52, className : "Main", methodName : "main"});
-	haxe.Log.trace("smil: \t\t\t\t\t\t" + Modernizr.smil,{ fileName : "Main.hx", lineNumber : 53, className : "Main", methodName : "main"});
-	haxe.Log.trace("web sql database: \t\t\t" + Modernizr.websqldatabase,{ fileName : "Main.hx", lineNumber : 54, className : "Main", methodName : "main"});
-	haxe.Log.trace("indexed db: \t\t\t\t\t" + Modernizr.indexeddb,{ fileName : "Main.hx", lineNumber : 55, className : "Main", methodName : "main"});
-	haxe.Log.trace("web sockets: \t\t\t\t" + Modernizr.websockets,{ fileName : "Main.hx", lineNumber : 56, className : "Main", methodName : "main"});
-	haxe.Log.trace("hashchange event: \t\t\t" + Modernizr.hashchange,{ fileName : "Main.hx", lineNumber : 57, className : "Main", methodName : "main"});
-	haxe.Log.trace("history management: \t\t\t" + Modernizr.historymanagement,{ fileName : "Main.hx", lineNumber : 58, className : "Main", methodName : "main"});
-	haxe.Log.trace("drag and drop: \t\t\t\t" + Modernizr.draganddrop,{ fileName : "Main.hx", lineNumber : 59, className : "Main", methodName : "main"});
-	haxe.Log.trace("cross window messaging:\t \t" + Modernizr.crosswindowmessaging,{ fileName : "Main.hx", lineNumber : 60, className : "Main", methodName : "main"});
-	haxe.Log.trace("touch:\t\t\t\t\t\t" + Modernizr.touch,{ fileName : "Main.hx", lineNumber : 61, className : "Main", methodName : "main"});
+	var hash = new Hash();
+	hash.set("@font-face",Modernizr.fontface);
+	hash.set("Canvas",Modernizr.canvas);
+	hash.set("Canvas Text",Modernizr.canvastext);
+	hash.set("WebGL",Modernizr.webgl);
+	hash.set("HTML5 Audio",Modernizr.audio);
+	hash.set("HTML5 Video",Modernizr.video);
+	hash.set("rgba()",Modernizr.rgba);
+	hash.set("hsla()",Modernizr.hsla);
+	hash.set("border-image",Modernizr.borderimage);
+	hash.set("border-radius",Modernizr.borderradius);
+	hash.set("box-shadow",Modernizr.boxshadow);
+	hash.set("text-shadow",Modernizr.textshadow);
+	hash.set("Multiple Backgrounds",Modernizr.multiplebgs);
+	hash.set("Background Size",Modernizr.backgroundsize);
+	hash.set("Opacity",Modernizr.opacity);
+	hash.set("CSS Animations",Modernizr.cssanimations);
+	hash.set("CSS Columns",Modernizr.csscolumns);
+	hash.set("CSS Gradients",Modernizr.cssgradients);
+	hash.set("CSS Reflections",Modernizr.cssreflections);
+	hash.set("CSS 2D Transforms",Modernizr.csstransforms);
+	hash.set("CSS 3D Transforms",Modernizr.csstransforms3d);
+	hash.set("Flexable Box Model",Modernizr.flexbox);
+	hash.set("CSS Transitions",Modernizr.csstransitions);
+	hash.set("Geolocation",Modernizr.geolocation);
+	hash.set("Local Storage",Modernizr.localstorage);
+	hash.set("Session Storage",Modernizr.sessionstorage);
+	hash.set("Web Workers",Modernizr.webworkers);
+	hash.set("Application Cache",Modernizr.applicationcache);
+	hash.set("SVG",Modernizr.svg);
+	hash.set("Inline SVG",Modernizr.inlinesvg);
+	hash.set("SVG Clip Paths",Modernizr.svgclippaths);
+	hash.set("SMIL",Modernizr.smil);
+	hash.set("Web SQL Database",Modernizr.websqldatabase);
+	hash.set("Indexed DB",Modernizr.indexeddb);
+	hash.set("Web Sockets",Modernizr.websockets);
+	hash.set("HashChange Event",Modernizr.hashchange);
+	hash.set("History Management",Modernizr.historymanagement);
+	hash.set("Drag & Drop",Modernizr.draganddrop);
+	hash.set("Cross Window Messaging",Modernizr.crosswindowmessaging);
+	hash.set("Touch Events",Modernizr.touch);
+	var hxnzr = js.Lib.document.getElementById("hxnzr");
+	var div;
+	var $it0 = hash.keys();
+	while( $it0.hasNext() ) {
+		var n = $it0.next();
+		div = js.Lib.document.createElement("div");
+		div.className += "prop ";
+		div.innerHTML = n;
+		hxnzr.appendChild(div);
+		if(hash.get(n)) div.className += "good "; else div.className += "bad ";
+	}
 }
 Main.prototype.__class__ = Main;
 Std = function() { }
@@ -285,6 +279,83 @@ Std.random = function(x) {
 	return Math.floor(Math.random() * x);
 }
 Std.prototype.__class__ = Std;
+Hash = function(p) {
+	if( p === $_ ) return;
+	this.h = {}
+	if(this.h.__proto__ != null) {
+		this.h.__proto__ = null;
+		delete(this.h.__proto__);
+	}
+}
+Hash.__name__ = ["Hash"];
+Hash.prototype.h = null;
+Hash.prototype.set = function(key,value) {
+	this.h["$" + key] = value;
+}
+Hash.prototype.get = function(key) {
+	return this.h["$" + key];
+}
+Hash.prototype.exists = function(key) {
+	try {
+		key = "$" + key;
+		return this.hasOwnProperty.call(this.h,key);
+	} catch( e ) {
+		for(var i in this.h) if( i == key ) return true;
+		return false;
+	}
+}
+Hash.prototype.remove = function(key) {
+	if(!this.exists(key)) return false;
+	delete(this.h["$" + key]);
+	return true;
+}
+Hash.prototype.keys = function() {
+	var a = new Array();
+	for(var i in this.h) a.push(i.substr(1));
+	return a.iterator();
+}
+Hash.prototype.iterator = function() {
+	return { ref : this.h, it : this.keys(), hasNext : function() {
+		return this.it.hasNext();
+	}, next : function() {
+		var i = this.it.next();
+		return this.ref["$" + i];
+	}};
+}
+Hash.prototype.toString = function() {
+	var s = new StringBuf();
+	s.b[s.b.length] = "{";
+	var it = this.keys();
+	while( it.hasNext() ) {
+		var i = it.next();
+		s.b[s.b.length] = i;
+		s.b[s.b.length] = " => ";
+		s.b[s.b.length] = Std.string(this.get(i));
+		if(it.hasNext()) s.b[s.b.length] = ", ";
+	}
+	s.b[s.b.length] = "}";
+	return s.b.join("");
+}
+Hash.prototype.__class__ = Hash;
+StringBuf = function(p) {
+	if( p === $_ ) return;
+	this.b = new Array();
+}
+StringBuf.__name__ = ["StringBuf"];
+StringBuf.prototype.add = function(x) {
+	this.b[this.b.length] = x;
+}
+StringBuf.prototype.addSub = function(s,pos,len) {
+	this.b[this.b.length] = s.substr(pos,len);
+}
+StringBuf.prototype.addChar = function(c) {
+	this.b[this.b.length] = String.fromCharCode(c);
+}
+StringBuf.prototype.toString = function() {
+	return this.b.join("");
+}
+StringBuf.prototype.b = null;
+StringBuf.prototype.__class__ = StringBuf;
 IntIter = function(min,max) {
 	if( min === $_ ) return;
 	this.min = min;

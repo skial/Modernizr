@@ -3,7 +3,7 @@
  * @author Skial Bainn
  */
 
-package com.modernizr;
+package ;
 import haxe.macro.Tools;
 
 @:native('Modernizr')

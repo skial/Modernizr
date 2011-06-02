@@ -10,12 +10,14 @@ import haxe.macro.Tools;
 extern class Modernizr {
 
 	static public function __init__():Void untyped {
-		#if !noEmbedJS
+		#if embedJS
 			Tools.includeFile(
 				#if m1.5 
 					'modernizr/modernizr-1.5.min.js'
-				#else 
+				#elseif m1.7 
 					'modernizr/modernizr-1.7.min.js'
+				#else
+					'modernizr/modernizr-2.0.min.js'
 				#end
 			);
 		#else
@@ -148,12 +150,12 @@ extern class Modernizr {
 	/**
 	 * CSS classes for input types are not applied
 	 */
-	public static var inputtypes = Inputtypes;
+	public static var inputtypes = InputTypes;
 	
 	/**
 	 * CSS classes for input are not applied
 	 */
-	public static var input = Input;
+	public static var input = InputAttributes;
 	
 	/**
 	 * CSS classes .localstorage/ .no-localstorage
@@ -216,9 +218,9 @@ extern class Modernizr {
 	public static var hashchange:Bool;
 	
 	/**
-	 * CSS classes .historymanagement/ .no-historymanagement
+	 * CSS classes .history/ .no-history
 	 */
-	public static var historymanagement:Bool;
+	public static var history:Bool;
 	
 	/**
 	 * CSS classes .draganddrop/ .no-draganddrop
@@ -226,9 +228,9 @@ extern class Modernizr {
 	public static var draganddrop:Bool;
 	
 	/**
-	 * CSS classes .crosswindowmessaging/ .no-crosswindowmessaging
+	 * CSS classes .postmessage/ .no-postmessage
 	 */
-	public static var crosswindowmessaging:Bool;
+	public static var postmessage:Bool;
 	
 	/**
 	 * CSS classes .touch/ .no-touch
@@ -242,10 +244,66 @@ extern class Modernizr {
 	 * @return
 	 */
 	public static function addTest(str:String, fn:Dynamic):Bool;
+	
+	/**
+	 * Modernizr.prefixed(str) returns the prefixed or nonprefixed
+	 * propterty name variant of your input
+	 * @param	str
+	 * @return  String
+	 */
+	public static function prefixed(str:String):String;
+	
+	/**
+	 * Modernizr.mq(str) tests a given media query, live against
+	 * the current state of the window
+	 * @param	str
+	 * @return  Bool
+	 */
+	public static function mq(str:String):Bool;
+	
+	/**
+	 * Modernizr.testStyles(str, fn) allows you to add custom styles to
+	 * the document and test an element afterwards.
+	 * @param	str
+	 * @param	fn
+	 */
+	public static function styleStyles(str:String, fn:Dynamic):Void;
+	
+	/**
+	 * Modernizr.testProp(str) investigates whether a given style property
+	 * is recognized. Note that the property names must be provided in the
+	 * camelCase variant.
+	 * @param	str
+	 * @return
+	 */
+	public static function testProp(str:String):Bool;
+	
+	/**
+	 * Modernizr.testAllProps(str) investigates whether a given style property,
+	 * or any of its vendor-prefixed variants is recognized. Note that
+	 * the property names must be provided in the camelCase variant.
+	 * @param	str
+	 * @return
+	 */
+	public static function testAllProps(str:String):Bool;
+	
+	/**
+	 * Modernizr.hasEvent(str, elem) detects support for a given event.
+	 * @param	str
+	 * @param	elem
+	 * @return
+	 */
+	public static function hasEvent(str:String, elem:Dynamic):Bool;
+	
+	/*
+	 * The vendor prefixes you'll have to test against.
+	 */
+	public static var _prefixes:Array<String>;
+	public static var _domPrefixes:Array<String>;
 }
 
 @:native('Modernizr.audio')
-private extern class Audio {
+private extern class Audio implements Dynamic<Bool> {
 	public static var ogg:Bool;
 	public static var mp3:Bool;
 	public static var wav:Bool;
@@ -253,13 +311,14 @@ private extern class Audio {
 }
 
 @:native('Modernizr.video')
-private extern class Video {
+private extern class Video implements Dynamic<Bool>{
 	public static var ogg:Bool;
+	public static var webm:Bool;
 	public static var h264:Bool;
 }
 
 @:native('Modernizr.inputtypes')
-private extern class Inputtypes {
+private extern class InputTypes {
 	public static var search:Bool;
 	public static var tel:Bool;
 	public static var url:Bool;
@@ -277,7 +336,7 @@ private extern class Inputtypes {
 }
 
 @:native('Modernizr.input')
-private extern class Input {
+private extern class InputAttributes {
 	public static var autocomplete:Bool;
 	public static var autofocus:Bool;
 	public static var list:Bool;

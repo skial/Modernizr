@@ -4,25 +4,12 @@
  */
 
 package ;
-import haxe.macro.Tools;
 
 @:native('Modernizr')
 extern class Modernizr {
 
 	static public function __init__():Void untyped {
-		#if embedJS
-			Tools.includeFile(
-				#if m1.5 
-					'modernizr/modernizr-1.5.min.js'
-				#elseif m1.7 
-					'modernizr/modernizr-1.7.min.js'
-				#else
-					'modernizr/modernizr-2.0.min.js'
-				#end
-			);
-		#else
-			window.Modernizr = Modernizr;
-		#end
+		window.Modernizr = Modernizr;
 	}
 	
 	/**

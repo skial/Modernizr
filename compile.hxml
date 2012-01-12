@@ -1,4 +1,0 @@
--js bin\haXemodernizr.js
--cp com
-#-D embedJS
--main Main

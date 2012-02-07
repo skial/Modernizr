@@ -225,6 +225,11 @@ extern class Modernizr {
 	public static var touch:Bool;
 	
 	/**
+	 * CSS :before / :after
+	 */
+	public static var generatedcontent:Bool;
+	
+	/**
 	 * 
 	 * @param	str	-	What you want to test for eg 'text-shadow'
 	 * @param	fn		-	The function containing the test
@@ -238,6 +243,7 @@ extern class Modernizr {
 	 * @param	str
 	 * @return  String
 	 */
+	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
 	public static function prefixed(str:String):String;
 	
 	/**
@@ -254,7 +260,7 @@ extern class Modernizr {
 	 * @param	str
 	 * @param	fn
 	 */
-	public static function styleStyles(str:String, fn:Dynamic):Void;
+	public static function testStyles(str:String, fn:Dynamic):Void;
 	
 	/**
 	 * Modernizr.testProp(str) investigates whether a given style property
@@ -280,7 +286,7 @@ extern class Modernizr {
 	 * @param	elem
 	 * @return
 	 */
-	public static function hasEvent(str:String, elem:Dynamic):Bool;
+	public static function hasEvent(str:String, ?elem:Dynamic):Bool;
 	
 	/*
 	 * The vendor prefixes you'll have to test against.
@@ -316,6 +322,7 @@ private extern class InputTypes {
 	public static var week:Bool;
 	public static var time:Bool;
 	//public static var datetimelocal:Bool; // I cant get datetime-local, still trying to get around this...
+	public inline static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes.datetime-local');
 	public static var number:Bool;
 	public static var range:Bool;
 	public static var color:Bool;

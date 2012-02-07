@@ -225,6 +225,11 @@ extern class Modernizr {
 	public static var touch:Bool;
 	
 	/**
+	 * CSS :before / :after
+	 */
+	public static var generatedcontent:Bool;
+	
+	/**
 	 * 
 	 * @param	str	-	What you want to test for eg 'text-shadow'
 	 * @param	fn		-	The function containing the test

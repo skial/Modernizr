@@ -260,7 +260,7 @@ extern class Modernizr {
 	 * @param	str
 	 * @param	fn
 	 */
-	public static function styleStyles(str:String, fn:Dynamic):Void;
+	public static function testStyles(str:String, fn:Dynamic):Void;
 	
 	/**
 	 * Modernizr.testProp(str) investigates whether a given style property
@@ -286,7 +286,7 @@ extern class Modernizr {
 	 * @param	elem
 	 * @return
 	 */
-	public static function hasEvent(str:String, elem:Dynamic):Bool;
+	public static function hasEvent(str:String, ?elem:Dynamic):Bool;
 	
 	/*
 	 * The vendor prefixes you'll have to test against.

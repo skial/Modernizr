@@ -9,5 +9,4 @@
     <tag v="modernizr"/>
     <description>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites. Example code can be found at the project URL.</description>
     <version name="2.5.1">Updated to Modernizr 2.5.1. Version changed to match.</version>
-    <version name="1.0">Initial release, everything is working correctly.</version>
 </project>

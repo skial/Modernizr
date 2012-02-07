@@ -243,7 +243,7 @@ extern class Modernizr {
 	 * @param	str
 	 * @return  String
 	 */
-	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic)
+	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
 	public static function prefixed(str:String):String;
 	
 	/**

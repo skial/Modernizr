@@ -13,12 +13,6 @@ To install just run ```haxelib install modernizr``` from the command line. All d
 
 ---
 
-## Example ##
-
-You can view a simple example which shows you what your browser supports - http://skial.github.com/haXe-modernizr/
-
----
-
 ## Useful Info ##
 
 http://www.modernizr.com/

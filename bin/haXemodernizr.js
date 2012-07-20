@@ -1,34 +1,272 @@
-var $_, $hxClasses = $hxClasses || {}, $estr = function() { return js.Boot.__string_rec(this,''); }
-function $extend(from, fields) {
-	function inherit() {}; inherit.prototype = from; var proto = new inherit();
-	for (var name in fields) proto[name] = fields[name];
-	return proto;
+var Hash = function() {
+	this.h = { };
+};
+Hash.__name__ = true;
+Hash.prototype = {
+	toString: function() {
+		var s = new StringBuf();
+		s.b += Std.string("{");
+		var it = this.keys();
+		while( it.hasNext() ) {
+			var i = it.next();
+			s.b += Std.string(i);
+			s.b += Std.string(" => ");
+			s.b += Std.string(Std.string(this.get(i)));
+			if(it.hasNext()) s.b += Std.string(", ");
+		}
+		s.b += Std.string("}");
+		return s.b;
+	}
+	,iterator: function() {
+		return { ref : this.h, it : this.keys(), hasNext : function() {
+			return this.it.hasNext();
+		}, next : function() {
+			var i = this.it.next();
+			return this.ref["$" + i];
+		}};
+	}
+	,keys: function() {
+		var a = [];
+		for( var key in this.h ) {
+		if(this.h.hasOwnProperty(key)) a.push(key.substr(1));
+		}
+		return HxOverrides.iter(a);
+	}
+	,remove: function(key) {
+		key = "$" + key;
+		if(!this.h.hasOwnProperty(key)) return false;
+		delete(this.h[key]);
+		return true;
+	}
+	,exists: function(key) {
+		return this.h.hasOwnProperty("$" + key);
+	}
+	,get: function(key) {
+		return this.h["$" + key];
+	}
+	,set: function(key,value) {
+		this.h["$" + key] = value;
+	}
+	,__class__: Hash
+}
+var HxOverrides = function() { }
+HxOverrides.__name__ = true;
+HxOverrides.dateStr = function(date) {
+	var m = date.getMonth() + 1;
+	var d = date.getDate();
+	var h = date.getHours();
+	var mi = date.getMinutes();
+	var s = date.getSeconds();
+	return date.getFullYear() + "-" + (m < 10?"0" + m:"" + m) + "-" + (d < 10?"0" + d:"" + d) + " " + (h < 10?"0" + h:"" + h) + ":" + (mi < 10?"0" + mi:"" + mi) + ":" + (s < 10?"0" + s:"" + s);
+}
+HxOverrides.strDate = function(s) {
+	switch(s.length) {
+	case 8:
+		var k = s.split(":");
+		var d = new Date();
+		d.setTime(0);
+		d.setUTCHours(k[0]);
+		d.setUTCMinutes(k[1]);
+		d.setUTCSeconds(k[2]);
+		return d;
+	case 10:
+		var k = s.split("-");
+		return new Date(k[0],k[1] - 1,k[2],0,0,0);
+	case 19:
+		var k = s.split(" ");
+		var y = k[0].split("-");
+		var t = k[1].split(":");
+		return new Date(y[0],y[1] - 1,y[2],t[0],t[1],t[2]);
+	default:
+		throw "Invalid date format : " + s;
+	}
+}
+HxOverrides.cca = function(s,index) {
+	var x = s.charCodeAt(index);
+	if(x != x) return undefined;
+	return x;
+}
+HxOverrides.substr = function(s,pos,len) {
+	if(pos != null && pos != 0 && len != null && len < 0) return "";
+	if(len == null) len = s.length;
+	if(pos < 0) {
+		pos = s.length + pos;
+		if(pos < 0) pos = 0;
+	} else if(len < 0) len = s.length + len - pos;
+	return s.substr(pos,len);
+}
+HxOverrides.remove = function(a,obj) {
+	var i = 0;
+	var l = a.length;
+	while(i < l) {
+		if(a[i] == obj) {
+			a.splice(i,1);
+			return true;
+		}
+		i++;
+	}
+	return false;
+}
+HxOverrides.iter = function(a) {
+	return { cur : 0, arr : a, hasNext : function() {
+		return this.cur < this.arr.length;
+	}, next : function() {
+		return this.arr[this.cur++];
+	}};
+}
+var IntIter = function(min,max) {
+	this.min = min;
+	this.max = max;
+};
+IntIter.__name__ = true;
+IntIter.prototype = {
+	next: function() {
+		return this.min++;
+	}
+	,hasNext: function() {
+		return this.min < this.max;
+	}
+	,__class__: IntIter
+}
+var Main = function() { }
+Main.__name__ = true;
+Main.main = function() {
+	var hash = new Hash();
+	hash.set("@font-face",Modernizr.fontface);
+	hash.set("Background Size",Modernizr.backgroundsize);
+	hash.set("border-image",Modernizr.borderimage);
+	hash.set("border-radius",Modernizr.borderradius);
+	hash.set("box-shadow",Modernizr.boxshadow);
+	hash.set("Flexable Box Model",Modernizr.flexbox);
+	hash.set("hsla()",Modernizr.hsla);
+	hash.set("Multiple Backgrounds",Modernizr.multiplebgs);
+	hash.set("Opacity",Modernizr.opacity);
+	hash.set("rgba()",Modernizr.rgba);
+	hash.set("text-shadow",Modernizr.textshadow);
+	hash.set("CSS Animations",Modernizr.cssanimations);
+	hash.set("CSS Columns",Modernizr.csscolumns);
+	hash.set("CSS Gradients",Modernizr.cssgradients);
+	hash.set("CSS Reflections",Modernizr.cssreflections);
+	hash.set("CSS 2D Transforms",Modernizr.csstransforms);
+	hash.set("CSS 3D Transforms",Modernizr.csstransforms3d);
+	hash.set("CSS Transitions",Modernizr.csstransitions);
+	hash.set("Application Cache",Modernizr.applicationcache);
+	hash.set("Canvas",Modernizr.canvas);
+	hash.set("Canvas Text",Modernizr.canvastext);
+	hash.set("Drag & Drop",Modernizr.draganddrop);
+	hash.set("HashChange Event",Modernizr.hashchange);
+	hash.set("History Management",Modernizr.history);
+	hash.set("HTML5 Audio",Modernizr.audio);
+	hash.set("HTML5 Audio Format OGG",Modernizr.audio.ogg);
+	hash.set("HTML5 Audio Format MP3",Modernizr.audio.mp3);
+	hash.set("HTML5 Audio Format WAV",Modernizr.audio.wav);
+	hash.set("HTML5 Audio Format M4A",Modernizr.audio.m4a);
+	hash.set("HTML5 Video",Modernizr.video);
+	hash.set("HTML5 Video Format OGG",Modernizr.video.ogg);
+	hash.set("HTML5 Video Format WebM",Modernizr.video.webm);
+	hash.set("HTML5 Video Format H264",Modernizr.video.h264);
+	hash.set("Indexed DB",Modernizr.indexeddb);
+	hash.set("Local Storage",Modernizr.localstorage);
+	hash.set("Cross-window Messaging",Modernizr.postmessage);
+	hash.set("Session Storage",Modernizr.sessionstorage);
+	hash.set("Web Sockets",Modernizr.websockets);
+	hash.set("Web SQL Database",Modernizr.websqldatabase);
+	hash.set("Web Workers",Modernizr.webworkers);
+	hash.set("Geolocation",Modernizr.geolocation);
+	hash.set("Inline SVG",Modernizr.inlinesvg);
+	hash.set("SMIL",Modernizr.smil);
+	hash.set("SVG",Modernizr.svg);
+	hash.set("SVG Clip Paths",Modernizr.svgclippaths);
+	hash.set("Touch Events",Modernizr.touch);
+	hash.set("WebGL",Modernizr.webgl);
+	var hxnzr = js.Lib.document.getElementById("hxnzr");
+	var div;
+	var $it0 = hash.keys();
+	while( $it0.hasNext() ) {
+		var n = $it0.next();
+		div = js.Lib.document.createElement("div");
+		div.className += "prop ";
+		div.innerHTML = n;
+		hxnzr.appendChild(div);
+		if(hash.get(n)) div.className += "good "; else div.className += "bad ";
+	}
+}
+var Std = function() { }
+Std.__name__ = true;
+Std["is"] = function(v,t) {
+	return js.Boot.__instanceof(v,t);
+}
+Std.string = function(s) {
+	return js.Boot.__string_rec(s,"");
+}
+Std["int"] = function(x) {
+	return x | 0;
+}
+Std.parseInt = function(x) {
+	var v = parseInt(x,10);
+	if(v == 0 && (HxOverrides.cca(x,1) == 120 || HxOverrides.cca(x,1) == 88)) v = parseInt(x);
+	if(isNaN(v)) return null;
+	return v;
+}
+Std.parseFloat = function(x) {
+	return parseFloat(x);
+}
+Std.random = function(x) {
+	return Math.floor(Math.random() * x);
+}
+var StringBuf = function() {
+	this.b = "";
+};
+StringBuf.__name__ = true;
+StringBuf.prototype = {
+	toString: function() {
+		return this.b;
+	}
+	,addSub: function(s,pos,len) {
+		this.b += HxOverrides.substr(s,pos,len);
+	}
+	,addChar: function(c) {
+		this.b += String.fromCharCode(c);
+	}
+	,add: function(x) {
+		this.b += Std.string(x);
+	}
+	,__class__: StringBuf
 }
 var js = js || {}
-js.Boot = $hxClasses["js.Boot"] = function() { }
-js.Boot.__name__ = ["js","Boot"];
+js.Boot = function() { }
+js.Boot.__name__ = true;
 js.Boot.__unhtml = function(s) {
 	return s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
 }
 js.Boot.__trace = function(v,i) {
 	var msg = i != null?i.fileName + ":" + i.lineNumber + ": ":"";
 	msg += js.Boot.__string_rec(v,"");
-	var d = document.getElementById("haxe:trace");
-	if(d != null) d.innerHTML += js.Boot.__unhtml(msg) + "<br/>"; else if(typeof(console) != "undefined" && console.log != null) console.log(msg);
+	var d;
+	if(typeof(document) != "undefined" && (d = document.getElementById("haxe:trace")) != null) d.innerHTML += js.Boot.__unhtml(msg) + "<br/>"; else if(typeof(console) != "undefined" && console.log != null) console.log(msg);
 }
 js.Boot.__clear_trace = function() {
 	var d = document.getElementById("haxe:trace");
 	if(d != null) d.innerHTML = "";
 }
+js.Boot.isClass = function(o) {
+	return o.__name__;
+}
+js.Boot.isEnum = function(e) {
+	return e.__ename__;
+}
+js.Boot.getClass = function(o) {
+	return o.__class__;
+}
 js.Boot.__string_rec = function(o,s) {
 	if(o == null) return "null";
 	if(s.length >= 5) return "<...>";
 	var t = typeof(o);
-	if(t == "function" && (o.__name__ != null || o.__ename__ != null)) t = "object";
+	if(t == "function" && (o.__name__ || o.__ename__)) t = "object";
 	switch(t) {
 	case "object":
 		if(o instanceof Array) {
-			if(o.__enum__ != null) {
+			if(o.__enum__) {
 				if(o.length == 2) return o[0];
 				var str = o[0] + "(";
 				s += "\t";
@@ -123,74 +361,19 @@ js.Boot.__instanceof = function(o,cl) {
 		return true;
 	default:
 		if(o == null) return false;
-		return o.__enum__ == cl || cl == Class && o.__name__ != null || cl == Enum && o.__ename__ != null;
+		if(cl == Class && o.__name__ != null) return true; else null;
+		if(cl == Enum && o.__ename__ != null) return true; else null;
+		return o.__enum__ == cl;
 	}
 }
-js.Boot.__init = function() {
-	js.Lib.isIE = typeof document!='undefined' && document.all != null && typeof window!='undefined' && window.opera == null;
-	js.Lib.isOpera = typeof window!='undefined' && window.opera != null;
-	Array.prototype.copy = Array.prototype.slice;
-	Array.prototype.insert = function(i,x) {
-		this.splice(i,0,x);
-	};
-	Array.prototype.remove = Array.prototype.indexOf?function(obj) {
-		var idx = this.indexOf(obj);
-		if(idx == -1) return false;
-		this.splice(idx,1);
-		return true;
-	}:function(obj) {
-		var i = 0;
-		var l = this.length;
-		while(i < l) {
-			if(this[i] == obj) {
-				this.splice(i,1);
-				return true;
-			}
-			i++;
-		}
-		return false;
-	};
-	Array.prototype.iterator = function() {
-		return { cur : 0, arr : this, hasNext : function() {
-			return this.cur < this.arr.length;
-		}, next : function() {
-			return this.arr[this.cur++];
-		}};
-	};
-	if(String.prototype.cca == null) String.prototype.cca = String.prototype.charCodeAt;
-	String.prototype.charCodeAt = function(i) {
-		var x = this.cca(i);
-		if(x != x) return undefined;
-		return x;
-	};
-	var oldsub = String.prototype.substr;
-	String.prototype.substr = function(pos,len) {
-		if(pos != null && pos != 0 && len != null && len < 0) return "";
-		if(len == null) len = this.length;
-		if(pos < 0) {
-			pos = this.length + pos;
-			if(pos < 0) pos = 0;
-		} else if(len < 0) len = this.length + len - pos;
-		return oldsub.apply(this,[pos,len]);
-	};
-	Function.prototype["$bind"] = function(o) {
-		var f = function() {
-			return f.method.apply(f.scope,arguments);
-		};
-		f.scope = o;
-		f.method = this;
-		return f;
-	};
+js.Boot.__cast = function(o,t) {
+	if(js.Boot.__instanceof(o,t)) return o; else throw "Cannot cast " + Std.string(o) + " to " + Std.string(t);
 }
-js.Boot.prototype = {
-	__class__: js.Boot
+js.Lib = function() { }
+js.Lib.__name__ = true;
+js.Lib.debug = function() {
+	debugger;
 }
-js.Lib = $hxClasses["js.Lib"] = function() { }
-js.Lib.__name__ = ["js","Lib"];
-js.Lib.isIE = null;
-js.Lib.isOpera = null;
-js.Lib.document = null;
-js.Lib.window = null;
 js.Lib.alert = function(v) {
 	alert(js.Boot.__string_rec(v,""));
 }
@@ -200,236 +383,45 @@ js.Lib.eval = function(code) {
 js.Lib.setErrorHandler = function(f) {
 	js.Lib.onerror = f;
 }
-js.Lib.prototype = {
-	__class__: js.Lib
-}
-var Main = $hxClasses["Main"] = function() { }
-Main.__name__ = ["Main"];
-Main.main = function() {
-	var hash = new Hash();
-	hash.set("@font-face",Modernizr.fontface);
-	hash.set("Background Size",Modernizr.backgroundsize);
-	hash.set("border-image",Modernizr.borderimage);
-	hash.set("border-radius",Modernizr.borderradius);
-	hash.set("box-shadow",Modernizr.boxshadow);
-	hash.set("Flexable Box Model",Modernizr.flexbox);
-	hash.set("hsla()",Modernizr.hsla);
-	hash.set("Multiple Backgrounds",Modernizr.multiplebgs);
-	hash.set("Opacity",Modernizr.opacity);
-	hash.set("rgba()",Modernizr.rgba);
-	hash.set("text-shadow",Modernizr.textshadow);
-	hash.set("CSS Animations",Modernizr.cssanimations);
-	hash.set("CSS Columns",Modernizr.csscolumns);
-	hash.set("CSS Gradients",Modernizr.cssgradients);
-	hash.set("CSS Reflections",Modernizr.cssreflections);
-	hash.set("CSS 2D Transforms",Modernizr.csstransforms);
-	hash.set("CSS 3D Transforms",Modernizr.csstransforms3d);
-	hash.set("CSS Transitions",Modernizr.csstransitions);
-	hash.set("Application Cache",Modernizr.applicationcache);
-	hash.set("Canvas",Modernizr.canvas);
-	hash.set("Canvas Text",Modernizr.canvastext);
-	hash.set("Drag & Drop",Modernizr.draganddrop);
-	hash.set("HashChange Event",Modernizr.hashchange);
-	hash.set("History Management",Modernizr.history);
-	hash.set("HTML5 Audio",Modernizr.audio);
-	hash.set("HTML5 Audio Format OGG",Modernizr.audio.ogg);
-	hash.set("HTML5 Audio Format MP3",Modernizr.audio.mp3);
-	hash.set("HTML5 Audio Format WAV",Modernizr.audio.wav);
-	hash.set("HTML5 Audio Format M4A",Modernizr.audio.m4a);
-	hash.set("HTML5 Video",Modernizr.video);
-	hash.set("HTML5 Video Format OGG",Modernizr.video.ogg);
-	hash.set("HTML5 Video Format WebM",Modernizr.video.webm);
-	hash.set("HTML5 Video Format H264",Modernizr.video.h264);
-	hash.set("Indexed DB",Modernizr.indexeddb);
-	hash.set("Local Storage",Modernizr.localstorage);
-	hash.set("Cross-window Messaging",Modernizr.postmessage);
-	hash.set("Session Storage",Modernizr.sessionstorage);
-	hash.set("Web Sockets",Modernizr.websockets);
-	hash.set("Web SQL Database",Modernizr.websqldatabase);
-	hash.set("Web Workers",Modernizr.webworkers);
-	hash.set("Geolocation",Modernizr.geolocation);
-	hash.set("Inline SVG",Modernizr.inlinesvg);
-	hash.set("SMIL",Modernizr.smil);
-	hash.set("SVG",Modernizr.svg);
-	hash.set("SVG Clip Paths",Modernizr.svgclippaths);
-	hash.set("Touch Events",Modernizr.touch);
-	hash.set("WebGL",Modernizr.webgl);
-	var hxnzr = js.Lib.document.getElementById("hxnzr");
-	var div;
-	var $it0 = hash.keys();
-	while( $it0.hasNext() ) {
-		var n = $it0.next();
-		div = js.Lib.document.createElement("div");
-		div.className += "prop ";
-		div.innerHTML = n;
-		hxnzr.appendChild(div);
-		if(hash.get(n)) div.className += "good "; else div.className += "bad ";
-	}
-}
-Main.prototype = {
-	__class__: Main
-}
-var Std = $hxClasses["Std"] = function() { }
-Std.__name__ = ["Std"];
-Std["is"] = function(v,t) {
-	return js.Boot.__instanceof(v,t);
-}
-Std.string = function(s) {
-	return js.Boot.__string_rec(s,"");
-}
-Std["int"] = function(x) {
-	if(x < 0) return Math.ceil(x);
-	return Math.floor(x);
-}
-Std.parseInt = function(x) {
-	var v = parseInt(x,10);
-	if(v == 0 && x.charCodeAt(1) == 120) v = parseInt(x);
-	if(isNaN(v)) return null;
-	return v;
-}
-Std.parseFloat = function(x) {
-	return parseFloat(x);
-}
-Std.random = function(x) {
-	return Math.floor(Math.random() * x);
-}
-Std.prototype = {
-	__class__: Std
-}
-var Hash = $hxClasses["Hash"] = function() {
-	this.h = {}
-	if(this.h.__proto__ != null) {
-		this.h.__proto__ = null;
-		delete(this.h.__proto__);
-	}
-}
-Hash.__name__ = ["Hash"];
-Hash.prototype = {
-	h: null
-	,set: function(key,value) {
-		this.h["$" + key] = value;
-	}
-	,get: function(key) {
-		return this.h["$" + key];
-	}
-	,exists: function(key) {
-		try {
-			key = "$" + key;
-			return this.hasOwnProperty.call(this.h,key);
-		} catch( e ) {
-			for(var i in this.h) if( i == key ) return true;
-			return false;
-		}
-	}
-	,remove: function(key) {
-		if(!this.exists(key)) return false;
-		delete(this.h["$" + key]);
-		return true;
-	}
-	,keys: function() {
-		var a = new Array();
-		for(var i in this.h) a.push(i.substr(1));
-		return a.iterator();
-	}
-	,iterator: function() {
-		return { ref : this.h, it : this.keys(), hasNext : function() {
-			return this.it.hasNext();
-		}, next : function() {
-			var i = this.it.next();
-			return this.ref["$" + i];
-		}};
-	}
-	,toString: function() {
-		var s = new StringBuf();
-		s.b[s.b.length] = "{";
-		var it = this.keys();
-		while( it.hasNext() ) {
-			var i = it.next();
-			s.b[s.b.length] = i == null?"null":i;
-			s.b[s.b.length] = " => ";
-			s.add(Std.string(this.get(i)));
-			if(it.hasNext()) s.b[s.b.length] = ", ";
-		}
-		s.b[s.b.length] = "}";
-		return s.b.join("");
-	}
-	,__class__: Hash
-}
-var StringBuf = $hxClasses["StringBuf"] = function() {
-	this.b = new Array();
-}
-StringBuf.__name__ = ["StringBuf"];
-StringBuf.prototype = {
-	add: function(x) {
-		this.b[this.b.length] = x == null?"null":x;
-	}
-	,addSub: function(s,pos,len) {
-		this.b[this.b.length] = s.substr(pos,len);
-	}
-	,addChar: function(c) {
-		this.b[this.b.length] = String.fromCharCode(c);
-	}
-	,toString: function() {
-		return this.b.join("");
-	}
-	,b: null
-	,__class__: StringBuf
-}
-var IntIter = $hxClasses["IntIter"] = function(min,max) {
-	this.min = min;
-	this.max = max;
-}
-IntIter.__name__ = ["IntIter"];
-IntIter.prototype = {
-	min: null
-	,max: null
-	,hasNext: function() {
-		return this.min < this.max;
-	}
-	,next: function() {
-		return this.min++;
-	}
-	,__class__: IntIter
-}
-js.Boot.__res = {}
-js.Boot.__init();
-{
-	js.Lib.document = document;
-	js.Lib.window = window;
-	onerror = function(msg,url,line) {
-		var f = js.Lib.onerror;
-		if( f == null )
-			return false;
-		return f(msg,[url+":"+line]);
-	}
-}
-{
-	String.prototype.__class__ = $hxClasses["String"] = String;
-	String.__name__ = ["String"];
-	Array.prototype.__class__ = $hxClasses["Array"] = Array;
-	Array.__name__ = ["Array"];
-	Int = $hxClasses["Int"] = { __name__ : ["Int"]};
-	Dynamic = $hxClasses["Dynamic"] = { __name__ : ["Dynamic"]};
-	Float = $hxClasses["Float"] = Number;
-	Float.__name__ = ["Float"];
-	Bool = $hxClasses["Bool"] = { __ename__ : ["Bool"]};
-	Class = $hxClasses["Class"] = { __name__ : ["Class"]};
-	Enum = { };
-	Void = $hxClasses["Void"] = { __ename__ : ["Void"]};
-}
+if(Array.prototype.indexOf) HxOverrides.remove = function(a,o) {
+	var i = a.indexOf(o);
+	if(i == -1) return false;
+	a.splice(i,1);
+	return true;
+}; else null;
+Math.__name__ = ["Math"];
+Math.NaN = Number.NaN;
+Math.NEGATIVE_INFINITY = Number.NEGATIVE_INFINITY;
+Math.POSITIVE_INFINITY = Number.POSITIVE_INFINITY;
+Math.isFinite = function(i) {
+	return isFinite(i);
+};
+Math.isNaN = function(i) {
+	return isNaN(i);
+};
 window.Modernizr = Modernizr;
-{
-	Math.__name__ = ["Math"];
-	Math.NaN = Number["NaN"];
-	Math.NEGATIVE_INFINITY = Number["NEGATIVE_INFINITY"];
-	Math.POSITIVE_INFINITY = Number["POSITIVE_INFINITY"];
-	$hxClasses["Math"] = Math;
-	Math.isFinite = function(i) {
-		return isFinite(i);
-	};
-	Math.isNaN = function(i) {
-		return isNaN(i);
+String.prototype.__class__ = String;
+String.__name__ = true;
+Array.prototype.__class__ = Array;
+Array.__name__ = true;
+Date.prototype.__class__ = Date;
+Date.__name__ = ["Date"];
+var Int = { __name__ : ["Int"]};
+var Dynamic = { __name__ : ["Dynamic"]};
+var Float = Number;
+Float.__name__ = ["Float"];
+var Bool = Boolean;
+Bool.__ename__ = ["Bool"];
+var Class = { __name__ : ["Class"]};
+var Enum = { };
+var Void = { __ename__ : ["Void"]};
+if(typeof document != "undefined") js.Lib.document = document;
+if(typeof window != "undefined") {
+	js.Lib.window = window;
+	js.Lib.window.onerror = function(msg,url,line) {
+		var f = js.Lib.onerror;
+		if(f == null) return false;
+		return f(msg,[url + ":" + line]);
 	};
 }
-js.Lib.onerror = null;
-Main.main()
+Main.main();

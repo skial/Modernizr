@@ -11,6 +11,8 @@ for it or not.
 
 To install just run ```haxelib install modernizr``` from the command line. All done!
 
+You will need to include the modernizr in your html. Use the links below to build an optimised version.
+
 ---
 
 ## Useful Info ##

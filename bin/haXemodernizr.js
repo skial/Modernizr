@@ -179,6 +179,112 @@ Main.main = function() {
 	hash.set("SVG Clip Paths",Modernizr.svgclippaths);
 	hash.set("Touch Events",Modernizr.touch);
 	hash.set("WebGL",Modernizr.webgl);
+	hash.set("Download Attribute",Modernizr.adownload);
+	hash.set("Audio Data",Modernizr.audiodata);
+	hash.set("Web Audio",Modernizr.webaudio);
+	hash.set("Battery Status",Modernizr.battery);
+	hash.set("Low Battery",Modernizr.lowbattery);
+	hash.set("Blob Constructor",Modernizr.blobconstructor);
+	hash.set("JPEG to data url",Modernizr.todataurljpeg);
+	hash.set("WEBP to data url",Modernizr.todataurlwebp);
+	hash.set("Content Editable",Modernizr.contenteditable);
+	hash.set("Content Security Policy",Modernizr.contentsecuritypolicy);
+	hash.set("Context Menu",Modernizr.contextmenu);
+	hash.set("Cookies",Modernizr.cookies);
+	hash.set("Cross-site HTTP requests",Modernizr.cors);
+	hash.set("Background Position Shorthand",Modernizr.bgpositionshorthand);
+	hash.set("Background Position XY",Modernizr.bgpositionxy);
+	hash.set("Background Repeat - round",Modernizr.bgrepeatround);
+	hash.set("Background Repeat - space",Modernizr.bgrepeatspace);
+	hash.set("Background Size Cover",Modernizr.bgsizecover);
+	hash.set("Box Sizing",Modernizr.boxsizing);
+	hash.set("CSS Calc",Modernizr.csscalc);
+	hash.set("Cubic Bezier Range",Modernizr.cubicbezierrange);
+	hash.set("Display : run-in",Modernizr["display-runin"]);
+	hash.set("Display : table",Modernizr["display-table"]);
+	hash.set("CSS Filters",Modernizr.cssfilters);
+	hash.set("Soft Hyphens",Modernizr.softhyphens);
+	hash.set("Find Hyphens",Modernizr.softhyphensfind);
+	hash.set("Last Child",Modernizr.lastchild);
+	hash.set("CSS Mask",Modernizr.cssmask);
+	hash.set("Media Queries",Modernizr.mediaqueries);
+	hash.set("Object Fit",Modernizr["object-fit"]);
+	hash.set("Overflow Scrolling",Modernizr.overflowscrolling);
+	hash.set("Pointer Events",Modernizr.pointerevents);
+	hash.set("CSS Position Sticky",Modernizr.csspositionsticky);
+	hash.set("Regions",Modernizr.regions);
+	hash.set("CSS rem unit",Modernizr.cssremunit);
+	hash.set("CSS resize",Modernizr.cssresize);
+	hash.set("CSS scrollbar",Modernizr.cssscrollbar);
+	hash.set("Subpixel Font",Modernizr.subpixelfont);
+	hash.set("CSS Supports",Modernizr.supports);
+	hash.set("User Select",Modernizr.userselect);
+	hash.set("CSS vh unit",Modernizr.cssvhunit);
+	hash.set("CSS vmax",Modernizr.cssvmaxunit);
+	hash.set("CSS vmin",Modernizr.cssvminunit);
+	hash.set("CSS vw unit",Modernizr.cssvwunit);
+	hash.set("Custom Protocol Handler",Modernizr.customprotocolhandler);
+	hash.set("Dart Support",Modernizr.dart);
+	hash.set("Data View",Modernizr.dataview);
+	hash.set("Class List",Modernizr.classlist);
+	hash.set("Create Element Attributes",Modernizr["createelement-attrs"]);
+	hash.set("Dataset",Modernizr.dataset);
+	hash.set("Microdata",Modernizr.microdata);
+	hash.set("Data List Element",Modernizr.datalistelem);
+	hash.set("Details Element",Modernizr.datalistelem);
+	hash.set("Output Element",Modernizr.outputelem);
+	hash.set("Progress Bar",Modernizr.progressbar);
+	hash.set("Meter",Modernizr.meter);
+	hash.set("Ruby Element",Modernizr.ruby);
+	hash.set("Time Element",Modernizr.time);
+	hash.set("Text Track API",Modernizr.texttrackapi);
+	hash.set("Text Track",Modernizr.track);
+	hash.set("Emoji",Modernizr.emoji);
+	hash.set("Strict Mode",Modernizr.strictmode);
+	hash.set("Device Motion",Modernizr.devicemotion);
+	hash.set("Device Orientation",Modernizr.deviceorientation);
+	hash.set("EXIF Orientation",Modernizr["exif-orientation"]);
+	hash.set("File Reader",Modernizr.filereader);
+	hash.set("File System",Modernizr.filesystem);
+	hash.set("File Input",Modernizr.fileinput);
+	hash.set("Form Attribute",Modernizr.formattribute);
+	hash.set("Localized Number",Modernizr.localizedNumber);
+	hash.set("Placeholder",Modernizr.placeholder);
+	hash.set("Speech Input",Modernizr.speechinput);
+	hash.set("Form Validation",Modernizr.formvalidation);
+	hash.set("Fullscreen",Modernizr.fullscreen);
+	hash.set("Gamepad Support",Modernizr.gamepads);
+	hash.set("getUserMedia",Modernizr.getusermedia);
+	hash.set("IE8 Compat Mode",Modernizr.ie8compat);
+	hash.set("IFrame Sandbox",Modernizr.sandbox);
+	hash.set("IFrame Seamless",Modernizr.seamless);
+	hash.set("IFrame Srcdoc",Modernizr.srcdoc);
+	hash.set("APNG",Modernizr.apng);
+	hash.set("Lossless WEBP",Modernizr["webp-lossless"]);
+	hash.set("WEBP Support",Modernizr.webp);
+	hash.set("JSON Support",Modernizr.json);
+	hash.set("<ol> Reversed",Modernizr.olreversed);
+	hash.set("MathML",Modernizr.mathml);
+	hash.set("Low Bandwidth",Modernizr.lowbandwidth);
+	hash.set("Event Source",Modernizr.eventsource);
+	hash.set("Xhr2",Modernizr.xhr2);
+	hash.set("Notifications",Modernizr.notification);
+	hash.set("Performance",Modernizr.performance);
+	hash.set("Quota Management",Modernizr.quotamanagement);
+	hash.set("Request Animation Frame",Modernizr.raf);
+	hash.set("Async <script>",Modernizr.scriptasync);
+	hash.set("Defer <script>",Modernizr.scriptdefer);
+	hash.set("Scoped Styles",Modernizr.stylescoped);
+	hash.set("SVG Filters",Modernizr.svgfilters);
+	hash.set("Unicode",Modernizr.unicode);
+	hash.set("Data URI",Modernizr.datauri);
+	hash.set("Vibrate",Modernizr.vibrate);
+	hash.set("Web Intents",Modernizr.webintents);
+	hash.set("Binary Websockets",Modernizr.websocketsbinary);
+	hash.set("If Window is in IFrame",Modernizr.framed);
+	hash.set("Blob Workers",Modernizr.blobworkers);
+	hash.set("Data Workers",Modernizr.dataworkers);
+	hash.set("Shared Workers",Modernizr.sharedworkers);
 	var hxnzr = js.Lib.document.getElementById("hxnzr");
 	var div;
 	var $it0 = hash.keys();
@@ -186,7 +292,7 @@ Main.main = function() {
 		var n = $it0.next();
 		div = js.Lib.document.createElement("div");
 		div.className += "prop ";
-		div.innerHTML = n;
+		div.innerHTML = StringTools.htmlEscape(n);
 		hxnzr.appendChild(div);
 		if(hash.get(n)) div.className += "good "; else div.className += "bad ";
 	}
@@ -232,6 +338,92 @@ StringBuf.prototype = {
 		this.b += Std.string(x);
 	}
 	,__class__: StringBuf
+}
+var StringTools = function() { }
+StringTools.__name__ = true;
+StringTools.urlEncode = function(s) {
+	return encodeURIComponent(s);
+}
+StringTools.urlDecode = function(s) {
+	return decodeURIComponent(s.split("+").join(" "));
+}
+StringTools.htmlEscape = function(s) {
+	return s.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;");
+}
+StringTools.htmlUnescape = function(s) {
+	return s.split("&gt;").join(">").split("&lt;").join("<").split("&amp;").join("&");
+}
+StringTools.startsWith = function(s,start) {
+	return s.length >= start.length && HxOverrides.substr(s,0,start.length) == start;
+}
+StringTools.endsWith = function(s,end) {
+	var elen = end.length;
+	var slen = s.length;
+	return slen >= elen && HxOverrides.substr(s,slen - elen,elen) == end;
+}
+StringTools.isSpace = function(s,pos) {
+	var c = HxOverrides.cca(s,pos);
+	return c >= 9 && c <= 13 || c == 32;
+}
+StringTools.ltrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,r)) r++;
+	if(r > 0) return HxOverrides.substr(s,r,l - r); else return s;
+}
+StringTools.rtrim = function(s) {
+	var l = s.length;
+	var r = 0;
+	while(r < l && StringTools.isSpace(s,l - r - 1)) r++;
+	if(r > 0) return HxOverrides.substr(s,0,l - r); else return s;
+}
+StringTools.trim = function(s) {
+	return StringTools.ltrim(StringTools.rtrim(s));
+}
+StringTools.rpad = function(s,c,l) {
+	var sl = s.length;
+	var cl = c.length;
+	while(sl < l) if(l - sl < cl) {
+		s += HxOverrides.substr(c,0,l - sl);
+		sl = l;
+	} else {
+		s += c;
+		sl += cl;
+	}
+	return s;
+}
+StringTools.lpad = function(s,c,l) {
+	var ns = "";
+	var sl = s.length;
+	if(sl >= l) return s;
+	var cl = c.length;
+	while(sl < l) if(l - sl < cl) {
+		ns += HxOverrides.substr(c,0,l - sl);
+		sl = l;
+	} else {
+		ns += c;
+		sl += cl;
+	}
+	return ns + s;
+}
+StringTools.replace = function(s,sub,by) {
+	return s.split(sub).join(by);
+}
+StringTools.hex = function(n,digits) {
+	var s = "";
+	var hexChars = "0123456789ABCDEF";
+	do {
+		s = hexChars.charAt(n & 15) + s;
+		n >>>= 4;
+	} while(n > 0);
+	if(digits != null) while(s.length < digits) s = "0" + s;
+	return s;
+}
+StringTools.fastCodeAt = function(s,index) {
+	return s.charCodeAt(index);
+}
+StringTools.isEOF = function(c) {
+	return c != c;
 }
 var js = js || {}
 js.Boot = function() { }

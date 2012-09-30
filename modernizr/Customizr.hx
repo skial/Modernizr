@@ -228,7 +228,6 @@ class Customizr {
 		var last:String = '';
 		var matched:String = '';
 		
-		trace(modernizr.length);
 		for (ereg in [marker, test]) {
 			while (true) {
 				if (ereg.match(modernizr) && matched != ereg.matched(0)) {
@@ -246,7 +245,10 @@ class Customizr {
 			}
 		}
 		
+		trace(source.length);
 		trace(result.length);
+		
+		File.saveContent('./modernizr-custom-' + Date.now().getSeconds() + '.hx.js', result);
 	}
 	
 }

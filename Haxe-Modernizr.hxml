@@ -1,0 +1,4 @@
+-js bin/HaxeModernizr.js
+-D modernizr_non_core
+-main Main
+--dead-code-elimination

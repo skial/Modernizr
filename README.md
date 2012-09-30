@@ -18,6 +18,7 @@ You will need to include the modernizr in your html. Use the links below to buil
 ## Useful Info ##
 
 haxelib version ```2.6.1```
+
 github version ```2.6.2``` - includes typed definitions for all [non core feature detections](https://github.com/Modernizr/Modernizr/tree/master/feature-detects), except for ```webgl-extensions```.
 
 http://www.modernizr.com/

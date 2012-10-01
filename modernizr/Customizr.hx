@@ -219,36 +219,42 @@ class Customizr {
 		var modernizr:String = source;
 		var result:String = '';
 		// ^\s*/\*>>(\w*)\*/$([\w\W]*?)^\s*/\*>>(\w*)\*/$
-		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\w*)\*\/$/m;
+		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
 		var test:EReg = ~/^\s*(?:tests\[')(\w*)(?:']\s=\s[\w\W]*?};)$/m;
 		
-		var parts:Hash<Array<String>> = new Hash<Array<String>>();
-		
-		var first:String = '';
-		var last:String = '';
-		var matched:String = '';
-		
-		for (ereg in [marker, test]) {
+		var _strip = function(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
+			var _result = '';
+			var matched = '';
+			
 			while (true) {
-				if (ereg.match(modernizr) && matched != ereg.matched(0)) {
+				if (ereg.match(text) && matched != ereg.matched(0)) {
 					matched = ereg.matched(0);
-					first = ereg.matched(1).trim();
-					last = ereg.matched(2).trim();
 					
-					if (first == last && tests.exists(first)) {
-						result += ereg.matchedLeft() + matched;
+					if (tests.exists(ereg.matched(1).trim())) {
+						_result += ereg.matchedLeft() + matched;
+					} else {
+						_result += ereg.matchedLeft();
 					}
-					modernizr = ereg.matchedRight();
+					text = ereg.matchedRight();
 				} else {
 					break;
 				}
 			}
+			
+			_result += text;
+			
+			return _result;
 		}
+		
+		modernizr = _strip(test, modernizr, tests);
+		modernizr = _strip(marker, modernizr, tests);
+		
+		result += modernizr;
 		
 		trace(source.length);
 		trace(result.length);
 		
-		File.saveContent('./modernizr-custom-' + Date.now().getSeconds() + '.hx.js', result);
+		File.saveContent('./modernizr-custom-' + ~/:/g.replace(Date.now().toString(), '-') + '.hx.js', result);
 	}
 	
 }

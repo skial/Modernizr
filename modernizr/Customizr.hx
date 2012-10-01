@@ -3,11 +3,13 @@ package modernizr;
 import haxe.macro.Context;
 import haxe.macro.Compiler;
 import haxe.macro.Expr;
-import haxe.macro.Type;
 import sys.FileSystem;
 import sys.io.File;
+import modernizr.Defaultizr;
 
 using StringTools;
+
+typedef MacroType = haxe.macro.Type;
 
 /**
  * ...
@@ -177,8 +179,9 @@ class Customizr {
 		return Context.getBuildFields();
 	}
 	
-	private static function izr_alpha(types:Array<Type>):Void {
+	private static function izr_alpha(types:Array<MacroType>):Void {
 		var tests:Hash<Array<String>> = new Hash<Array<String>>();
+		var non_core:Hash<Bool> = new Hash<Bool>();
 		
 		for (t in types) {
 			switch(t) {
@@ -189,9 +192,12 @@ class Customizr {
 					if (cls.isExtern && cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
+							if (f.meta.has(':?feature_detect')) non_core.set(f.name.toLowerCase(), true);
 							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
 							
 						}
+					} else if (!cls.isExtern && cls.name = 'Defaultizr') {
+						
 					}
 					
 				default:
@@ -199,10 +205,10 @@ class Customizr {
 			}
 		}
 		
-		izr_omega(File.getContent(_path), tests);
+		izr_omega(File.getContent(_path), tests, non_core);
 	}
 	
-	private static function izr_omega(source:String, tests:Hash<Array<String>>):Void {
+	private static function izr_omega(source:String, tests:Hash<Array<String>>, non_core:Hash<Bool>):Void {
 		
 		for (d in Reflect.fields(_dependencies)) {
 			if (tests.exists(d)) {

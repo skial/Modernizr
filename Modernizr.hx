@@ -303,152 +303,152 @@ extern class Modernizr {
 	 */
 	
 	#if modernizr_non_core
-	@:feature_detect public static var adownload:Bool;
-	@:feature_detect public static var audiodata:Bool;
-	@:feature_detect public static var webaudio:Bool;
-	@:feature_detect public static var battery:Bool;
-	@:feature_detect public static var lowbattery:Bool;
-	@:feature_detect public static var blobconstructor:Bool;
+	@:??feature_detect public static var adownload:Bool;
+	@:?feature_detect public static var audiodata:Bool;
+	@:?feature_detect public static var webaudio:Bool;
+	@:?feature_detect public static var battery:Bool;
+	@:?feature_detect public static var lowbattery:Bool;
+	@:?feature_detect public static var blobconstructor:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas-todataurl-type.js
-	@:feature_detect public static var todataurljpeg:Bool;
-	@:feature_detect public static var todataurlwebp:Bool;
+	@:?feature_detect public static var todataurljpeg:Bool;
+	@:?feature_detect public static var todataurlwebp:Bool;
 	
-	@:feature_detect public static var contenteditable:Bool;
-	@:feature_detect public static var contentsecuritypolicy:Bool;
-	@:feature_detect public static var contextmenu:Bool;
-	@:feature_detect public static var cookies:Bool;
-	@:feature_detect public static var cors:Bool;
-	@:feature_detect public static var bgpositionshorthand:Bool;
-	@:feature_detect public static var bgpositionxy:Bool;
+	@:?feature_detect public static var contenteditable:Bool;
+	@:?feature_detect public static var contentsecuritypolicy:Bool;
+	@:?feature_detect public static var contextmenu:Bool;
+	@:?feature_detect public static var cookies:Bool;
+	@:?feature_detect public static var cors:Bool;
+	@:?feature_detect public static var bgpositionshorthand:Bool;
+	@:?feature_detect public static var bgpositionxy:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-backgroundrepeat.js
-	@:feature_detect public static var bgrepeatround:Bool;
-	@:feature_detect public static var bgrepeatspace:Bool;
+	@:?feature_detect public static var bgrepeatround:Bool;
+	@:?feature_detect public static var bgrepeatspace:Bool;
 	
-	@:feature_detect public static var bgsizecover:Bool;
-	@:feature_detect public static var boxsizing:Bool;
-	@:feature_detect public static var csscalc:Bool;
-	@:feature_detect public static var cubicbezierrange:Bool;
+	@:?feature_detect public static var bgsizecover:Bool;
+	@:?feature_detect public static var boxsizing:Bool;
+	@:?feature_detect public static var csscalc:Bool;
+	@:?feature_detect public static var cubicbezierrange:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-displayrunin.js
-	@:feature_detect public static inline var displayRunin:Bool = untyped __js__('Modernizr["display-runin"]');
+	@:?feature_detect public static inline var displayRunin:Bool = untyped __js__('Modernizr["display-runin"]');
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-displaytable.js
-	@:feature_detect public static inline var displayTable:Bool = untyped __js__('Modernizr["display-table"]');
+	@:?feature_detect public static inline var displayTable:Bool = untyped __js__('Modernizr["display-table"]');
 	
-	@:feature_detect public static var cssfilters:Bool;
+	@:?feature_detect public static var cssfilters:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-hyphens.js
-	@:feature_detect public static var csshyphens:Bool;
-	@:feature_detect public static var softhyphens:Bool;
-	@:feature_detect public static var softhyphensfind:Bool;
+	@:?feature_detect public static var csshyphens:Bool;
+	@:?feature_detect public static var softhyphens:Bool;
+	@:?feature_detect public static var softhyphensfind:Bool;
 	
-	@:feature_detect public static var lastchild:Bool;
-	@:feature_detect public static var cssmask:Bool;
-	@:feature_detect public static var mediaqueries:Bool;
+	@:?feature_detect public static var lastchild:Bool;
+	@:?feature_detect public static var cssmask:Bool;
+	@:?feature_detect public static var mediaqueries:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-objectfit.js
-	@:feature_detect public static inline var objectFit:Bool = untyped __js__('Modernizr["object-fit"]');
+	@:?feature_detect public static inline var objectFit:Bool = untyped __js__('Modernizr["object-fit"]');
 	
-	@:feature_detect public static var overflowscrolling:Bool;
-	@:feature_detect public static var pointerevents:Bool;
-	@:feature_detect public static var csspositionsticky:Bool;
-	@:feature_detect public static var regions:Bool;
-	@:feature_detect public static var cssremunit:Bool;
-	@:feature_detect public static var cssresize:Bool;
-	@:feature_detect public static var cssscrollbar:Bool;
-	@:feature_detect public static var subpixelfont:Bool;
-	@:feature_detect public static var supports:Bool;
-	@:feature_detect public static var userselect:Bool;
-	@:feature_detect public static var cssvhunit:Bool;
-	@:feature_detect public static var cssvmaxunit:Bool;
-	@:feature_detect public static var cssvminunit:Bool;
-	@:feature_detect public static var cssvwunit:Bool;
-	@:feature_detect public static var customprotocolhandler:Bool;
-	@:feature_detect public static var dart:Bool;
-	@:feature_detect public static var dataview:Bool;
-	@:feature_detect public static var classlist:Bool;
+	@:?feature_detect public static var overflowscrolling:Bool;
+	@:?feature_detect public static var pointerevents:Bool;
+	@:?feature_detect public static var csspositionsticky:Bool;
+	@:?feature_detect public static var regions:Bool;
+	@:?feature_detect public static var cssremunit:Bool;
+	@:?feature_detect public static var cssresize:Bool;
+	@:?feature_detect public static var cssscrollbar:Bool;
+	@:?feature_detect public static var subpixelfont:Bool;
+	@:?feature_detect public static var supports:Bool;
+	@:?feature_detect public static var userselect:Bool;
+	@:?feature_detect public static var cssvhunit:Bool;
+	@:?feature_detect public static var cssvmaxunit:Bool;
+	@:?feature_detect public static var cssvminunit:Bool;
+	@:?feature_detect public static var cssvwunit:Bool;
+	@:?feature_detect public static var customprotocolhandler:Bool;
+	@:?feature_detect public static var dart:Bool;
+	@:?feature_detect public static var dataview:Bool;
+	@:?feature_detect public static var classlist:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/dom-createElement-attrs.js
-	@:feature_detect public static inline var createElementAttrs:Bool = untyped __js__('Modernizr["createelement-attrs"]');
+	@:?feature_detect public static inline var createElementAttrs:Bool = untyped __js__('Modernizr["createelement-attrs"]');
 	
-	@:feature_detect public static var dataset:Bool;
-	@:feature_detect public static var microdata:Bool;
-	@:feature_detect public static var datalistelem:Bool;
-	@:feature_detect public static var details:Bool;
-	@:feature_detect public static var outputelem:Bool;
+	@:?feature_detect public static var dataset:Bool;
+	@:?feature_detect public static var microdata:Bool;
+	@:?feature_detect public static var datalistelem:Bool;
+	@:?feature_detect public static var details:Bool;
+	@:?feature_detect public static var outputelem:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem-progress-meter.js
-	@:feature_detect public static var progressbar:Bool;
-	@:feature_detect public static var meter:Bool;
+	@:?feature_detect public static var progressbar:Bool;
+	@:?feature_detect public static var meter:Bool;
 	
-	@:feature_detect public static var ruby:Bool;
-	@:feature_detect public static var time:Bool;
+	@:?feature_detect public static var ruby:Bool;
+	@:?feature_detect public static var time:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem-track.js
-	@:feature_detect public static var texttrackapi:Bool;
-	@:feature_detect public static var track:Bool;
+	@:?feature_detect public static var texttrackapi:Bool;
+	@:?feature_detect public static var track:Bool;
 	
-	@:feature_detect public static var emoji:Bool;
-	@:feature_detect public static var strictmode:Bool;
+	@:?feature_detect public static var emoji:Bool;
+	@:?feature_detect public static var strictmode:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/event-deviceorientation-motion.js
-	@:feature_detect public static var devicemotion:Bool;
-	@:feature_detect public static var deviceorientation:Bool;
+	@:?feature_detect public static var devicemotion:Bool;
+	@:?feature_detect public static var deviceorientation:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/exif-orientation.js
-	@:feature_detect public static inline var exifOrientation:Bool = untyped __js__('Modernizr["exif-orientation"]');
+	@:?feature_detect public static inline var exifOrientation:Bool = untyped __js__('Modernizr["exif-orientation"]');
 	
-	@:feature_detect public static var filereader:Bool;
-	@:feature_detect public static var filesystem:Bool;
-	@:feature_detect public static var fileinput:Bool;
-	@:feature_detect public static var formattribute:Bool;
-	@:feature_detect public static var localizedNumber:Bool;
-	@:feature_detect public static var placeholder:Bool;
-	@:feature_detect public static var speechinput:Bool;
-	@:feature_detect public static var formvalidation:Bool;
-	@:feature_detect public static var fullscreen:Bool;
-	@:feature_detect public static var gamepads:Bool;
-	@:feature_detect public static var getusermedia:Bool;
-	@:feature_detect public static var ie8compat:Bool;
-	@:feature_detect public static var sandbox:Bool;
-	@:feature_detect public static var seamless:Bool;
-	@:feature_detect public static var srcdoc:Bool;
-	@:feature_detect public static var apng:Bool;
+	@:?feature_detect public static var filereader:Bool;
+	@:?feature_detect public static var filesystem:Bool;
+	@:?feature_detect public static var fileinput:Bool;
+	@:?feature_detect public static var formattribute:Bool;
+	@:?feature_detect public static var localizedNumber:Bool;
+	@:?feature_detect public static var placeholder:Bool;
+	@:?feature_detect public static var speechinput:Bool;
+	@:?feature_detect public static var formvalidation:Bool;
+	@:?feature_detect public static var fullscreen:Bool;
+	@:?feature_detect public static var gamepads:Bool;
+	@:?feature_detect public static var getusermedia:Bool;
+	@:?feature_detect public static var ie8compat:Bool;
+	@:?feature_detect public static var sandbox:Bool;
+	@:?feature_detect public static var seamless:Bool;
+	@:?feature_detect public static var srcdoc:Bool;
+	@:?feature_detect public static var apng:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/img-webp-lossless.js
-	@:feature_detect public static inline var webpLossless:Bool = untyped __js__('Modernizr["webp-lossless"]');
+	@:?feature_detect public static inline var webpLossless:Bool = untyped __js__('Modernizr["webp-lossless"]');
 	
-	@:feature_detect public static var webp:Bool;
-	@:feature_detect public static var json:Bool;
-	@:feature_detect public static var olreversed:Bool;
-	@:feature_detect public static var mathml:Bool;
-	@:feature_detect public static var lowbandwidth:Bool;
-	@:feature_detect public static var eventsource:Bool;
-	@:feature_detect public static var xhr2:Bool;
-	@:feature_detect public static var notification:Bool;
-	@:feature_detect public static var performance:Bool;
-	@:feature_detect public static var pointerlock:Bool;
-	@:feature_detect public static var quotamanagement:Bool;
-	@:feature_detect public static var raf:Bool;
-	@:feature_detect public static var scriptasync:Bool;
-	@:feature_detect public static var scriptdefer:Bool;
-	@:feature_detect public static var stylescoped:Bool;
-	@:feature_detect public static var svgfilters:Bool;
-	@:feature_detect public static var unicode:Bool;
-	@:feature_detect public static var datauri:Bool;
-	@:feature_detect public static var userdata:Bool;
-	@:feature_detect public static var vibrate:Bool;
-	@:feature_detect public static var webintents:Bool;
+	@:?feature_detect public static var webp:Bool;
+	@:?feature_detect public static var json:Bool;
+	@:?feature_detect public static var olreversed:Bool;
+	@:?feature_detect public static var mathml:Bool;
+	@:?feature_detect public static var lowbandwidth:Bool;
+	@:?feature_detect public static var eventsource:Bool;
+	@:?feature_detect public static var xhr2:Bool;
+	@:?feature_detect public static var notification:Bool;
+	@:?feature_detect public static var performance:Bool;
+	@:?feature_detect public static var pointerlock:Bool;
+	@:?feature_detect public static var quotamanagement:Bool;
+	@:?feature_detect public static var raf:Bool;
+	@:?feature_detect public static var scriptasync:Bool;
+	@:?feature_detect public static var scriptdefer:Bool;
+	@:?feature_detect public static var stylescoped:Bool;
+	@:?feature_detect public static var svgfilters:Bool;
+	@:?feature_detect public static var unicode:Bool;
+	@:?feature_detect public static var datauri:Bool;
+	@:?feature_detect public static var userdata:Bool;
+	@:?feature_detect public static var vibrate:Bool;
+	@:?feature_detect public static var webintents:Bool;
 	
 	// webgl extensions
 	
-	@:feature_detect public static var websocketsbinary:Bool;
-	@:feature_detect public static var framed:Bool;
-	@:feature_detect public static var blobworkers:Bool;
-	@:feature_detect public static var dataworkers:Bool;
-	@:feature_detect public static var sharedworkers:Bool;
+	@:?feature_detect public static var websocketsbinary:Bool;
+	@:?feature_detect public static var framed:Bool;
+	@:?feature_detect public static var blobworkers:Bool;
+	@:?feature_detect public static var dataworkers:Bool;
+	@:?feature_detect public static var sharedworkers:Bool;
 	#end
 }
 

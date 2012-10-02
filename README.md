@@ -1,27 +1,42 @@
 # Modernizr for Haxe #
 
-Haxe wrapper for Modernizr. Modernizr is a script that will detect native CSS3 and 
-HTML5 features available in the current UA and provide an object containing all 
-features with a true/false value, depending on whether the UA has native support 
-for it or not.
+Modernizr is a JavaScript library that detects HTML5 and CSS3 features in the user’s browser.
 
----
+## Overview ##
+
+Modernizr for Haxe are extern type definitions to be used by the Haxejs target.
 
 ## Install ##
 
-To install just run ```haxelib install modernizr``` from the command line. All done!
+#### v2.6.2 ####
 
-You will need to include the modernizr in your html. Use the links below to build an optimised version.
+To install ```v2.6.2``` do one of the following :
+
+- Run ```haxelib git modernizr https://github.com/skial/Modernizr.git src```. This should setup Modernizr to use this git repository using ```src``` as the root directory.
+- Clone this repository and run ```haxelib dev modernizr path/to/cloned/folder```
+
+In ```v2.6.2```, a custom version of Modernizr can be created based on the fields you use.
+
+In Haxe v2.10 and earlier, you will need to set ```--dead-code-elimination``` and add ```-D dce``` in your ```.hxml``` file for it to work.
+
+In nightly builds of Haxe, just set ```--dead-code-elimination``` in your ```.hxml``` file.
+
+#### v2.6.1 ####
+
+To install ```v2.6.1``` run ```haxelib install modernizr``` from the command line. You will need to create a custom version by using the build tool at (http://modernizr.com/download/) for best performance.
 
 ---
 
-## Useful Info ##
+## Non Core Feature Detects ##
 
-haxelib version ```2.6.1```
+You can use feature detects not found in Modernizr's core tests by adding ```-D mnc``` or ```-D modernizr_non_core``` to your ```.hxml``` file.
 
-github version ```2.6.2``` - includes typed definitions for all [non core feature detections](https://github.com/Modernizr/Modernizr/tree/master/feature-detects), except for ```webgl-extensions```.
+If you are using ```v2.6.2```, and have dead code elimination turned on, then a custom version will be built, only including fields which are used.
+
+If you are using ```v2.6.1``` you will need to create a custom version by visiting (http://modernizr.com/download/)
+
+## Links ##
 
 http://www.modernizr.com/
 http://github.com/Modernizr/Modernizr
-
-For best performance, build your own custom Modernizr file at http://www.modernizr.com/download/
+http://www.modernizr.com/download/

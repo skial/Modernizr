@@ -1,6 +1,7 @@
 -cp src
 -lib tink_macros
 -js bin/HaxeModernizr.js
--D modernizr_non_core
+-D mnc
+-D dce
 -main Main
 --dead-code-elimination

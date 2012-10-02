@@ -300,152 +300,347 @@ extern class Modernizr {
 	 */
 	
 	#if modernizr_non_core
-	@:feature_detect public static var adownload:Bool;
-	@:feature_detect public static var audiodata:Bool;
-	@:feature_detect public static var webaudio:Bool;
-	@:feature_detect public static var battery:Bool;
-	@:feature_detect public static var lowbattery:Bool;
-	@:feature_detect public static var blobconstructor:Bool;
+	@:feature_detect('a-download') 
+	public static var adownload:Bool;
+	
+	@:feature_detect('audio-audiodata-api') 
+	public static var audiodata:Bool;
+	
+	@:feature_detect('audio-webaudio-api') 
+	public static var webaudio:Bool;
+	
+	@:feature_detect('battery-api')
+	public static var battery:Bool;
+	
+	@:feature_detect('battery-level')
+	public static var lowbattery:Bool;
+	
+	@:feature_detect('blob-constructor')
+	public static var blobconstructor:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas-todataurl-type.js
-	@:feature_detect public static var todataurljpeg:Bool;
-	@:feature_detect public static var todataurlwebp:Bool;
+	@:feature_detect('canvas-todataurl-type')
+	public static var todataurljpeg:Bool;
 	
-	@:feature_detect public static var contenteditable:Bool;
-	@:feature_detect public static var contentsecuritypolicy:Bool;
-	@:feature_detect public static var contextmenu:Bool;
-	@:feature_detect public static var cookies:Bool;
-	@:feature_detect public static var cors:Bool;
-	@:feature_detect public static var bgpositionshorthand:Bool;
-	@:feature_detect public static var bgpositionxy:Bool;
+	@:feature_detect('canvas-todataurl-type')
+	public static var todataurlwebp:Bool;
+	
+	@:feature_detect 
+	public static var contenteditable:Bool;
+	
+	@:feature_detect
+	public static var contentsecuritypolicy:Bool;
+	
+	@:feature_detect
+	public static var contextmenu:Bool;
+	
+	@:feature_detect
+	public static var cookies:Bool;
+	
+	@:feature_detect
+	public static var cors:Bool;
+	
+	@:feature_detect('css-backgroundposition-shorthand')
+	public static var bgpositionshorthand:Bool;
+	
+	@:feature_detect('css-backgroundposition-xy')
+	public static var bgpositionxy:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-backgroundrepeat.js
-	@:feature_detect public static var bgrepeatround:Bool;
-	@:feature_detect public static var bgrepeatspace:Bool;
+	@:feature_detect('css-backgroundrepeat')
+	public static var bgrepeatround:Bool;
 	
-	@:feature_detect public static var bgsizecover:Bool;
-	@:feature_detect public static var boxsizing:Bool;
-	@:feature_detect public static var csscalc:Bool;
-	@:feature_detect public static var cubicbezierrange:Bool;
+	@:feature_detect('css-backgroundrepeat')
+	public static var bgrepeatspace:Bool;
+	
+	@:feature_detect('css-backgroundsizecover')
+	public static var bgsizecover:Bool;
+	
+	@:feature_detect('css-boxsizing')
+	public static var boxsizing:Bool;
+	
+	@:feature_detect('css-calc')
+	public static var csscalc:Bool;
+	
+	@:feature_detect('css-cubicbezierrange')
+	public static var cubicbezierrange:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-displayrunin.js
-	@:feature_detect public static inline var displayRunin:Bool = untyped __js__('Modernizr["display-runin"]');
+	@:feature_detect('css-displayrunin')
+	public static inline var displayRunin:Bool = untyped __js__('Modernizr["display-runin"]');
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-displaytable.js
-	@:feature_detect public static inline var displayTable:Bool = untyped __js__('Modernizr["display-table"]');
+	@:feature_detect('css-displaytable')
+	public static inline var displayTable:Bool = untyped __js__('Modernizr["display-table"]');
 	
-	@:feature_detect public static var cssfilters:Bool;
+	@:feature_detect('css-filters')
+	public static var cssfilters:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-hyphens.js
-	@:feature_detect public static var csshyphens:Bool;
-	@:feature_detect public static var softhyphens:Bool;
-	@:feature_detect public static var softhyphensfind:Bool;
+	@:feature_detect('css-hyphens')
+	public static var csshyphens:Bool;
 	
-	@:feature_detect public static var lastchild:Bool;
-	@:feature_detect public static var cssmask:Bool;
-	@:feature_detect public static var mediaqueries:Bool;
+	@:feature_detect('css-hyphens')
+	public static var softhyphens:Bool;
+	
+	@:feature_detect('css-hyphens')
+	public static var softhyphensfind:Bool;
+	
+	@:feature_detect('css-lastchild')
+	public static var lastchild:Bool;
+	
+	@:feature_detect('css-mask')
+	public static var cssmask:Bool;
+	
+	@:feature_detect('css-mediaqueries')
+	public static var mediaqueries:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-objectfit.js
-	@:feature_detect public static inline var objectFit:Bool = untyped __js__('Modernizr["object-fit"]');
+	@:feature_detect('css-objectfit')
+	public static inline var objectFit:Bool = untyped __js__('Modernizr["object-fit"]');
 	
-	@:feature_detect public static var overflowscrolling:Bool;
-	@:feature_detect public static var pointerevents:Bool;
-	@:feature_detect public static var csspositionsticky:Bool;
-	@:feature_detect public static var regions:Bool;
-	@:feature_detect public static var cssremunit:Bool;
-	@:feature_detect public static var cssresize:Bool;
-	@:feature_detect public static var cssscrollbar:Bool;
-	@:feature_detect public static var subpixelfont:Bool;
-	@:feature_detect public static var supports:Bool;
-	@:feature_detect public static var userselect:Bool;
-	@:feature_detect public static var cssvhunit:Bool;
-	@:feature_detect public static var cssvmaxunit:Bool;
-	@:feature_detect public static var cssvminunit:Bool;
-	@:feature_detect public static var cssvwunit:Bool;
-	@:feature_detect public static var customprotocolhandler:Bool;
-	@:feature_detect public static var dart:Bool;
-	@:feature_detect public static var dataview:Bool;
-	@:feature_detect public static var classlist:Bool;
+	@:feature_detect('css-overflow-scrolling')
+	public static var overflowscrolling:Bool;
+	
+	@:feature_detect('css-pointerevents')
+	public static var pointerevents:Bool;
+	
+	@:feature_detect('css-positionsticky')
+	public static var csspositionsticky:Bool;
+	
+	@:feature_detect('css-regions')
+	public static var regions:Bool;
+	
+	@:feature_detect('css-remunit')
+	public static var cssremunit:Bool;
+	
+	@:feature_detect('css-resize')
+	public static var cssresize:Bool;
+	
+	@:feature_detect('css-scrollbars')
+	public static var cssscrollbar:Bool;
+	
+	@:feature_detect('css-subpixelfont')
+	public static var subpixelfont:Bool;
+	
+	@:feature_detect('css-supports')
+	public static var supports:Bool;
+	
+	@:feature_detect('css-userselect')
+	public static var userselect:Bool;
+	
+	@:feature_detect('css-vhunit')
+	public static var cssvhunit:Bool;
+	
+	@:feature_detect('css-vmaxunit')
+	public static var cssvmaxunit:Bool;
+	
+	@:feature_detect('css-vminunit')
+	public static var cssvminunit:Bool;
+	
+	@:feature_detect('css-vwunit')
+	public static var cssvwunit:Bool;
+	
+	@:feature_detect('custom-protocol-handler')
+	public static var customProtocolHandler:Bool;
+	
+	@:feature_detect 
+	public static var dart:Bool;
+	
+	@:feature_detect('dataview-api')
+	public static var dataview:Bool;
+	
+	@:feature_detect('dom-classlist')
+	public static var classlist:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/dom-createElement-attrs.js
-	@:feature_detect public static inline var createElementAttrs:Bool = untyped __js__('Modernizr["createelement-attrs"]');
+	@:feature_detect('dom-createElement-attrs')
+	public static inline var createElementAttrs:Bool = untyped __js__('Modernizr["createelement-attrs"]');
 	
-	@:feature_detect public static var dataset:Bool;
-	@:feature_detect public static var microdata:Bool;
-	@:feature_detect public static var datalistelem:Bool;
-	@:feature_detect public static var details:Bool;
-	@:feature_detect public static var outputelem:Bool;
+	@:feature_detect('dom-dataset')
+	public static var dataset:Bool;
+	
+	@:feature_detect('dom-microdata')
+	public static var microdata:Bool;
+	
+	@:feature_detect('elem-datalist')
+	public static var dataListElement:Bool;
+	
+	@:feature_detect('elem-details')
+	public static var details:Bool;
+	
+	@:feature_detect('elem-output')
+	public static var outputElement:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem-progress-meter.js
-	@:feature_detect public static var progressbar:Bool;
-	@:feature_detect public static var meter:Bool;
+	@:feature_detect('elem-progress-meter')
+	public static var progressbar:Bool;
 	
-	@:feature_detect public static var ruby:Bool;
-	@:feature_detect public static var time:Bool;
+	@:feature_detect('elem-progress-meter')
+	public static var meter:Bool;
+	
+	@:feature_detect('elem-ruby')
+	public static var ruby:Bool;
+	
+	@:feature_detect('elem-time')
+	public static var time:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem-track.js
-	@:feature_detect public static var texttrackapi:Bool;
-	@:feature_detect public static var track:Bool;
+	@:feature_detect('elem-track')
+	public static var textTrackApi:Bool;
 	
-	@:feature_detect public static var emoji:Bool;
-	@:feature_detect public static var strictmode:Bool;
+	@:feature_detect('elem-track')
+	public static var track:Bool;
+	
+	@:feature_detect 
+	public static var emoji:Bool;
+	
+	@:feature_detect('es5-strictmode')
+	public static var strictmode:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/event-deviceorientation-motion.js
-	@:feature_detect public static var devicemotion:Bool;
-	@:feature_detect public static var deviceorientation:Bool;
+	@:feature_detect('event-deviceorientation-motion')
+	public static var deviceMotion:Bool;
+	
+	@:feature_detect('event-deviceorientation-motion')
+	public static var deviceOrientation:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/exif-orientation.js
-	@:feature_detect public static inline var exifOrientation:Bool = untyped __js__('Modernizr["exif-orientation"]');
+	@:feature_detect('exif-orientation')
+	public static inline var exifOrientation:Bool = untyped __js__('Modernizr["exif-orientation"]');
 	
-	@:feature_detect public static var filereader:Bool;
-	@:feature_detect public static var filesystem:Bool;
-	@:feature_detect public static var fileinput:Bool;
-	@:feature_detect public static var formattribute:Bool;
-	@:feature_detect public static var localizedNumber:Bool;
-	@:feature_detect public static var placeholder:Bool;
-	@:feature_detect public static var speechinput:Bool;
-	@:feature_detect public static var formvalidation:Bool;
-	@:feature_detect public static var fullscreen:Bool;
-	@:feature_detect public static var gamepads:Bool;
-	@:feature_detect public static var getusermedia:Bool;
-	@:feature_detect public static var ie8compat:Bool;
-	@:feature_detect public static var sandbox:Bool;
-	@:feature_detect public static var seamless:Bool;
-	@:feature_detect public static var srcdoc:Bool;
-	@:feature_detect public static var apng:Bool;
+	@:feature_detect('file-api')
+	public static var fileReader:Bool;
+	
+	@:feature_detect('file-filesystem')
+	public static var fileSystem:Bool;
+	
+	@:feature_detect('forms-fileinput')
+	public static var fileInput:Bool;
+	
+	@:feature_detect('forms-formattribute')
+	public static var formAttribute:Bool;
+	
+	@:feature_detect('forms-inputnumber-l10n')
+	public static var localizedNumber:Bool;
+	
+	@:feature_detect('forms-placeholder')
+	public static var placeholder:Bool;
+	
+	@:feature_detect('forms-speechinput')
+	public static var speechInput:Bool;
+	
+	@:feature_detect('forms-validation')
+	public static var formValidation:Bool;
+	
+	@:feature_detect('fullscreen-api')
+	public static var fullscreen:Bool;
+	
+	@:feature_detect 
+	public static var gamepad:Bool;
+	
+	@:feature_detect 
+	public static var getusermedia:Bool;
+	
+	@:feature_detect 
+	public static var ie8compat:Bool;
+	
+	@:feature_detect('iframe-sandbox')
+	public static var iframeSandbox:Bool;
+	
+	@:feature_detect('iframe-seamless')
+	public static var iframeSeamless:Bool;
+	
+	@:feature_detect('iframe-srcdoc')
+	public static var iframeSrcdoc:Bool;
+	
+	@:feature_detect('img-apng')
+	public static var apng:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/img-webp-lossless.js
-	@:feature_detect public static inline var webpLossless:Bool = untyped __js__('Modernizr["webp-lossless"]');
+	@:feature_detect('img-webp-lossless')
+	public static inline var webpLossless:Bool = untyped __js__('Modernizr["webp-lossless"]');
 	
-	@:feature_detect public static var webp:Bool;
-	@:feature_detect public static var json:Bool;
-	@:feature_detect public static var olreversed:Bool;
-	@:feature_detect public static var mathml:Bool;
-	@:feature_detect public static var lowbandwidth:Bool;
-	@:feature_detect public static var eventsource:Bool;
-	@:feature_detect public static var xhr2:Bool;
-	@:feature_detect public static var notification:Bool;
-	@:feature_detect public static var performance:Bool;
-	@:feature_detect public static var pointerlock:Bool;
-	@:feature_detect public static var quotamanagement:Bool;
-	@:feature_detect public static var raf:Bool;
-	@:feature_detect public static var scriptasync:Bool;
-	@:feature_detect public static var scriptdefer:Bool;
-	@:feature_detect public static var stylescoped:Bool;
-	@:feature_detect public static var svgfilters:Bool;
-	@:feature_detect public static var unicode:Bool;
-	@:feature_detect public static var datauri:Bool;
-	@:feature_detect public static var userdata:Bool;
-	@:feature_detect public static var vibrate:Bool;
-	@:feature_detect public static var webintents:Bool;
+	@:feature_detect('img-webp')
+	public static var webp:Bool;
 	
-	// webgl extensions
+	@:feature_detect
+	public static var json:Bool;
 	
-	@:feature_detect public static var websocketsbinary:Bool;
-	@:feature_detect public static var framed:Bool;
-	@:feature_detect public static var blobworkers:Bool;
-	@:feature_detect public static var dataworkers:Bool;
-	@:feature_detect public static var sharedworkers:Bool;
+	@:feature_detect('lists-reversed')
+	public static var listsReversed:Bool;
+	
+	@:feature_detect
+	public static var mathML:Bool;
+	
+	@:feature_detect('network-connection')
+	public static var lowBandwidth:Bool;
+	
+	@:feature_detect('network-eventsource')
+	public static var eventsource:Bool;
+	
+	@:feature_detect('network-xhr2')
+	public static var xhr2:Bool;
+	
+	@:feature_detect
+	public static var notification:Bool;
+	
+	@:feature_detect
+	public static var performance:Bool;
+	
+	@:feature_detect('pointerlock-api') 
+	public static var pointerlock:Bool;
+	
+	@:feature_detect('quota-management-api')
+	public static var quotaManagement:Bool;
+	
+	@:feature_detect('requestanimationframe')
+	public static var raf:Bool;
+	
+	@:feature_detect('script-async')
+	public static var scriptasync:Bool;
+	
+	@:feature_detect('script-defer')
+	public static var scriptdefer:Bool;
+	
+	@:feature_detect('style-scoped')
+	public static var stylescoped:Bool;
+	
+	@:feature_detect('svg-filters')
+	public static var svgfilters:Bool;
+	
+	@:feature_detect
+	public static var unicode:Bool;
+	
+	@:feature_detect('url-data-uri')
+	public static var datauri:Bool;
+	
+	@:feature_detect 
+	public static var userdata:Bool;
+	
+	@:feature_detect('vibration')
+	public static var vibrate:Bool;
+	
+	@:feature_detect('web-intents')
+	public static var webintents:Bool;
+	
+	@:feature_detect('webgl-extensions')
+	public static var webglExtensions:Bool;
+	
+	@:feature_detect('websockets-binary')
+	public static var websocketsBinary:Bool;
+	
+	@:feature_detect('window-framed')
+	public static var framedWindow:Bool;
+	
+	@:feature_detect('workers-blobworkers')
+	public static var blobWorkers:Bool;
+	
+	@:feature_detect('workers-dataworkers')
+	public static var dataWorkers:Bool;
+	
+	@:feature_detect('workers-sharedworkers')
+	public static var sharedWorkers:Bool;
 	#end
 }
 

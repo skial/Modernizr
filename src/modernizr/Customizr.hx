@@ -1,5 +1,6 @@
 package modernizr;
 
+import haxe.Http;
 import haxe.macro.Context;
 import haxe.macro.Compiler;
 import haxe.macro.Expr;
@@ -21,11 +22,11 @@ class Customizr {
 	
 	private static var _version:String = '2.6.2';
 	
-	private static var _downloads:String = 'http://modernizr.com/downloads/';
-	private static var _feature_detects:String = 'i/js/modernizr-git/feature-detects/';
+	private static var _base:String = 'http://modernizr.com/';	
 	private static var _name:String = 'modernizr-';
 	private static var _ext:String = '.js';
 	private static var _path:String = Context.resolvePath('modernizr/assets/' + _name + _version + _ext);
+	private static var _feature_detects:String = _path.replace(_name + _version + _ext, '') + 'feature-detects/';
 	
 	/**
 	 * Stolen from the modernizr build script modulizr.js 
@@ -193,7 +194,20 @@ class Customizr {
 					if (cls.isExtern && cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
-							if (f.meta.has(':feature_detect')) non_core.set(f.name.toLowerCase(), true);
+							if (f.meta.has(':feature_detect')) {
+								var m = f.meta.get();
+								var n = f.name.toLowerCase();
+								
+								for (meta in m) {
+									if (meta.name == ':feature_detect') {
+										if (meta.params.length > 0) {
+											n = meta.params[0].toString().replace('"', '');
+										}
+									}
+								}
+								
+								non_core.set(n, true);
+							}
 							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
 							
 						}
@@ -240,21 +254,15 @@ class Customizr {
 		new_source = _strip_test(test, new_source, tests);
 		new_source = _strip_test(marker, new_source, tests);
 		
-		var css_prefix:EReg = ~/["']\sjs\s["']\s*\+\s*([\w]+).join\(["'] ["']\)/;
-		var css_name:EReg = ~/className\s*\+=\s*["']\s['"]/;
+		new_source = _check_prefix(new_source);
 		
-		if (Defaultizr.cssClasses && Defaultizr.cssPrefix != '') {
-			var new_prefix = Defaultizr.cssPrefix;
-			if (css_prefix.match(new_source))
-				new_source = css_prefix.replace(new_source, '" '+new_prefix+'js '+new_prefix+'"+'+css_prefix.matched(1)+'.join(" '+new_prefix+'")');
-			
-			if (css_name.match(new_source))
-				new_source = css_name.replace(new_source, 'className+=" ' + new_prefix + '"');
+		for (ncore in non_core.keys()) {
+			new_source += _load_feature_detect(ncore);
 		}
 		
 		result += new_source;
 		
-		File.saveContent('./modernizr-' + Date.now().toString().replace(':', '-') + '.hx.js', result);
+		File.saveContent('./modernizr-' + Date.now().toString().replace(':', '-') + '.hx' + _ext, result);
 	}
 	
 	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
@@ -281,4 +289,37 @@ class Customizr {
 		return _result;
 	}
 	
+	private static function _check_prefix(text:String):String {
+		var css_prefix:EReg = ~/["']\sjs\s["']\s*\+\s*([\w]+).join\(["'] ["']\)/;
+		var css_name:EReg = ~/className\s*\+=\s*["']\s['"]/;
+		
+		if (Defaultizr.cssClasses && Defaultizr.cssPrefix != '') {
+			var new_prefix = Defaultizr.cssPrefix;
+			
+			if (css_prefix.match(text)) {
+				text = css_prefix.replace(text, '" ' + new_prefix + 'js ' + new_prefix + '"+' + css_prefix.matched(1) + '.join(" ' + new_prefix + '")');
+			}
+			
+			if (css_name.match(text)) {
+				text = css_name.replace(text, 'className+=" ' + new_prefix + '"');
+			}
+		}
+		
+		return text;
+	}
+	
+	private static function _load_feature_detect(name:String):String {
+		name = name.replace('_', '-');
+		
+		var result = '';
+		var path = _feature_detects + name + _ext;
+		
+		if (FileSystem.exists(path)) {
+			result = File.getContent(path);
+		} else {
+			trace(path);
+		}
+		
+		return result;
+	}
 }

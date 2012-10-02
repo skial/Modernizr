@@ -185,6 +185,9 @@ class Customizr {
 		var tests:Hash<Array<String>> = new Hash<Array<String>>();
 		var non_core:Hash<Bool> = new Hash<Bool>();
 		
+		if (Defaultizr.printShiv) Defaultizr.shiv = false;
+		if (!Defaultizr.shiv && !Defaultizr.printShiv) Defaultizr.shiv = true;
+		
 		for (t in types) {
 			switch(t) {
 				case TInst(type, params):
@@ -237,7 +240,7 @@ class Customizr {
 			if (tests.exists(d)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
-					if (!tests.exists(z)) tests.set(z, []);
+					if (!tests.exists(StringTools.replace(z, '_', '-'))) tests.set(z, []);
 				}
 				
 			}
@@ -260,9 +263,14 @@ class Customizr {
 			new_source += _load_feature_detect(ncore);
 		}
 		
+		new_source += _last_checks();
+		
 		result += new_source;
 		
-		File.saveContent('./modernizr-' + Date.now().toString().replace(':', '-') + '.hx' + _ext, result);
+		var output:String = Compiler.getOutput();
+		output = output.substr(0, output.lastIndexOf('/'));
+		
+		File.saveContent(output + '/modernizr-' + Date.now().toString().replace(':', '-') + '.hx' + _ext, result);
 	}
 	
 	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
@@ -322,4 +330,14 @@ class Customizr {
 		
 		return result;
 	}
+	
+	private static function _last_checks():String {
+		var result = '';
+		
+		if (Defaultizr.printShiv && !Defaultizr.shiv) result += File.getContent(Context.resolvePath('modernizr/assets/html5shiv-printshiv-3.6.js'));
+		if (Defaultizr.load) result += File.getContent(Context.resolvePath('modernizr/assets/modernizr.load.1.5.4.js'));
+		
+		return result;
+	}
+	
 }

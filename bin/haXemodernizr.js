@@ -322,6 +322,9 @@ js.Boot.__cast = function(o,t) {
 }
 js.Lib = function() { }
 js.Lib.__name__ = true;
+var modernizr = modernizr || {}
+modernizr.Defaultizr = function() { }
+modernizr.Defaultizr.__name__ = true;
 window.Modernizr = Modernizr;
 String.prototype.__class__ = String;
 String.__name__ = true;
@@ -344,4 +347,18 @@ if(typeof window != "undefined") {
 		return f(msg,[url + ":" + line]);
 	};
 }
+modernizr.Defaultizr.shiv = true;
+modernizr.Defaultizr.printShiv = false;
+modernizr.Defaultizr.load = true;
+modernizr.Defaultizr.mq = false;
+modernizr.Defaultizr.cssClasses = true;
+modernizr.Defaultizr.cssPrefix = "";
+modernizr.Defaultizr.addTest = false;
+modernizr.Defaultizr.prefixed = false;
+modernizr.Defaultizr.testStyles = false;
+modernizr.Defaultizr.testProp = false;
+modernizr.Defaultizr.testAllProps = false;
+modernizr.Defaultizr.hasEvent = false;
+modernizr.Defaultizr._prefixes = false;
+modernizr.Defaultizr._domPrefixes = false;
 Main.main();

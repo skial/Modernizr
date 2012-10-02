@@ -8,6 +8,7 @@ import sys.io.File;
 import modernizr.Defaultizr;
 
 using StringTools;
+using tink.macro.tools.MacroTools;
 
 typedef MacroType = haxe.macro.Type;
 
@@ -192,12 +193,21 @@ class Customizr {
 					if (cls.isExtern && cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
-							if (f.meta.has(':?feature_detect')) non_core.set(f.name.toLowerCase(), true);
+							if (f.meta.has(':feature_detect')) non_core.set(f.name.toLowerCase(), true);
 							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
 							
 						}
-					} else if (!cls.isExtern && cls.name = 'Defaultizr') {
-						
+					} 
+					
+					if (cls.name == 'Defaultizr') {
+						for (f in cls.statics.get()) {
+							if (Context.getTypedExpr(f.expr()).toString() == 'true') {
+								
+								trace(f.name.toLowerCase());
+								tests.set(f.name.toLowerCase(), []);
+								
+							}
+						}
 					}
 					
 				default:

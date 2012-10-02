@@ -5,18 +5,19 @@ package modernizr;
  * @author Skial Bainn
  */
 
+@:keep
 class Defaultizr {
 
 	/**
 	 * Extra Functionality
 	 */
-	public static var html5shiv:Bool = true;
-	public static var printshiv:Bool = false;
+	public static var shiv:Bool = true;
+	public static var printShiv:Bool = false;
 	public static var load:Bool = true;
 	public static var mq:Bool = false;
 	public static var cssClasses:Bool = true;
 	
-	public static var classNamePrefix:String = '';
+	public static var cssPrefix:String = '';
 	
 	/**
 	 * Extensibility
@@ -27,8 +28,8 @@ class Defaultizr {
 	public static var testProp:Bool = false;
 	public static var testAllProps:Bool = false;
 	public static var hasEvent:Bool = false;
-	public static var prefixes:Bool = false;
-	public static var domPrefixes:Bool = false;
+	public static var _prefixes:Bool = false;
+	public static var _domPrefixes:Bool = false;
 	
 	/**
 	 * Customizr Only

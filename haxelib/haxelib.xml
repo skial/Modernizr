@@ -9,4 +9,5 @@
     <tag v="modernizr"/>
     <description>Modernizr is a JavaScript library that detects HTML5 and CSS3 features in the user’s browser.</description>
     <version name="2.6.2">Updated to Modernizr 2.6.2. Can now create custom builds of Modernizr. Visit the projects GIT repo for more information.</version>
+	<depends name="tink_macros"/>
 </project>

@@ -1,3 +1,4 @@
+-cp src
 -lib tink_macros
 -js bin/HaxeModernizr.js
 -D modernizr_non_core

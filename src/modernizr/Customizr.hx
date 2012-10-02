@@ -203,7 +203,6 @@ class Customizr {
 						for (f in cls.statics.get()) {
 							if (Context.getTypedExpr(f.expr()).toString() == 'true') {
 								
-								trace(f.name.toLowerCase());
 								tests.set(f.name.toLowerCase(), []);
 								
 							}
@@ -230,14 +229,15 @@ class Customizr {
 			}
 		}
 		
-		// ^\s*(/\*>>|tests\[')(\w*)(?:(?:\*/)|(?:']\s=\s[\w\W]*?};))$
-		
 		var modernizr:String = source;
 		var result:String = '';
-		// ^\s*/\*>>(\w*)\*/$([\w\W]*?)^\s*/\*>>(\w*)\*/$
-		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
-		var test:EReg = ~/^\s*(?:tests\[')(\w*)(?:']\s=\s[\w\W]*?};)$/m;
 		
+		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
+		
+		// If short hand ereg ~/.../m, it causes autocompletion issues.
+		var test:EReg = new EReg('^\\s*(?:tests\\[\')(\\w*)(?:\']\\s=\\s[\\w\\W]*?};)$', 'm');
+		
+		// If created as a normal method, haxe errors about the identifier. Changing the name doesnt help.
 		var _strip = function(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
 			var _result = '';
 			var matched = '';
@@ -267,10 +267,17 @@ class Customizr {
 		
 		result += modernizr;
 		
-		trace(source.length);
-		trace(result.length);
+		var css_prefix:EReg = ~/["']\sjs\s["']\s*\+\s*([\w]+).join\(["'] ["']\)/m;
+		var css_name:EReg = ~/className\s*\+=\s*["']\s['"]/m;
 		
-		File.saveContent('./modernizr-custom-' + ~/:/g.replace(Date.now().toString(), '-') + '.hx.js', result);
+		if (Defaultizr.cssPrefix != '') {
+			if (css_prefix.match(result)) {
+				var new_prefix = Defaultizr.cssPrefix;
+				css_prefix.replace(result, '" '+new_prefix+'js '+new_prefix+'"+'+css_prefix.matched(1)+'.join(" '+new_prefix+'")');
+			}
+		}
+		
+		File.saveContent('./modernizr-' + Date.now().toString().replace(':', '-') + '.hx.js', result);
 	}
 	
 }

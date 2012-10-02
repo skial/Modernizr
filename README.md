@@ -37,8 +37,6 @@ If you are using ```v2.6.1``` you will need to create a custom version by visiti
 
 ## Links ##
 
-http://www.modernizr.com/
-
-http://github.com/Modernizr/Modernizr
-
-http://www.modernizr.com/download/
+http://www.modernizr.com/  
+http://github.com/Modernizr/Modernizr  
+http://www.modernizr.com/download/  

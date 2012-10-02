@@ -25,8 +25,6 @@ In nightly builds of Haxe, just set ```--dead-code-elimination``` in your ```.hx
 
 To install ```v2.6.1``` run ```haxelib install modernizr``` from the command line. You will need to create a custom version by using the build tool at http://modernizr.com/download/ for best performance.
 
----
-
 ## Non Core Feature Detects ##
 
 You can use feature detects not found in Modernizr's core tests by adding ```-D mnc``` or ```-D modernizr_non_core``` to your ```.hxml``` file.

@@ -229,7 +229,7 @@ class Customizr {
 			}
 		}
 		
-		var modernizr:String = source;
+		var new_source:String = source;
 		var result:String = '';
 		
 		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
@@ -237,35 +237,10 @@ class Customizr {
 		// If short hand ereg ~/.../m, it causes autocompletion issues.
 		var test:EReg = new EReg('^\\s*(?:tests\\[\')(\\w*)(?:\']\\s=\\s[\\w\\W]*?};)$', 'm');
 		
-		// If created as a normal method, haxe errors about the identifier. Changing the name doesnt help.
-		var _strip = function(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
-			var _result = '';
-			var matched = '';
-			
-			while (true) {
-				if (ereg.match(text) && matched != ereg.matched(0)) {
-					matched = ereg.matched(0);
-					
-					if (tests.exists(ereg.matched(1).trim())) {
-						_result += ereg.matchedLeft() + matched;
-					} else {
-						_result += ereg.matchedLeft();
-					}
-					text = ereg.matchedRight();
-				} else {
-					break;
-				}
-			}
-			
-			_result += text;
-			
-			return _result;
-		}
+		new_source = _strip_test(test, new_source, tests);
+		new_source = _strip_test(marker, new_source, tests);
 		
-		modernizr = _strip(test, modernizr, tests);
-		modernizr = _strip(marker, modernizr, tests);
-		
-		result += modernizr;
+		result += new_source;
 		
 		var css_prefix:EReg = ~/["']\sjs\s["']\s*\+\s*([\w]+).join\(["'] ["']\)/m;
 		var css_name:EReg = ~/className\s*\+=\s*["']\s['"]/m;
@@ -278,6 +253,30 @@ class Customizr {
 		}
 		
 		File.saveContent('./modernizr-' + Date.now().toString().replace(':', '-') + '.hx.js', result);
+	}
+	
+	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
+		var _result = '';
+		var matched = '';
+		
+		while (true) {
+			if (ereg.match(text) && matched != ereg.matched(0)) {
+				matched = ereg.matched(0);
+				
+				if (tests.exists(ereg.matched(1).trim())) {
+					_result += ereg.matchedLeft() + matched;
+				} else {
+					_result += ereg.matchedLeft();
+				}
+				text = ereg.matchedRight();
+			} else {
+				break;
+			}
+		}
+		
+		_result += text;
+		
+		return _result;
 	}
 	
 }

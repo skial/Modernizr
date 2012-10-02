@@ -270,7 +270,7 @@ class Customizr {
 		tests = _check_dependencies(tests, non_core);
 		
 		var new_source:String = source;
-		var result:String = '/* Modernizr ' + _version + ' (Custom Build) | MIT & BSD\n * Build: http://modernizr.com/download/#';
+		var result:String = '/* Modernizr ' + _version + ' (Haxe Custom Build) http://haxe.org/ | MIT & BSD\n * Build: http://modernizr.com/download/#';
 		
 		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
 		

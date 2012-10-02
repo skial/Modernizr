@@ -4,7 +4,7 @@ Modernizr is a JavaScript library that detects HTML5 and CSS3 features in the us
 
 ## Overview ##
 
-Modernizr for Haxe are extern type definitions to be used by the Haxejs target.
+Modernizr for Haxe are extern type definitions to be used by the [HaxeJS](http://www.haxejs.org/) target.
 
 ## Install ##
 
@@ -23,7 +23,7 @@ In nightly builds of Haxe, just set ```--dead-code-elimination``` in your ```.hx
 
 #### v2.6.1 ####
 
-To install ```v2.6.1``` run ```haxelib install modernizr``` from the command line. You will need to create a custom version by using the build tool at (http://modernizr.com/download/) for best performance.
+To install ```v2.6.1``` run ```haxelib install modernizr``` from the command line. You will need to create a custom version by using the build tool at http://modernizr.com/download/ for best performance.
 
 ---
 
@@ -33,10 +33,12 @@ You can use feature detects not found in Modernizr's core tests by adding ```-D 
 
 If you are using ```v2.6.2```, and have dead code elimination turned on, then a custom version will be built, only including fields which are used.
 
-If you are using ```v2.6.1``` you will need to create a custom version by visiting (http://modernizr.com/download/)
+If you are using ```v2.6.1``` you will need to create a custom version by visiting http://modernizr.com/download/
 
 ## Links ##
 
 http://www.modernizr.com/
+
 http://github.com/Modernizr/Modernizr
+
 http://www.modernizr.com/download/

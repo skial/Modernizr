@@ -17,7 +17,7 @@ class Defaultizr {
 	public static var mq:Bool = false;
 	public static var cssClasses:Bool = true;
 	
-	public static var cssPrefix:String = '';
+	public static var cssPrefix:String = 'SKIAL';
 	
 	/**
 	 * Extensibility

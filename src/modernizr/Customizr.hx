@@ -240,17 +240,19 @@ class Customizr {
 		new_source = _strip_test(test, new_source, tests);
 		new_source = _strip_test(marker, new_source, tests);
 		
-		result += new_source;
+		var css_prefix:EReg = ~/["']\sjs\s["']\s*\+\s*([\w]+).join\(["'] ["']\)/;
+		var css_name:EReg = ~/className\s*\+=\s*["']\s['"]/;
 		
-		var css_prefix:EReg = ~/["']\sjs\s["']\s*\+\s*([\w]+).join\(["'] ["']\)/m;
-		var css_name:EReg = ~/className\s*\+=\s*["']\s['"]/m;
-		
-		if (Defaultizr.cssPrefix != '') {
-			if (css_prefix.match(result)) {
-				var new_prefix = Defaultizr.cssPrefix;
-				css_prefix.replace(result, '" '+new_prefix+'js '+new_prefix+'"+'+css_prefix.matched(1)+'.join(" '+new_prefix+'")');
-			}
+		if (Defaultizr.cssClasses && Defaultizr.cssPrefix != '') {
+			var new_prefix = Defaultizr.cssPrefix;
+			if (css_prefix.match(new_source))
+				new_source = css_prefix.replace(new_source, '" '+new_prefix+'js '+new_prefix+'"+'+css_prefix.matched(1)+'.join(" '+new_prefix+'")');
+			
+			if (css_name.match(new_source))
+				new_source = css_name.replace(new_source, 'className+=" ' + new_prefix + '"');
 		}
+		
+		result += new_source;
 		
 		File.saveContent('./modernizr-' + Date.now().toString().replace(':', '-') + '.hx.js', result);
 	}

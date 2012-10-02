@@ -12,7 +12,7 @@ Modernizr for Haxe are extern type definitions to be used by the [HaxeJS](http:/
 
 To install ```v2.6.2``` do one of the following :
 
-- Run ```haxelib git modernizr https://github.com/skial/Modernizr.git src```. This should setup Modernizr to use this git repository using ```src``` as the root directory.
+- Run ```haxelib git modernizr https://github.com/skial/Modernizr.git src```. This should setup Modernizr to use this git repository using ```src``` as the root directory. Then run ```haxelib install tink_macros```.
 - Clone this repository and run ```haxelib dev modernizr path/to/cloned/folder```
 
 In ```v2.6.2```, a custom version of Modernizr can be created based on the fields you use.

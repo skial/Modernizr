@@ -299,7 +299,7 @@ extern class Modernizr {
 	 * Set -D modernizr_non_core in your .hxml file
 	 */
 	
-	#if modernizr_non_core
+	#if (mnc || modernizr_non_core)
 	@:feature_detect('a-download') 
 	public static var adownload:Bool;
 	

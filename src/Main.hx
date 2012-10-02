@@ -64,7 +64,7 @@ class Main {
 		hash.set('Touch Events', Modernizr.touch);
 		hash.set('WebGL', Modernizr.webgl);
 		
-		#if modernizr_non_core
+		#if (mnc || modernizr_non_core)
 		hash.set('Download Attribute', Modernizr.adownload);
 		hash.set('Audio Data', Modernizr.audiodata);
 		hash.set('Web Audio', Modernizr.webaudio);

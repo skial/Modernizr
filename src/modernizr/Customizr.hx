@@ -8,6 +8,7 @@ import sys.FileSystem;
 import sys.io.File;
 import modernizr.Defaultizr;
 
+using Lambda;
 using StringTools;
 using tink.macro.tools.MacroTools;
 
@@ -234,20 +235,42 @@ class Customizr {
 		izr_omega(File.getContent(_path), tests, non_core);
 	}
 	
-	private static function izr_omega(source:String, tests:Hash<Array<String>>, non_core:Hash<Bool>):Void {
+	private static function _check_dependencies(tests:Hash<Array<String>>, features:Hash<Bool>):Hash<Array<String>> {
+		var key:String = '';
 		
 		for (d in Reflect.fields(_dependencies)) {
-			if (tests.exists(d)) {
+			key = StringTools.replace(d, '_', '-');
+			if (features.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
-					if (!tests.exists(StringTools.replace(z, '_', '-'))) tests.set(z, []);
+					key = StringTools.replace(z, '_', '-');
+					if (!tests.exists(key)) tests.set(key, []);
 				}
 				
 			}
 		}
 		
+		for (d in Reflect.fields(_dependencies)) {
+			key = StringTools.replace(d, '_', '-');
+			if (tests.exists(key)) {
+				
+				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
+					key = StringTools.replace(z, '_', '-');
+					if (!tests.exists(key)) tests.set(key, []);
+				}
+				
+			}
+		}
+		
+		return tests;
+	}
+	
+	private static function izr_omega(source:String, tests:Hash<Array<String>>, non_core:Hash<Bool>):Void {
+		
+		tests = _check_dependencies(tests, non_core);
+		
 		var new_source:String = source;
-		var result:String = '';
+		var result:String = '/* Modernizr ' + _version + ' (Custom Build) | MIT & BSD\n * Build: http://modernizr.com/download/#';
 		
 		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
 		
@@ -265,6 +288,15 @@ class Customizr {
 		
 		new_source += _last_checks();
 		
+		for (key in tests.keys()) {
+			result += '-' + key.replace('-', '_');
+		}
+		
+		for (key in non_core.keys()) {
+			result += '-' + key.replace('-', '_');
+		}
+		
+		result += (Defaultizr.prefixed ? '-cssclassprefix:' + Defaultizr.cssPrefix.replace('_', '!') : '');
 		result += new_source;
 		
 		var output:String = Compiler.getOutput();

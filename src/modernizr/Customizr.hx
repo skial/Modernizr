@@ -270,7 +270,7 @@ class Customizr {
 		var output:String = Compiler.getOutput();
 		output = output.substr(0, output.lastIndexOf('/'));
 		
-		File.saveContent(output + '/modernizr-' + Date.now().toString().replace(':', '-') + '.hx' + _ext, result);
+		File.saveContent(output + '/modernizr-' + (Context.defined('debug') ? 'debug' : 'release') + '.hx' + _ext, result);
 	}
 	
 	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {

@@ -5,10 +5,11 @@ import modernizr.Defaultizr;
 #if !display
 @:build(modernizr.Customizr.build())
 #end
-extern class Modernizr {
+@:native('FakeModernizr')
+class Modernizr {
 
 	static public function __init__():Void untyped {
-		window.Modernizr = Modernizr;
+		//window.Modernizr = Modernizr;
 	}
 	
 	/**

@@ -39,14 +39,14 @@ class Main {
 		hash.set('HashChange Event', Modernizr.hashchange);
 		hash.set('History Management', Modernizr.history);
 		hash.set('HTML5 Audio', untyped Modernizr.audio);
-		hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
+		/*hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
 		hash.set('HTML5 Audio Format MP3', Modernizr.audio.mp3);
 		hash.set('HTML5 Audio Format WAV', Modernizr.audio.wav);
-		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);
+		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);*/
 		hash.set('HTML5 Video', untyped Modernizr.video);
-		hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
+		/*hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
 		hash.set('HTML5 Video Format WebM', Modernizr.video.webm);
-		hash.set('HTML5 Video Format H264', Modernizr.video.h264);
+		hash.set('HTML5 Video Format H264', Modernizr.video.h264);*/
 		hash.set('Indexed DB', Modernizr.indexeddb);
 		hash.set('Local Storage', Modernizr.localstorage);
 		hash.set('Cross-window Messaging', Modernizr.postmessage);

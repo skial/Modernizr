@@ -39,7 +39,7 @@ class Customizr {
       'flexbox'         : ['domprefixes', 'testprop', 'testallprops'],
       'cssgradients'    : ['prefixes'],
       'opacity'         : ['prefixes'],
-      'indexedDB'       : ['domprefixes'],
+      'indexeddb'       : ['domprefixes'],
       'backgroundsize'  : ['domprefixes', 'testprop', 'testallprops'],
       'borderimage'     : ['domprefixes', 'testprop', 'testallprops'],
       'borderradius'    : ['domprefixes', 'testprop', 'testallprops'],
@@ -182,57 +182,27 @@ class Customizr {
 			var old_fields = Context.getBuildFields();
 			var new_fields:Array<Field> = [];
 			
-			/**
-			 * typedef Field = {
-					var name : String;
-					@:optional var doc : Null<String>;
-					@:optional var access : Array<Access>;
-					var kind : FieldType;
-					var pos : Position;
-					@:optional var meta : Metadata;
-				}
-			 */
 			for (f in old_fields) {
+				var _name = f.name.toLowerCase();
+				var _complex = switch(f.kind) { case FVar(t, _): t; default: };
+				var _expr = switch(f.kind) { case FVar(_, e): e; default: };
+				var _func = _expr == null ? Context.parse('untyped __js__("Modernizr.' + _name + '")', f.pos) : _expr;
+				var _enum = Type.enumConstructor(f.kind);
 				
-				if (Type.enumConstructor(f.kind) != 'FVar') {
+				if (_enum == 'FProp' || _enum == 'FFun') {
 					new_fields.push(f);
 					continue;
 				}
 				
-				//var _bool = TPath( { pack:[], name:'Bool', params:[], sub:null } );
-				var _val = switch(f.kind) { case FVar(t, _): t; default: };
-				//var func = Context.parse( 'function(){Defaultizr.addUsedField("'+f.name+'"); return untyped __js__("Modernizr.' + f.name + '");}', Context.currentPos() );
-				//var func = Context.parse('{Defaultizr.addUsedField("'+f.name+'"); return untyped __js__("Modernizr.' + f.name + '");}', Context.currentPos() );
-				//var _kind = FVar(switch(f.kind) { case FVar(t, _): t; default: }, func);
-				var _kind = FProp('get_' + f.name, 'default', _val, null);
-				var _field:Field = {
-						name:f.name,
-						access:[APublic, AStatic, AInline],
-						doc:f.doc,
-						meta:f.meta,
-						pos:f.pos,
-						kind:_kind
-					};
+				var _field = {
+					name:f.name,
+					access:[APublic,AStatic],
+					kind:FVar(_complex, _func),
+					pos:f.pos,
+					meta:f.meta,
+					doc:f.doc
+				}
 				
-				new_fields.push(
-					_field
-				);
-				
-				_field = {
-						name:'get_' + f.name,
-						access:[APublic, AStatic],
-						pos:f.pos,
-						kind:FFun( {
-							args:[],
-							ret:_val,
-							params:[],
-							expr: { expr:EBlock([
-								Context.parse('Defaultizr.addUsedField("' + f.name + '")', Context.currentPos() ),
-								Context.parse('return untyped __js__("Modernizr.' + f.name + '")', Context.currentPos() )
-							]), pos:Context.currentPos()}
-						} )
-					};
-					
 				new_fields.push(_field);
 			}
 			
@@ -249,14 +219,14 @@ class Customizr {
 		
 		if (Defaultizr.printShiv) Defaultizr.shiv = false;
 		if (!Defaultizr.shiv && !Defaultizr.printShiv) Defaultizr.shiv = true;
-		trace(Lambda.count(Defaultizr.used_fields));
+		
 		for (t in types) {
 			switch(t) {
 				case TInst(type, params):
 					
 					var cls = type.get();
 					
-					if (cls.isExtern && cls.name == 'Modernizr') {
+					if (/*cls.isExtern && */cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
 							if (f.meta.has(':feature_detect') && f.meta.has(':?used')) {
@@ -301,11 +271,11 @@ class Customizr {
 		var key:String = '';
 		
 		for (d in Reflect.fields(_dependencies)) {
-			key = StringTools.replace(d, '_', '-');
+			key = StringTools.replace(d, '_', '-').toLowerCase();
 			if (features.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
-					key = StringTools.replace(z, '_', '-');
+					key = StringTools.replace(z, '_', '-').toLowerCase();
 					if (!tests.exists(key)) tests.set(key, []);
 				}
 				
@@ -313,11 +283,11 @@ class Customizr {
 		}
 		
 		for (d in Reflect.fields(_dependencies)) {
-			key = StringTools.replace(d, '_', '-');
+			key = StringTools.replace(d, '_', '-').toLowerCase();
 			if (tests.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
-					key = StringTools.replace(z, '_', '-');
+					key = StringTools.replace(z, '_', '-').toLowerCase();
 					if (!tests.exists(key)) tests.set(key, []);
 				}
 				

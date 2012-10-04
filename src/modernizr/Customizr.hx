@@ -194,31 +194,46 @@ class Customizr {
 			 */
 			for (f in old_fields) {
 				
-				/*switch (f.kind) {
-					case FVar(t, e):
-						if (t != null) trace(t);
-						if (e != null) trace(e);
-					default:
-				}*/
 				if (Type.enumConstructor(f.kind) != 'FVar') {
 					new_fields.push(f);
 					continue;
 				}
 				
-				var _bool = TPath( { pack:[], name:'Bool', params:[], sub:null } );
-				var func = Context.parse( 'inline function(){Defaultizr.addUsedField("'+f.name+'"); return untyped __js__("Modernizr.' + f.name + '");}()', Context.currentPos() );
-				var _kind = FVar(_bool, func);
-				
-				new_fields.push(
-					{
+				//var _bool = TPath( { pack:[], name:'Bool', params:[], sub:null } );
+				var _val = switch(f.kind) { case FVar(t, _): t; default: };
+				//var func = Context.parse( 'function(){Defaultizr.addUsedField("'+f.name+'"); return untyped __js__("Modernizr.' + f.name + '");}', Context.currentPos() );
+				//var func = Context.parse('{Defaultizr.addUsedField("'+f.name+'"); return untyped __js__("Modernizr.' + f.name + '");}', Context.currentPos() );
+				//var _kind = FVar(switch(f.kind) { case FVar(t, _): t; default: }, func);
+				var _kind = FProp('get_' + f.name, 'default', _val, null);
+				var _field:Field = {
 						name:f.name,
 						access:[APublic, AStatic, AInline],
 						doc:f.doc,
 						meta:f.meta,
 						pos:f.pos,
 						kind:_kind
-					}
+					};
+				
+				new_fields.push(
+					_field
 				);
+				
+				_field = {
+						name:'get_' + f.name,
+						access:[APublic, AStatic],
+						pos:f.pos,
+						kind:FFun( {
+							args:[],
+							ret:_val,
+							params:[],
+							expr: { expr:EBlock([
+								Context.parse('Defaultizr.addUsedField("' + f.name + '")', Context.currentPos() ),
+								Context.parse('return untyped __js__("Modernizr.' + f.name + '")', Context.currentPos() )
+							]), pos:Context.currentPos()}
+						} )
+					};
+					
+				new_fields.push(_field);
 			}
 			
 			Context.onGenerate(izr_alpha);
@@ -229,13 +244,12 @@ class Customizr {
 	}
 	
 	private static function izr_alpha(types:Array<MacroType>):Void {
-		trace(Defaultizr.used_fields);
 		var tests:Hash<Array<String>> = new Hash<Array<String>>();
 		var non_core:Hash<Bool> = new Hash<Bool>();
 		
 		if (Defaultizr.printShiv) Defaultizr.shiv = false;
 		if (!Defaultizr.shiv && !Defaultizr.printShiv) Defaultizr.shiv = true;
-		
+		trace(Lambda.count(Defaultizr.used_fields));
 		for (t in types) {
 			switch(t) {
 				case TInst(type, params):

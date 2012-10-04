@@ -35,4 +35,10 @@ class Defaultizr {
 	 * Customizr Only
 	 */
 	
+	@:ignore @:macro public static function addUsedField(name:String) {
+		used_fields.push(name);
+		return haxe.macro.Context.parse('null', haxe.macro.Context.currentPos());
+	}
+	
+	@:ignore public static var used_fields:Array<String> = [];
 }

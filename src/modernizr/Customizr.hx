@@ -175,14 +175,61 @@ class Customizr {
       'iframe-srcdoc' : [],
       'pointerlock-api' : ['prefixed']
 	}
-
+	
 	@:macro
 	public static function build():Array<Field> {
-		if (Context.defined('dce')) Context.onGenerate(izr_alpha);
+		if (Context.defined('dce')) {
+			var old_fields = Context.getBuildFields();
+			var new_fields:Array<Field> = [];
+			
+			/**
+			 * typedef Field = {
+					var name : String;
+					@:optional var doc : Null<String>;
+					@:optional var access : Array<Access>;
+					var kind : FieldType;
+					var pos : Position;
+					@:optional var meta : Metadata;
+				}
+			 */
+			for (f in old_fields) {
+				
+				/*switch (f.kind) {
+					case FVar(t, e):
+						if (t != null) trace(t);
+						if (e != null) trace(e);
+					default:
+				}*/
+				if (Type.enumConstructor(f.kind) != 'FVar') {
+					new_fields.push(f);
+					continue;
+				}
+				
+				var _bool = TPath( { pack:[], name:'Bool', params:[], sub:null } );
+				var func = Context.parse( 'inline function(){Defaultizr.addUsedField("'+f.name+'"); return untyped __js__("Modernizr.' + f.name + '");}()', Context.currentPos() );
+				var _kind = FVar(_bool, func);
+				
+				new_fields.push(
+					{
+						name:f.name,
+						access:[APublic, AStatic, AInline],
+						doc:f.doc,
+						meta:f.meta,
+						pos:f.pos,
+						kind:_kind
+					}
+				);
+			}
+			
+			Context.onGenerate(izr_alpha);
+			
+			return new_fields;
+		}
 		return Context.getBuildFields();
 	}
 	
 	private static function izr_alpha(types:Array<MacroType>):Void {
+		trace(Defaultizr.used_fields);
 		var tests:Hash<Array<String>> = new Hash<Array<String>>();
 		var non_core:Hash<Bool> = new Hash<Bool>();
 		
@@ -198,7 +245,7 @@ class Customizr {
 					if (cls.isExtern && cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
-							if (f.meta.has(':feature_detect')) {
+							if (f.meta.has(':feature_detect') && f.meta.has(':?used')) {
 								var m = f.meta.get();
 								var n = f.name.toLowerCase();
 								
@@ -219,7 +266,8 @@ class Customizr {
 					
 					if (cls.name == 'Defaultizr') {
 						for (f in cls.statics.get()) {
-							if (Context.getTypedExpr(f.expr()).toString() == 'true') {
+							
+							if (!f.meta.has(':ignore') && Context.getTypedExpr(f.expr()).toString() == 'true') {
 								
 								tests.set(f.name.toLowerCase(), []);
 								

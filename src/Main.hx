@@ -39,14 +39,14 @@ class Main {
 		hash.set('HashChange Event', Modernizr.hashchange);
 		hash.set('History Management', Modernizr.history);
 		hash.set('HTML5 Audio', untyped Modernizr.audio);
-		hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
+		/*hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
 		hash.set('HTML5 Audio Format MP3', Modernizr.audio.mp3);
 		hash.set('HTML5 Audio Format WAV', Modernizr.audio.wav);
-		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);
+		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);*/
 		hash.set('HTML5 Video', untyped Modernizr.video);
-		hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
+		/*hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
 		hash.set('HTML5 Video Format WebM', Modernizr.video.webm);
-		hash.set('HTML5 Video Format H264', Modernizr.video.h264);
+		hash.set('HTML5 Video Format H264', Modernizr.video.h264);*/
 		hash.set('Indexed DB', Modernizr.indexeddb);
 		hash.set('Local Storage', Modernizr.localstorage);
 		hash.set('Cross-window Messaging', Modernizr.postmessage);
@@ -65,7 +65,7 @@ class Main {
 		hash.set('WebGL', Modernizr.webgl);
 		
 		#if (mnc || modernizr_non_core)
-		hash.set('Download Attribute', Modernizr.adownload);
+		/*hash.set('Download Attribute', Modernizr.adownload);
 		hash.set('Audio Data', Modernizr.audiodata);
 		hash.set('Web Audio', Modernizr.webaudio);
 		hash.set('Battery Status', Modernizr.battery);
@@ -85,9 +85,9 @@ class Main {
 		hash.set('Background Size Cover', Modernizr.bgsizecover);
 		hash.set('Box Sizing', Modernizr.boxsizing);
 		hash.set('CSS Calc', Modernizr.csscalc);
-		hash.set('Cubic Bezier Range', Modernizr.cubicbezierrange);
+		hash.set('Cubic Bezier Range', Modernizr.cubicbezierrange);*/
 		hash.set('Display : run-in', Modernizr.displayRunin);
-		hash.set('Display : table', Modernizr.displayTable);
+		/*hash.set('Display : table', Modernizr.displayTable);
 		hash.set('CSS Filters', Modernizr.cssfilters);
 		hash.set('Soft Hyphens', Modernizr.softhyphens);
 		hash.set('Find Hyphens', Modernizr.softhyphensfind);
@@ -169,7 +169,7 @@ class Main {
 		hash.set('Binary Websockets', Modernizr.websocketsBinary);
 		hash.set('If Window is in IFrame', Modernizr.framedWindow);
 		hash.set('Blob Workers', Modernizr.blobWorkers);
-		hash.set('Data Workers', Modernizr.dataWorkers);
+		hash.set('Data Workers', Modernizr.dataWorkers);*/
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
 		

@@ -2,9 +2,9 @@ package ;
 
 import modernizr.Defaultizr;
 
-
+#if !display
 @:build(modernizr.Customizr.build())
-@:native('Modernizr')
+#end
 extern class Modernizr {
 
 	static public function __init__():Void untyped {

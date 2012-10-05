@@ -226,7 +226,7 @@ class Customizr {
 					
 					var cls = type.get();
 					
-					if (/*cls.isExtern && */cls.name == 'Modernizr') {
+					if (cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
 							if (f.meta.has(':feature_detect') && f.meta.has(':?used')) {
@@ -242,6 +242,7 @@ class Customizr {
 								}
 								
 								non_core.set(n, true);
+								Compiler.removeField(cls.name, f.name, true);
 							}
 							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
 							
@@ -316,11 +317,11 @@ class Customizr {
 		
 		new_source = _check_prefix(new_source);
 		
+		new_source += _last_checks();
+		
 		for (ncore in non_core.keys()) {
 			new_source += _load_feature_detect(ncore);
 		}
-		
-		new_source += _last_checks();
 		
 		for (key in tests.keys()) {
 			result += '-' + key.replace('-', '_');

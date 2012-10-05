@@ -5,7 +5,11 @@ import modernizr.Defaultizr;
 #if !display
 @:build(modernizr.Customizr.build())
 #end
+#if dce
 @:native('FakeModernizr')
+#else
+extern
+#end
 class Modernizr {
 
 	static public function __init__():Void untyped {
@@ -465,13 +469,13 @@ class Modernizr {
 	public static var microdata:Bool;
 	
 	@:feature_detect('elem-datalist')
-	public static var dataListElement:Bool;
+	public static var datalistelem:Bool;
 	
 	@:feature_detect('elem-details')
 	public static var details:Bool;
 	
 	@:feature_detect('elem-output')
-	public static var outputElement:Bool;
+	public static var outputelem:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem-progress-meter.js
 	@:feature_detect('elem-progress-meter')
@@ -547,13 +551,13 @@ class Modernizr {
 	public static var ie8compat:Bool;
 	
 	@:feature_detect('iframe-sandbox')
-	public static var iframeSandbox:Bool;
+	public static var sandbox:Bool;
 	
 	@:feature_detect('iframe-seamless')
-	public static var iframeSeamless:Bool;
+	public static var seamless:Bool;
 	
 	@:feature_detect('iframe-srcdoc')
-	public static var iframeSrcdoc:Bool;
+	public static var srcdoc:Bool;
 	
 	@:feature_detect('img-apng')
 	public static var apng:Bool;
@@ -569,7 +573,7 @@ class Modernizr {
 	public static var json:Bool;
 	
 	@:feature_detect('lists-reversed')
-	public static var listsReversed:Bool;
+	public static var olreversed:Bool;
 	
 	@:feature_detect
 	public static var mathML:Bool;
@@ -632,16 +636,16 @@ class Modernizr {
 	public static var websocketsBinary:Bool;
 	
 	@:feature_detect('window-framed')
-	public static var framedWindow:Bool;
+	public static var framed:Bool;
 	
 	@:feature_detect('workers-blobworkers')
 	public static var blobWorkers:Bool;
 	
 	@:feature_detect('workers-dataworkers')
-	public static var dataWorkers:Bool;
+	public static inline var dataWorkers:Bool = untyped __js__('Modernizr.dataworkers');
 	
 	@:feature_detect('workers-sharedworkers')
-	public static var sharedWorkers:Bool;
+	public static inline var sharedWorkers:Bool = untyped __js__('Modernizr.sharedworkers');
 	#end
 }
 

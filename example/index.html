@@ -11,11 +11,10 @@
 	<meta name="author" content="">
 	
 	<link rel="stylesheet" href="css/style.css?v=2">
-	<script src="../bin/modernizr-2.6.2.hx.js"></script>
 	<!--<script src="js/modernizr-non-core.2.6.2.js"></script>-->
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+	<!--<script src="js/modernizr.custom.61702.js"></script>-->
 	<style>
-		#hxnzr {
+		#haxeizr {
 			max-width: 950px;
 			min-width: 650px;
 			min-height:75px;
@@ -39,12 +38,17 @@
 
 <body>
 	
-	<div id="haxe:trace"></div>
-	<div id="hxnzr">
+	<div id="haxeizr">
 		<h3>Modernizer Haxe Extern Test</h3>
 	</div>
 	
-	<script src="../bin/HaxeModernizr.js"></script>
+	<script src="../bin/modernizr-2.6.2.hx.js?v=3"></script>
+	<!--<script src="../bin/HaxeModernizr.js?v=3"></script>-->
+	<script>
+	Modernizr.load({
+	load:['../bin/HaxeModernizr.js?v=3']
+	});
+	</script>
 </body>
 
 </html>

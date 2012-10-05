@@ -3,6 +3,8 @@
 import js.Lib;
 import Modernizr;
 
+import jQuery.JQuery;
+
 /**
  * ...
  * @author Skial Bainn
@@ -39,14 +41,14 @@ class Main {
 		hash.set('HashChange Event', Modernizr.hashchange);
 		hash.set('History Management', Modernizr.history);
 		hash.set('HTML5 Audio', untyped Modernizr.audio);
-		/*hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
+		hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
 		hash.set('HTML5 Audio Format MP3', Modernizr.audio.mp3);
 		hash.set('HTML5 Audio Format WAV', Modernizr.audio.wav);
-		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);*/
+		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);
 		hash.set('HTML5 Video', untyped Modernizr.video);
-		/*hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
+		hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
 		hash.set('HTML5 Video Format WebM', Modernizr.video.webm);
-		hash.set('HTML5 Video Format H264', Modernizr.video.h264);*/
+		hash.set('HTML5 Video Format H264', Modernizr.video.h264);
 		hash.set('Indexed DB', Modernizr.indexeddb);
 		hash.set('Local Storage', Modernizr.localstorage);
 		hash.set('Cross-window Messaging', Modernizr.postmessage);
@@ -65,7 +67,7 @@ class Main {
 		hash.set('WebGL', Modernizr.webgl);
 		
 		#if (mnc || modernizr_non_core)
-		/*hash.set('Download Attribute', Modernizr.adownload);
+		hash.set('Download Attribute', Modernizr.adownload);
 		hash.set('Audio Data', Modernizr.audiodata);
 		hash.set('Web Audio', Modernizr.webaudio);
 		hash.set('Battery Status', Modernizr.battery);
@@ -85,9 +87,9 @@ class Main {
 		hash.set('Background Size Cover', Modernizr.bgsizecover);
 		hash.set('Box Sizing', Modernizr.boxsizing);
 		hash.set('CSS Calc', Modernizr.csscalc);
-		hash.set('Cubic Bezier Range', Modernizr.cubicbezierrange);*/
+		hash.set('Cubic Bezier Range', Modernizr.cubicbezierrange);
 		hash.set('Display : run-in', Modernizr.displayRunin);
-		/*hash.set('Display : table', Modernizr.displayTable);
+		hash.set('Display : table', Modernizr.displayTable);
 		hash.set('CSS Filters', Modernizr.cssfilters);
 		hash.set('Soft Hyphens', Modernizr.softhyphens);
 		hash.set('Find Hyphens', Modernizr.softhyphensfind);
@@ -116,9 +118,9 @@ class Main {
 		hash.set('Create Element Attributes', Modernizr.createElementAttrs);
 		hash.set('Dataset', Modernizr.dataset);
 		hash.set('Microdata', Modernizr.microdata);
-		hash.set('Data List Element', Modernizr.dataListElement);
+		hash.set('Data List Element', Modernizr.datalistelem);
 		hash.set('Details Element', Modernizr.details);
-		hash.set('Output Element', Modernizr.outputElement);
+		hash.set('Output Element', Modernizr.outputelem);
 		hash.set('Progress Bar', Modernizr.progressbar);
 		hash.set('Meter', Modernizr.meter);
 		hash.set('Ruby Element', Modernizr.ruby);
@@ -142,14 +144,14 @@ class Main {
 		hash.set('Gamepad Support', Modernizr.gamepad);
 		hash.set('getUserMedia', Modernizr.getusermedia);
 		hash.set('IE8 Compat Mode', Modernizr.ie8compat);
-		hash.set('IFrame Sandbox', Modernizr.iframeSandbox);
-		hash.set('IFrame Seamless', Modernizr.iframeSeamless);
-		hash.set('IFrame Srcdoc', Modernizr.iframeSrcdoc);
+		hash.set('IFrame Sandbox', Modernizr.sandbox);
+		hash.set('IFrame Seamless', Modernizr.seamless);
+		hash.set('IFrame Srcdoc', Modernizr.srcdoc);
 		hash.set('APNG', Modernizr.apng);
 		hash.set('Lossless WEBP', Modernizr.webpLossless);
 		hash.set('WEBP Support', Modernizr.webp);
 		hash.set('JSON Support', Modernizr.json);
-		hash.set('<ol> Reversed', Modernizr.listsReversed);
+		hash.set('<ol> Reversed', Modernizr.olreversed);
 		hash.set('MathML', Modernizr.mathML);
 		hash.set('Low Bandwidth', Modernizr.lowBandwidth);
 		hash.set('Event Source', Modernizr.eventsource);
@@ -164,16 +166,36 @@ class Main {
 		hash.set('SVG Filters', Modernizr.svgfilters);
 		hash.set('Unicode', Modernizr.unicode);
 		hash.set('Data URI', Modernizr.datauri);
+		hash.set('userdata', Modernizr.userdata);
 		hash.set('Vibrate', Modernizr.vibrate);
 		hash.set('Web Intents', Modernizr.webintents);
 		hash.set('Binary Websockets', Modernizr.websocketsBinary);
-		hash.set('If Window is in IFrame', Modernizr.framedWindow);
+		hash.set('If Window is in IFrame', Modernizr.framed);
 		hash.set('Blob Workers', Modernizr.blobWorkers);
-		hash.set('Data Workers', Modernizr.dataWorkers);*/
+		hash.set('Data Workers', Modernizr.dataWorkers);
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
 		
-		var hxnzr = Lib.document.getElementById('hxnzr');
+		/*var ele = new JQuery('#haxeizr');
+		trace(ele);
+		//ele.ready(function() { 
+			trace('LOAD');
+			var div;
+			for (key in hash.keys()) {
+				div = new JQuery('div');
+				div.addClass('prop');
+				div.html(StringTools.htmlEscape(key));
+				ele.append(div);
+				
+				if (hash.get(key)) {
+					ele.addClass('good');
+				} else {
+					ele.addClass('bad');
+				}
+			}
+		//} );
+		*/
+		var hxnzr = Lib.document.getElementById('haxeizr');
 		var div;
 		
 		for (n in hash.keys()) {
@@ -190,9 +212,6 @@ class Main {
 			}
 			
 		}
-		trace(Lambda.count(hash));
-		/*trace(Modernizr.inputtypes);
-		trace(Modernizr.input);*/
 	}
 	
 }

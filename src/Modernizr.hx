@@ -254,10 +254,11 @@ class Modernizr {
 	 * @return  String
 	 */
 	#if dce
-	public static inline function prefixed(str:String):String {
-		return untyped __js__('Modernizr.prefixed')(str);
+	public static inline function prefixed(str:String, ?obj:Dynamic, ?scope:Dynamic):String {
+		return untyped __js__('Modernizr.prefixed')(str, obj, scope);
 	}
 	#else
+	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
 	public static function prefixed(str:String):String;
 	#end
 	

@@ -236,7 +236,7 @@ class Customizr {
 								for (meta in m) {
 									if (meta.name == ':feature_detect') {
 										if (meta.params.length > 0) {
-											n = meta.params[0].toString().replace('"', '');
+											n = meta.params[0].toString().replace('"', '').toLowerCase();
 										}
 									}
 								}
@@ -272,6 +272,7 @@ class Customizr {
 		
 		for (d in Reflect.fields(_dependencies)) {
 			key = StringTools.replace(d, '_', '-').toLowerCase();
+			
 			if (features.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
@@ -284,6 +285,7 @@ class Customizr {
 		
 		for (d in Reflect.fields(_dependencies)) {
 			key = StringTools.replace(d, '_', '-').toLowerCase();
+			
 			if (tests.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
@@ -338,17 +340,17 @@ class Customizr {
 	}
 	
 	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
-		var _result = '';
+		var result = '';
 		var matched = '';
 		
 		while (true) {
 			if (ereg.match(text) && matched != ereg.matched(0)) {
 				matched = ereg.matched(0);
 				
-				if (tests.exists(ereg.matched(1).trim())) {
-					_result += ereg.matchedLeft() + matched;
+				if (tests.exists(ereg.matched(1).trim().toLowerCase())) {
+					result += ereg.matchedLeft() + matched;
 				} else {
-					_result += ereg.matchedLeft();
+					result += ereg.matchedLeft();
 				}
 				text = ereg.matchedRight();
 			} else {
@@ -356,9 +358,9 @@ class Customizr {
 			}
 		}
 		
-		_result += text;
+		result += text;
 		
-		return _result;
+		return result;
 	}
 	
 	private static function _check_prefix(text:String):String {

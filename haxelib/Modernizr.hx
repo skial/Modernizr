@@ -2,13 +2,18 @@ package ;
 
 import modernizr.Defaultizr;
 
-
+#if !display
 @:build(modernizr.Customizr.build())
-@:native('Modernizr')
-extern class Modernizr {
+#end
+#if dce
+@:native('FakeModernizr')
+#else
+extern
+#end
+class Modernizr {
 
 	static public function __init__():Void untyped {
-		window.Modernizr = Modernizr;
+		//window.Modernizr = Modernizr;
 	}
 	
 	/**
@@ -234,7 +239,13 @@ extern class Modernizr {
 	 * @param	fn		-	The function containing the test
 	 * @return
 	 */
+	#if dce
+	public static function addTest(str:String, fn:Dynamic):Bool {
+		return untyped __js__('Modernizr.addTest')(str, fn);
+	}
+	#else
 	public static function addTest(str:String, fn:Dynamic):Bool;
+	#end
 	
 	/**
 	 * Modernizr.prefixed(str) returns the prefixed or nonprefixed
@@ -242,8 +253,14 @@ extern class Modernizr {
 	 * @param	str
 	 * @return  String
 	 */
+	#if dce
+	public static function prefixed(str:String, ?obj:Dynamic, ?scope:Dynamic):String {
+		return untyped __js__('Modernizr.prefixed')(str, obj, scope);
+	}
+	#else
 	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
 	public static function prefixed(str:String):String;
+	#end
 	
 	/**
 	 * Modernizr.mq(str) tests a given media query, live against
@@ -251,7 +268,13 @@ extern class Modernizr {
 	 * @param	str
 	 * @return  Bool
 	 */
+	#if dce
+	public static function mq(str:String):Bool {
+		return untyped __js__('Modernizr.mq')(str);
+	}
+	#else
 	public static function mq(str:String):Bool;
+	#end
 	
 	/**
 	 * Modernizr.testStyles(str, fn) allows you to add custom styles to
@@ -259,7 +282,13 @@ extern class Modernizr {
 	 * @param	str
 	 * @param	fn
 	 */
+	#if dce
+	public static function testStyles(str:String, fn:Dynamic):Void {
+		untyped __js__('Modernizr.testStyles')(str, fn);
+	}
+	#else
 	public static function testStyles(str:String, fn:Dynamic):Void;
+	#end
 	
 	/**
 	 * Modernizr.testProp(str) investigates whether a given style property
@@ -268,7 +297,13 @@ extern class Modernizr {
 	 * @param	str
 	 * @return
 	 */
+	#if dce
+	public static function testProp(str:String):Bool {
+		return untyped __js__('Modernizr.testProp')(str);
+	}
+	#else
 	public static function testProp(str:String):Bool;
+	#end
 	
 	/**
 	 * Modernizr.testAllProps(str) investigates whether a given style property,
@@ -277,7 +312,13 @@ extern class Modernizr {
 	 * @param	str
 	 * @return
 	 */
+	#if dce
+	public static function testAllProps(str:String):Bool {
+		return untyped __js__('Modernizr.testAllProps')(str);
+	}
+	#else
 	public static function testAllProps(str:String):Bool;
+	#end
 	
 	/**
 	 * Modernizr.hasEvent(str, elem) detects support for a given event.
@@ -285,7 +326,13 @@ extern class Modernizr {
 	 * @param	elem
 	 * @return
 	 */
+	#if dce
+	public static function hasEvent(str:String, ?elem:Dynamic):Bool {
+		return untyped __js__('Modernizr.hasEvent')(str, elem);
+	}
+	#else
 	public static function hasEvent(str:String, ?elem:Dynamic):Bool;
+	#end
 	
 	/*
 	 * The vendor prefixes you'll have to test against.
@@ -464,13 +511,13 @@ extern class Modernizr {
 	public static var microdata:Bool;
 	
 	@:feature_detect('elem-datalist')
-	public static var dataListElement:Bool;
+	public static var datalistelem:Bool;
 	
 	@:feature_detect('elem-details')
 	public static var details:Bool;
 	
 	@:feature_detect('elem-output')
-	public static var outputElement:Bool;
+	public static var outputelem:Bool;
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/elem-progress-meter.js
 	@:feature_detect('elem-progress-meter')
@@ -546,13 +593,13 @@ extern class Modernizr {
 	public static var ie8compat:Bool;
 	
 	@:feature_detect('iframe-sandbox')
-	public static var iframeSandbox:Bool;
+	public static var sandbox:Bool;
 	
 	@:feature_detect('iframe-seamless')
-	public static var iframeSeamless:Bool;
+	public static var seamless:Bool;
 	
 	@:feature_detect('iframe-srcdoc')
-	public static var iframeSrcdoc:Bool;
+	public static var srcdoc:Bool;
 	
 	@:feature_detect('img-apng')
 	public static var apng:Bool;
@@ -568,7 +615,7 @@ extern class Modernizr {
 	public static var json:Bool;
 	
 	@:feature_detect('lists-reversed')
-	public static var listsReversed:Bool;
+	public static var olreversed:Bool;
 	
 	@:feature_detect
 	public static var mathML:Bool;
@@ -631,16 +678,16 @@ extern class Modernizr {
 	public static var websocketsBinary:Bool;
 	
 	@:feature_detect('window-framed')
-	public static var framedWindow:Bool;
+	public static var framed:Bool;
 	
 	@:feature_detect('workers-blobworkers')
 	public static var blobWorkers:Bool;
 	
 	@:feature_detect('workers-dataworkers')
-	public static var dataWorkers:Bool;
+	public static inline var dataWorkers:Bool = untyped __js__('Modernizr.dataworkers');
 	
 	@:feature_detect('workers-sharedworkers')
-	public static var sharedWorkers:Bool;
+	public static inline var sharedWorkers:Bool = untyped __js__('Modernizr.sharedworkers');
 	#end
 }
 
@@ -671,7 +718,7 @@ private extern class InputTypes {
 	public static var week:Bool;
 	public static var time:Bool;
 	//public static var datetimelocal:Bool; // I cant get datetime-local, still trying to get around this...
-	public inline static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes.datetime-local');
+	public inline static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes["datetime-local"]');
 	public static var number:Bool;
 	public static var range:Bool;
 	public static var color:Bool;

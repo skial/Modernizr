@@ -240,7 +240,7 @@ class Modernizr {
 	 * @return
 	 */
 	#if dce
-	public static inline function addTest(str:String, fn:Dynamic):Bool {
+	public static function addTest(str:String, fn:Dynamic):Bool {
 		return untyped __js__('Modernizr.addTest')(str, fn);
 	}
 	#else
@@ -254,7 +254,7 @@ class Modernizr {
 	 * @return  String
 	 */
 	#if dce
-	public static inline function prefixed(str:String, ?obj:Dynamic, ?scope:Dynamic):String {
+	public static function prefixed(str:String, ?obj:Dynamic, ?scope:Dynamic):String {
 		return untyped __js__('Modernizr.prefixed')(str, obj, scope);
 	}
 	#else
@@ -269,7 +269,7 @@ class Modernizr {
 	 * @return  Bool
 	 */
 	#if dce
-	public static inline function mq(str:String):Bool {
+	public static function mq(str:String):Bool {
 		return untyped __js__('Modernizr.mq')(str);
 	}
 	#else
@@ -283,7 +283,7 @@ class Modernizr {
 	 * @param	fn
 	 */
 	#if dce
-	public static inline function testStyles(str:String, fn:Dynamic):Void {
+	public static function testStyles(str:String, fn:Dynamic):Void {
 		untyped __js__('Modernizr.testStyles')(str, fn);
 	}
 	#else
@@ -298,7 +298,7 @@ class Modernizr {
 	 * @return
 	 */
 	#if dce
-	public static inline function testProp(str:String):Bool {
+	public static function testProp(str:String):Bool {
 		return untyped __js__('Modernizr.testProp')(str);
 	}
 	#else
@@ -313,7 +313,7 @@ class Modernizr {
 	 * @return
 	 */
 	#if dce
-	public static inline function testAllProps(str:String):Bool {
+	public static function testAllProps(str:String):Bool {
 		return untyped __js__('Modernizr.testAllProps')(str);
 	}
 	#else
@@ -327,7 +327,7 @@ class Modernizr {
 	 * @return
 	 */
 	#if dce
-	public static inline function hasEvent(str:String, ?elem:Dynamic):Bool {
+	public static function hasEvent(str:String, ?elem:Dynamic):Bool {
 		return untyped __js__('Modernizr.hasEvent')(str, elem);
 	}
 	#else

@@ -39,7 +39,7 @@ class Customizr {
       'flexbox'         : ['domprefixes', 'testprop', 'testallprops'],
       'cssgradients'    : ['prefixes'],
       'opacity'         : ['prefixes'],
-      'indexedDB'       : ['domprefixes'],
+      'indexeddb'       : ['domprefixes'],
       'backgroundsize'  : ['domprefixes', 'testprop', 'testallprops'],
       'borderimage'     : ['domprefixes', 'testprop', 'testallprops'],
       'borderradius'    : ['domprefixes', 'testprop', 'testallprops'],
@@ -175,10 +175,41 @@ class Customizr {
       'iframe-srcdoc' : [],
       'pointerlock-api' : ['prefixed']
 	}
-
+	
 	@:macro
 	public static function build():Array<Field> {
-		if (Context.defined('dce')) Context.onGenerate(izr_alpha);
+		if (Context.defined('dce')) {
+			var old_fields = Context.getBuildFields();
+			var new_fields:Array<Field> = [];
+			
+			for (f in old_fields) {
+				var _name = f.name.toLowerCase();
+				var _complex = switch(f.kind) { case FVar(t, _): t; default: };
+				var _expr = switch(f.kind) { case FVar(_, e): e; default: };
+				var _func = _expr == null ? Context.parse('untyped __js__("Modernizr.' + _name + '")', f.pos) : _expr;
+				var _enum = Type.enumConstructor(f.kind);
+				
+				if (_enum == 'FProp' || _enum == 'FFun') {
+					new_fields.push(f);
+					continue;
+				}
+				
+				var _field = {
+					name:f.name,
+					access:[APublic,AStatic],
+					kind:FVar(_complex, _func),
+					pos:f.pos,
+					meta:f.meta,
+					doc:f.doc
+				}
+				
+				new_fields.push(_field);
+			}
+			
+			Context.onGenerate(izr_alpha);
+			
+			return new_fields;
+		}
 		return Context.getBuildFields();
 	}
 	
@@ -195,22 +226,23 @@ class Customizr {
 					
 					var cls = type.get();
 					
-					if (cls.isExtern && cls.name == 'Modernizr') {
+					if (cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
-							if (f.meta.has(':feature_detect')) {
+							if (f.meta.has(':feature_detect') && f.meta.has(':?used')) {
 								var m = f.meta.get();
 								var n = f.name.toLowerCase();
 								
 								for (meta in m) {
 									if (meta.name == ':feature_detect') {
 										if (meta.params.length > 0) {
-											n = meta.params[0].toString().replace('"', '');
+											n = meta.params[0].toString().replace('"', '').toLowerCase();
 										}
 									}
 								}
 								
 								non_core.set(n, true);
+								Compiler.removeField(cls.name, f.name, true);
 							}
 							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
 							
@@ -219,7 +251,8 @@ class Customizr {
 					
 					if (cls.name == 'Defaultizr') {
 						for (f in cls.statics.get()) {
-							if (Context.getTypedExpr(f.expr()).toString() == 'true') {
+							
+							if (!f.meta.has(':ignore') && Context.getTypedExpr(f.expr()).toString() == 'true') {
 								
 								tests.set(f.name.toLowerCase(), []);
 								
@@ -239,11 +272,12 @@ class Customizr {
 		var key:String = '';
 		
 		for (d in Reflect.fields(_dependencies)) {
-			key = StringTools.replace(d, '_', '-');
+			key = StringTools.replace(d, '_', '-').toLowerCase();
+			
 			if (features.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
-					key = StringTools.replace(z, '_', '-');
+					key = StringTools.replace(z, '_', '-').toLowerCase();
 					if (!tests.exists(key)) tests.set(key, []);
 				}
 				
@@ -251,11 +285,12 @@ class Customizr {
 		}
 		
 		for (d in Reflect.fields(_dependencies)) {
-			key = StringTools.replace(d, '_', '-');
+			key = StringTools.replace(d, '_', '-').toLowerCase();
+			
 			if (tests.exists(key)) {
 				
 				for (z in cast(Reflect.field(_dependencies, d), Array<Dynamic>)) {
-					key = StringTools.replace(z, '_', '-');
+					key = StringTools.replace(z, '_', '-').toLowerCase();
 					if (!tests.exists(key)) tests.set(key, []);
 				}
 				
@@ -282,11 +317,11 @@ class Customizr {
 		
 		new_source = _check_prefix(new_source);
 		
+		new_source += _last_checks();
+		
 		for (ncore in non_core.keys()) {
 			new_source += _load_feature_detect(ncore);
 		}
-		
-		new_source += _last_checks();
 		
 		for (key in tests.keys()) {
 			result += '-' + key.replace('-', '_');
@@ -306,17 +341,17 @@ class Customizr {
 	}
 	
 	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
-		var _result = '';
+		var result = '';
 		var matched = '';
 		
 		while (true) {
 			if (ereg.match(text) && matched != ereg.matched(0)) {
 				matched = ereg.matched(0);
 				
-				if (tests.exists(ereg.matched(1).trim())) {
-					_result += ereg.matchedLeft() + matched;
+				if (tests.exists(ereg.matched(1).trim().toLowerCase())) {
+					result += ereg.matchedLeft() + matched;
 				} else {
-					_result += ereg.matchedLeft();
+					result += ereg.matchedLeft();
 				}
 				text = ereg.matchedRight();
 			} else {
@@ -324,9 +359,9 @@ class Customizr {
 			}
 		}
 		
-		_result += text;
+		result += text;
 		
-		return _result;
+		return result;
 	}
 	
 	private static function _check_prefix(text:String):String {

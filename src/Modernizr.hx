@@ -241,7 +241,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function addTest(str:String, fn:Dynamic):Bool {
-		return untyped __js__('Modernizr.addTest')(str, fn);
+		return untyped __js__('Modernizr["addTest"]')(str, fn);
 	}
 	#else
 	public static function addTest(str:String, fn:Dynamic):Bool;
@@ -255,7 +255,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function prefixed(str:String, ?obj:Dynamic, ?scope:Dynamic):String {
-		return untyped __js__('Modernizr.prefixed')(str, obj, scope);
+		return untyped __js__('Modernizr["prefixed"]')(str, obj, scope);
 	}
 	#else
 	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
@@ -270,7 +270,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function mq(str:String):Bool {
-		return untyped __js__('Modernizr.mq')(str);
+		return untyped __js__('Modernizr["mq"]')(str);
 	}
 	#else
 	public static function mq(str:String):Bool;
@@ -284,7 +284,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function testStyles(str:String, fn:Dynamic):Void {
-		untyped __js__('Modernizr.testStyles')(str, fn);
+		untyped __js__('Modernizr["testStyles"]')(str, fn);
 	}
 	#else
 	public static function testStyles(str:String, fn:Dynamic):Void;
@@ -299,7 +299,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function testProp(str:String):Bool {
-		return untyped __js__('Modernizr.testProp')(str);
+		return untyped __js__('Modernizr["testProp"]')(str);
 	}
 	#else
 	public static function testProp(str:String):Bool;
@@ -314,7 +314,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function testAllProps(str:String):Bool {
-		return untyped __js__('Modernizr.testAllProps')(str);
+		return untyped __js__('Modernizr["testAllProps"]')(str);
 	}
 	#else
 	public static function testAllProps(str:String):Bool;
@@ -328,7 +328,7 @@ class Modernizr {
 	 */
 	#if dce
 	public static function hasEvent(str:String, ?elem:Dynamic):Bool {
-		return untyped __js__('Modernizr.hasEvent')(str, elem);
+		return untyped __js__('Modernizr["hasEvent"]')(str, elem);
 	}
 	#else
 	public static function hasEvent(str:String, ?elem:Dynamic):Bool;

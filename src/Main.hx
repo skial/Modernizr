@@ -195,7 +195,6 @@ class Main {
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
 		
-
 		//var hxnzr = Lib.document.getElementById('haxeizr');
 		var passed = Lib.document.getElementById('passed');
 		var failed = Lib.document.getElementById('failed');

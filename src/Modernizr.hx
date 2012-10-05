@@ -239,7 +239,13 @@ class Modernizr {
 	 * @param	fn		-	The function containing the test
 	 * @return
 	 */
+	#if dce
+	public static inline function addTest(str:String, fn:Dynamic):Bool {
+		return untyped __js__('Modernizr.addTest')(str, fn);
+	}
+	#else
 	public static function addTest(str:String, fn:Dynamic):Bool;
+	#end
 	
 	/**
 	 * Modernizr.prefixed(str) returns the prefixed or nonprefixed
@@ -247,8 +253,13 @@ class Modernizr {
 	 * @param	str
 	 * @return  String
 	 */
-	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
+	#if dce
+	public static inline function prefixed(str:String):String {
+		return untyped __js__('Modernizr.prefixed')(str);
+	}
+	#else
 	public static function prefixed(str:String):String;
+	#end
 	
 	/**
 	 * Modernizr.mq(str) tests a given media query, live against
@@ -256,7 +267,13 @@ class Modernizr {
 	 * @param	str
 	 * @return  Bool
 	 */
+	#if dce
+	public static inline function mq(str:String):Bool {
+		return untyped __js__('Modernizr.mq')(str);
+	}
+	#else
 	public static function mq(str:String):Bool;
+	#end
 	
 	/**
 	 * Modernizr.testStyles(str, fn) allows you to add custom styles to
@@ -264,7 +281,13 @@ class Modernizr {
 	 * @param	str
 	 * @param	fn
 	 */
+	#if dce
+	public static inline function testStyles(str:String, fn:Dynamic):Void {
+		untyped __js__('Modernizr.testStyles')(str, fn);
+	}
+	#else
 	public static function testStyles(str:String, fn:Dynamic):Void;
+	#end
 	
 	/**
 	 * Modernizr.testProp(str) investigates whether a given style property
@@ -273,7 +296,13 @@ class Modernizr {
 	 * @param	str
 	 * @return
 	 */
+	#if dce
+	public static inline function testProp(str:String):Bool {
+		return untyped __js__('Modernizr.testProp')(str);
+	}
+	#else
 	public static function testProp(str:String):Bool;
+	#end
 	
 	/**
 	 * Modernizr.testAllProps(str) investigates whether a given style property,
@@ -282,7 +311,13 @@ class Modernizr {
 	 * @param	str
 	 * @return
 	 */
+	#if dce
+	public static inline function testAllProps(str:String):Bool {
+		return untyped __js__('Modernizr.testAllProps')(str);
+	}
+	#else
 	public static function testAllProps(str:String):Bool;
+	#end
 	
 	/**
 	 * Modernizr.hasEvent(str, elem) detects support for a given event.
@@ -290,7 +325,13 @@ class Modernizr {
 	 * @param	elem
 	 * @return
 	 */
+	#if dce
+	public static inline function hasEvent(str:String, ?elem:Dynamic):Bool {
+		return untyped __js__('Modernizr.hasEvent')(str, elem);
+	}
+	#else
 	public static function hasEvent(str:String, ?elem:Dynamic):Bool;
+	#end
 	
 	/*
 	 * The vendor prefixes you'll have to test against.

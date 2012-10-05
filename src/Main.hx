@@ -3,7 +3,9 @@
 import js.Lib;
 import Modernizr;
 
-import jQuery.JQuery;
+import DOMTools;
+
+using DOMTools;
 
 /**
  * ...
@@ -45,10 +47,27 @@ class Main {
 		hash.set('HTML5 Audio Format MP3', Modernizr.audio.mp3);
 		hash.set('HTML5 Audio Format WAV', Modernizr.audio.wav);
 		hash.set('HTML5 Audio Format M4A', Modernizr.audio.m4a);
+		
 		hash.set('HTML5 Video', untyped Modernizr.video);
 		hash.set('HTML5 Video Format OGG', Modernizr.video.ogg);
 		hash.set('HTML5 Video Format WebM', Modernizr.video.webm);
 		hash.set('HTML5 Video Format H264', Modernizr.video.h264);
+		
+		hash.set('Input Types', untyped Modernizr.inputtypes);
+		hash.set('Input Type - search', Modernizr.inputtypes.search);
+		hash.set('Input Type - tel', Modernizr.inputtypes.tel);
+		hash.set('Input Type - url', Modernizr.inputtypes.url);
+		hash.set('Input Type - email', Modernizr.inputtypes.email);
+		hash.set('Input Type - datetime', Modernizr.inputtypes.datetime);
+		hash.set('Input Type - date', Modernizr.inputtypes.date);
+		hash.set('Input Type - month', Modernizr.inputtypes.month);
+		hash.set('Input Type - week', Modernizr.inputtypes.week);
+		hash.set('Input Type - time', Modernizr.inputtypes.time);
+		hash.set('Input Type - datetimelocal', Modernizr.inputtypes.datetimelocal);
+		hash.set('Input Type - number', Modernizr.inputtypes.number);
+		hash.set('Input Type - range', Modernizr.inputtypes.range);
+		hash.set('Input Type - color', Modernizr.inputtypes.color);
+		
 		hash.set('Indexed DB', Modernizr.indexeddb);
 		hash.set('Local Storage', Modernizr.localstorage);
 		hash.set('Cross-window Messaging', Modernizr.postmessage);
@@ -176,42 +195,31 @@ class Main {
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
 		
-		/*var ele = new JQuery('#haxeizr');
-		trace(ele);
-		//ele.ready(function() { 
-			trace('LOAD');
-			var div;
-			for (key in hash.keys()) {
-				div = new JQuery('div');
-				div.addClass('prop');
-				div.html(StringTools.htmlEscape(key));
-				ele.append(div);
-				
-				if (hash.get(key)) {
-					ele.addClass('good');
-				} else {
-					ele.addClass('bad');
-				}
-			}
-		//} );
-		*/
-		var hxnzr = Lib.document.getElementById('haxeizr');
+
+		//var hxnzr = Lib.document.getElementById('haxeizr');
+		var passed = Lib.document.getElementById('passed');
+		var failed = Lib.document.getElementById('failed');
 		var div;
 		
 		for (n in hash.keys()) {
 			
 			div = Lib.document.createElement('div');
-			div.className += 'prop ';
 			div.innerHTML = StringTools.htmlEscape(n);
-			hxnzr.appendChild(div);
 			
 			if (hash.get(n)) {
-				div.className += 'good ';
+				passed.appendChild(div);
 			} else {
-				div.className += 'bad ';
+				failed.appendChild(div);
 			}
 			
 		}
+		
+		var pc = '#passed'.find().find('h2');
+		var fc = '#failed'.find().find('h2');
+		
+		pc.setInnerHTML('#passed'.find().children().length + ' supported features');
+		fc.setInnerHTML('#failed'.find().children().length + ' unsupported features');
+		
 	}
 	
 }

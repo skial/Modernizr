@@ -676,7 +676,7 @@ private extern class InputTypes {
 	public static var week:Bool;
 	public static var time:Bool;
 	//public static var datetimelocal:Bool; // I cant get datetime-local, still trying to get around this...
-	public inline static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes.datetime-local');
+	public inline static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes["datetime-local"]');
 	public static var number:Bool;
 	public static var range:Bool;
 	public static var color:Bool;

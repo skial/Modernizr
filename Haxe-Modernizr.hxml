@@ -1,6 +1,7 @@
 -cp src
 -lib tink_macros
--lib jQueryExtern
+-lib domtools
+-lib xirsys_stdjs
 -js bin/HaxeModernizr.js
 -D mnc
 -D dce

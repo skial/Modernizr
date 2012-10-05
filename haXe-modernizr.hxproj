@@ -28,7 +28,8 @@
   <!-- haxelib libraries -->
   <haxelib>
     <library name="tink_macros" />
-    <library name="jQueryExtern" />
+    <library name="domtools" />
+    <library name="xirsys_stdjs" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>

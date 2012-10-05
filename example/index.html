@@ -11,8 +11,6 @@
 	<meta name="author" content="">
 	
 	<link rel="stylesheet" href="css/style.css?v=2">
-	<!--<script src="js/modernizr-non-core.2.6.2.js"></script>-->
-	<!--<script src="js/modernizr.custom.61702.js"></script>-->
 	<style>
 		#haxeizr {
 			max-width: 950px;
@@ -22,15 +20,24 @@
 			padding-top: 20px;
 		}
 		
-		.good:after {
+		#passed {
+			display:inline-table;
+		}
+		
+		#passed div:after {
 			content:url(image/check.gif);
 		}
 		
-		.bad {
+		#failed {
+			display:inline-table;
+			float:right;
+		}
+		
+		#failed div {
 			opacity: 0.5;
 		}
 		
-		.bad:after {
+		#failed div:after {
 			content:url(image/close.gif);
 		}
 	</style>
@@ -39,14 +46,20 @@
 <body>
 	
 	<div id="haxeizr">
-		<h3>Modernizer Haxe Extern Test</h3>
+		<h1>Modernizer Haxe Extern Test</h1>
+		<div id="passed">
+			<h2 class="count">supported features</h2>
+		</div>
+		<div id="failed">
+			<h2 class="count">unsupported features</h2>
+		</div>
 	</div>
 	
 	<script src="../bin/modernizr-2.6.2.hx.js?v=3"></script>
 	<!--<script src="../bin/HaxeModernizr.js?v=3"></script>-->
 	<script>
 	Modernizr.load({
-	load:['../bin/HaxeModernizr.js?v=3']
+	load:['../bin/HaxeModernizr.js']
 	});
 	</script>
 </body>

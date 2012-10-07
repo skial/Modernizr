@@ -1,18 +1,22 @@
 package modernizr;
+#if macro
+typedef StdType = Type;
 
 import haxe.Http;
 import haxe.macro.Context;
 import haxe.macro.Compiler;
+
 import haxe.macro.Expr;
+import haxe.macro.Type;
 import sys.FileSystem;
 import sys.io.File;
 import modernizr.Defaultizr;
+#end
 
+using Std;
 using Lambda;
 using StringTools;
 using tink.macro.tools.MacroTools;
-
-typedef MacroType = haxe.macro.Type;
 
 /**
  * ...
@@ -20,6 +24,22 @@ typedef MacroType = haxe.macro.Type;
  */
 
 class Customizr {
+	
+	private static var tests:Hash<Array<String>> = new Hash<Array<String>>();
+	private static var non_core:Hash<Bool> = new Hash<Bool>();
+	
+	@:macro public static function logField(name:Expr, ?core:Expr = null) {
+		var _name = name.toString().replace(' ', '').replace('(', '').replace(')', '');
+		
+		if (core != null) {
+			var _core = core.toString().replace(' ', '').replace('(', '').replace(')', '');
+			if (_core != 'null' && !non_core.exists(_core)) non_core.set(_core, true);
+		}
+		
+		if (!tests.exists(_name)) tests.set(_name, []);
+		
+		return Context.parse('untyped __js__("Modernizr[\'' + _name + '\']")', Context.currentPos());
+	}
 	
 	private static var _version:String = '2.6.2';
 	
@@ -176,27 +196,42 @@ class Customizr {
       'pointerlock-api' : ['prefixed']
 	}
 	
-	@:macro
-	public static function build():Array<Field> {
+	@:macro public static function build():Array<Field> {
 		if (Context.defined('dce')) {
 			var old_fields = Context.getBuildFields();
 			var new_fields:Array<Field> = [];
 			
 			for (f in old_fields) {
 				var _name = f.name.toLowerCase();
+				var _core = null;
 				var _complex = switch(f.kind) { case FVar(t, _): t; default: };
 				var _expr = switch(f.kind) { case FVar(_, e): e; default: };
-				var _func = _expr == null ? Context.parse('untyped __js__("Modernizr.' + _name + '")', f.pos) : _expr;
-				var _enum = Type.enumConstructor(f.kind);
+				var _enum = StdType.enumConstructor(f.kind);
+				var _access = [APublic, AStatic, AInline];
 				
 				if (_enum == 'FProp' || _enum == 'FFun') {
 					new_fields.push(f);
 					continue;
 				}
 				
+				for (meta in f.meta) {
+					if (meta.name == ':feature_detect') {
+						if (meta.params.length != 0) {
+							_core = meta.params[0].toString().toLowerCase().replace('"', '');
+							if (_core == 'null') _core = null;
+						}
+						
+						if (_core == null) _core = _name;
+						
+						break;
+					}
+				}
+				
+				var _func = Context.parse('Customizr.logField(${_name}, ${_core})'.format(), f.pos);
+				
 				var _field = {
 					name:f.name,
-					access:[APublic,AStatic],
+					access:_access,
 					kind:FVar(_complex, _func),
 					pos:f.pos,
 					meta:f.meta,
@@ -208,14 +243,18 @@ class Customizr {
 			
 			Context.onGenerate(izr_alpha);
 			
+			Compiler.exclude('Modernizr');
+			Compiler.exclude('modernizr.Defaultizr');
+			Compiler.exclude('modernizr.Customizr');
+			
 			return new_fields;
 		}
 		return Context.getBuildFields();
 	}
 	
-	private static function izr_alpha(types:Array<MacroType>):Void {
-		var tests:Hash<Array<String>> = new Hash<Array<String>>();
-		var non_core:Hash<Bool> = new Hash<Bool>();
+	private static function izr_alpha(types:Array<Type>):Void {
+		/*var tests:Hash<Array<String>> = new Hash<Array<String>>();
+		var non_core:Hash<Bool> = new Hash<Bool>();*/
 		
 		if (Defaultizr.printShiv) Defaultizr.shiv = false;
 		if (!Defaultizr.shiv && !Defaultizr.printShiv) Defaultizr.shiv = true;
@@ -226,7 +265,7 @@ class Customizr {
 					
 					var cls = type.get();
 					
-					if (cls.name == 'Modernizr') {
+					/*if (cls.name == 'Modernizr') {
 						for (f in cls.statics.get()) {
 							
 							if (f.meta.has(':feature_detect') && f.meta.has(':?used')) {
@@ -247,7 +286,7 @@ class Customizr {
 							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
 							
 						}
-					} 
+					} */
 					
 					if (cls.name == 'Defaultizr') {
 						for (f in cls.statics.get()) {
@@ -406,5 +445,6 @@ class Customizr {
 		
 		return result;
 	}
+	
 	
 }

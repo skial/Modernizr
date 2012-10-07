@@ -28,6 +28,7 @@
   <!-- haxelib libraries -->
   <haxelib>
     <library name="tink_macros" />
+    <library name="tink_lang" />
     <library name="domtools" />
     <library name="xirsys_stdjs" />
   </haxelib>

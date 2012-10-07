@@ -42,6 +42,7 @@ class Main {
 		hash.set('Drag & Drop', Modernizr.draganddrop);
 		hash.set('HashChange Event', Modernizr.hashchange);
 		hash.set('History Management', Modernizr.history);
+		
 		hash.set('HTML5 Audio', untyped Modernizr.audio);
 		hash.set('HTML5 Audio Format OGG', Modernizr.audio.ogg);
 		hash.set('HTML5 Audio Format MP3', Modernizr.audio.mp3);
@@ -194,6 +195,8 @@ class Main {
 		hash.set('Data Workers', Modernizr.dataWorkers);
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
+		
+		//trace(Modernizr.prefixed('requestAnimationFrame', Lib.window));
 		
 		var passed = Lib.document.getElementById('passed');
 		var failed = Lib.document.getElementById('failed');

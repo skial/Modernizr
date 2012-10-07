@@ -1,20 +1,16 @@
 package ;
 
-import modernizr.Defaultizr;
+import modernizr.Customizr;
+
+/**
+ * ...
+ * @author Skial Bainn
+ */
 
 #if !display
 @:build(modernizr.Customizr.build())
 #end
-#if dce
-@:native('FakeModernizr')
-#else
-extern
-#end
 class Modernizr {
-
-	static public function __init__():Void untyped {
-		//window.Modernizr = Modernizr;
-	}
 	
 	/**
 	 * CSS classes .fontface/ .no-fontface
@@ -239,13 +235,7 @@ class Modernizr {
 	 * @param	fn		-	The function containing the test
 	 * @return
 	 */
-	#if dce
-	public static function addTest(str:String, fn:Dynamic):Bool {
-		return untyped __js__('Modernizr["addTest"]')(str, fn);
-	}
-	#else
 	public static function addTest(str:String, fn:Dynamic):Bool;
-	#end
 	
 	/**
 	 * Modernizr.prefixed(str) returns the prefixed or nonprefixed
@@ -253,13 +243,21 @@ class Modernizr {
 	 * @param	str
 	 * @return  String
 	 */
-	#if dce
-	public static function prefixed(str:String, ?obj:Dynamic, ?scope:Dynamic):String {
-		return untyped __js__('Modernizr["prefixed"]')(str, obj, scope);
-	}
-	#else
 	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
-	public static function prefixed(str:String):String;
+	#if display
+	public static function prefixed(str:String):String { return ''; }
+	#else
+	@:overload(function(str:String):String{})
+	@:macro public static inline function prefixed(args:Array<haxe.macro.Expr>):haxe.macro.Expr {
+		return switch (args.length) {
+			case 1:
+				haxe.macro.Context.parse('untyped __js__("Modernizr[\"prefixed\"]('+args[0]+')")', haxe.macro.Context.currentPos());
+			case 3:
+				haxe.macro.Context.parse('untyped __js__("Modernizr[\"prefixed\"]('+args[0]+','+args[1]+','+args[2]+')")', haxe.macro.Context.currentPos());
+			default:
+				throw 'Wrong amount of parameters';
+		}
+	}
 	#end
 	
 	/**
@@ -268,13 +266,7 @@ class Modernizr {
 	 * @param	str
 	 * @return  Bool
 	 */
-	#if dce
-	public static function mq(str:String):Bool {
-		return untyped __js__('Modernizr["mq"]')(str);
-	}
-	#else
 	public static function mq(str:String):Bool;
-	#end
 	
 	/**
 	 * Modernizr.testStyles(str, fn) allows you to add custom styles to
@@ -282,13 +274,7 @@ class Modernizr {
 	 * @param	str
 	 * @param	fn
 	 */
-	#if dce
-	public static function testStyles(str:String, fn:Dynamic):Void {
-		untyped __js__('Modernizr["testStyles"]')(str, fn);
-	}
-	#else
 	public static function testStyles(str:String, fn:Dynamic):Void;
-	#end
 	
 	/**
 	 * Modernizr.testProp(str) investigates whether a given style property
@@ -297,13 +283,7 @@ class Modernizr {
 	 * @param	str
 	 * @return
 	 */
-	#if dce
-	public static function testProp(str:String):Bool {
-		return untyped __js__('Modernizr["testProp"]')(str);
-	}
-	#else
 	public static function testProp(str:String):Bool;
-	#end
 	
 	/**
 	 * Modernizr.testAllProps(str) investigates whether a given style property,
@@ -312,13 +292,7 @@ class Modernizr {
 	 * @param	str
 	 * @return
 	 */
-	#if dce
-	public static function testAllProps(str:String):Bool {
-		return untyped __js__('Modernizr["testAllProps"]')(str);
-	}
-	#else
 	public static function testAllProps(str:String):Bool;
-	#end
 	
 	/**
 	 * Modernizr.hasEvent(str, elem) detects support for a given event.
@@ -326,13 +300,7 @@ class Modernizr {
 	 * @param	elem
 	 * @return
 	 */
-	#if dce
-	public static function hasEvent(str:String, ?elem:Dynamic):Bool {
-		return untyped __js__('Modernizr["hasEvent"]')(str, elem);
-	}
-	#else
 	public static function hasEvent(str:String, ?elem:Dynamic):Bool;
-	#end
 	
 	/*
 	 * The vendor prefixes you'll have to test against.
@@ -692,7 +660,7 @@ class Modernizr {
 }
 
 @:native('Modernizr.audio')
-private extern class Audio implements Dynamic<Bool> {
+private extern class Audio {
 	public static var ogg:Bool;
 	public static var mp3:Bool;
 	public static var wav:Bool;
@@ -700,7 +668,7 @@ private extern class Audio implements Dynamic<Bool> {
 }
 
 @:native('Modernizr.video')
-private extern class Video implements Dynamic<Bool>{
+private extern class Video {
 	public static var ogg:Bool;
 	public static var webm:Bool;
 	public static var h264:Bool;
@@ -717,8 +685,7 @@ private extern class InputTypes {
 	public static var month:Bool;
 	public static var week:Bool;
 	public static var time:Bool;
-	//public static var datetimelocal:Bool; // I cant get datetime-local, still trying to get around this...
-	public inline static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes["datetime-local"]');
+	public static inline var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes["datetime-local"]');
 	public static var number:Bool;
 	public static var range:Bool;
 	public static var color:Bool;

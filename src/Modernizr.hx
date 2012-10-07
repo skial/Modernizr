@@ -7,7 +7,7 @@ import modernizr.Customizr;
  * @author Skial Bainn
  */
 
-#if !display
+#if (!display || !macro)
 @:build(modernizr.Customizr.build())
 #end
 class Modernizr {
@@ -235,7 +235,7 @@ class Modernizr {
 	 * @param	fn		-	The function containing the test
 	 * @return
 	 */
-	public static function addTest(str:String, fn:Dynamic):Bool;
+	public static var addTest:String->Dynamic->Bool;
 	
 	/**
 	 * Modernizr.prefixed(str) returns the prefixed or nonprefixed
@@ -243,22 +243,7 @@ class Modernizr {
 	 * @param	str
 	 * @return  String
 	 */
-	@:overload(function(str:String, obj:Dynamic, ?scope:Dynamic):Dynamic{})
-	#if display
-	public static function prefixed(str:String):String { return ''; }
-	#else
-	@:overload(function(str:String):String{})
-	@:macro public static inline function prefixed(args:Array<haxe.macro.Expr>):haxe.macro.Expr {
-		return switch (args.length) {
-			case 1:
-				haxe.macro.Context.parse('untyped __js__("Modernizr[\"prefixed\"]('+args[0]+')")', haxe.macro.Context.currentPos());
-			case 3:
-				haxe.macro.Context.parse('untyped __js__("Modernizr[\"prefixed\"]('+args[0]+','+args[1]+','+args[2]+')")', haxe.macro.Context.currentPos());
-			default:
-				throw 'Wrong amount of parameters';
-		}
-	}
-	#end
+	public static var prefixed:String->?Dynamic->?Dynamic->Dynamic;
 	
 	/**
 	 * Modernizr.mq(str) tests a given media query, live against
@@ -266,7 +251,7 @@ class Modernizr {
 	 * @param	str
 	 * @return  Bool
 	 */
-	public static function mq(str:String):Bool;
+	public static var mq:String->Bool;
 	
 	/**
 	 * Modernizr.testStyles(str, fn) allows you to add custom styles to
@@ -274,7 +259,7 @@ class Modernizr {
 	 * @param	str
 	 * @param	fn
 	 */
-	public static function testStyles(str:String, fn:Dynamic):Void;
+	public static var testStyles:String->Dynamic->Void;
 	
 	/**
 	 * Modernizr.testProp(str) investigates whether a given style property
@@ -283,7 +268,7 @@ class Modernizr {
 	 * @param	str
 	 * @return
 	 */
-	public static function testProp(str:String):Bool;
+	public static var testProp:String->Bool;
 	
 	/**
 	 * Modernizr.testAllProps(str) investigates whether a given style property,
@@ -292,7 +277,7 @@ class Modernizr {
 	 * @param	str
 	 * @return
 	 */
-	public static function testAllProps(str:String):Bool;
+	public static var testAllProps:String->Bool;
 	
 	/**
 	 * Modernizr.hasEvent(str, elem) detects support for a given event.
@@ -300,7 +285,7 @@ class Modernizr {
 	 * @param	elem
 	 * @return
 	 */
-	public static function hasEvent(str:String, ?elem:Dynamic):Bool;
+	public static var hasEvent:String->?Dynamic->Bool;
 	
 	/*
 	 * The vendor prefixes you'll have to test against.

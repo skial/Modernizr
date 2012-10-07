@@ -1,4 +1,5 @@
 package modernizr;
+
 #if macro
 typedef StdType = Type;
 
@@ -243,6 +244,9 @@ class Customizr {
 			
 			Context.onGenerate(izr_alpha);
 			
+			// This stops the class being generated. This needs to be done because Haxe
+			// sees it as a real class as it lacks 'extern'. Adding 'extern' kills the
+			// point of this.
 			Compiler.exclude('Modernizr');
 			Compiler.exclude('modernizr.Defaultizr');
 			Compiler.exclude('modernizr.Customizr');
@@ -253,9 +257,6 @@ class Customizr {
 	}
 	
 	private static function izr_alpha(types:Array<Type>):Void {
-		/*var tests:Hash<Array<String>> = new Hash<Array<String>>();
-		var non_core:Hash<Bool> = new Hash<Bool>();*/
-		
 		if (Defaultizr.printShiv) Defaultizr.shiv = false;
 		if (!Defaultizr.shiv && !Defaultizr.printShiv) Defaultizr.shiv = true;
 		
@@ -264,29 +265,6 @@ class Customizr {
 				case TInst(type, params):
 					
 					var cls = type.get();
-					
-					/*if (cls.name == 'Modernizr') {
-						for (f in cls.statics.get()) {
-							
-							if (f.meta.has(':feature_detect') && f.meta.has(':?used')) {
-								var m = f.meta.get();
-								var n = f.name.toLowerCase();
-								
-								for (meta in m) {
-									if (meta.name == ':feature_detect') {
-										if (meta.params.length > 0) {
-											n = meta.params[0].toString().replace('"', '').toLowerCase();
-										}
-									}
-								}
-								
-								non_core.set(n, true);
-								Compiler.removeField(cls.name, f.name, true);
-							}
-							if (f.meta.has(':?used')) tests.set(f.name.toLowerCase(), []);
-							
-						}
-					} */
 					
 					if (cls.name == 'Defaultizr') {
 						for (f in cls.statics.get()) {

@@ -196,7 +196,7 @@ class Main {
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
 		
-		//trace(Modernizr.prefixed('requestAnimationFrame', Lib.window));
+		trace(Modernizr.prefixed('requestAnimationFrame', Lib.window));
 		
 		var passed = Lib.document.getElementById('passed');
 		var failed = Lib.document.getElementById('failed');

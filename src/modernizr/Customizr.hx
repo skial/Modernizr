@@ -12,12 +12,13 @@ import haxe.macro.Type;
 import sys.FileSystem;
 import sys.io.File;
 import modernizr.Defaultizr;
-#end
+
 
 using Std;
 using Lambda;
 using StringTools;
 using tink.macro.tools.MacroTools;
+#end
 
 /**
  * ...

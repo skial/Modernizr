@@ -75,7 +75,6 @@ class Main {
 		hash.set('Web SQL Database', Modernizr.websqldatabase);
 		hash.set('Web Workers', Modernizr.webworkers);
 		
-		
 		hash.set('Geolocation', Modernizr.geolocation);
 		hash.set('Inline SVG', Modernizr.inlinesvg);
 		hash.set('SMIL', Modernizr.smil);

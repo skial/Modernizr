@@ -27,21 +27,24 @@ using haxe.macro.ExprTools;
 
 class Customizr {
 	
-	
 	private static var tests:StringMap<Array<String>> = new StringMap<Array<String>>();
 	private static var non_core:StringMap<Bool> = new StringMap<Bool>();
 	
 	public static macro function logField(name:Expr, ?core:Expr = null) {
-		var _name = name.toString().replace(' ', '').replace('(', '').replace(')', '');
+		var _name = name.toString().replace('"', '');
 		
 		if (core != null) {
-			var _core = core.toString().replace(' ', '').replace('(', '').replace(')', '');
-			if (_core != 'null' && !non_core.exists(_core)) non_core.set(_core, true);
+			var _core = core.toString().replace('"', '');
+			
+			if (_core != 'null' && !non_core.exists(_core)) {
+				non_core.set(_core, true);
+			}
 		}
 		
-		if (!tests.exists(_name)) tests.set(_name, []);
+		if (!tests.exists(_name)) {
+			tests.set(_name, []);
+		}
 		
-		//return Context.parse('untyped __js__("Modernizr[\'' + _name + '\']")', Context.currentPos());
 		return macro untyped __js__('Modernizr["$_name"]');
 	}
 	
@@ -63,7 +66,7 @@ class Customizr {
       'flexbox'         : ['domprefixes', 'testprop', 'testallprops'],
       'cssgradients'    : ['prefixes'],
       'opacity'         : ['prefixes'],
-      'indexeddb'       : ['domprefixes'],
+      'indexeddb'       : ['domprefixes', 'testprop', 'testallprops'],
       'backgroundsize'  : ['domprefixes', 'testprop', 'testallprops'],
       'borderimage'     : ['domprefixes', 'testprop', 'testallprops'],
       'borderradius'    : ['domprefixes', 'testprop', 'testallprops'],
@@ -201,13 +204,13 @@ class Customizr {
 	}
 	
 	public static macro function build():Array<Field> {
-		if (Context.defined('dce')) {
+		//if (Context.defined('dce') && Context.definedValue('dce') != 'no') {
 			var old_fields:Array<Field> = Context.getBuildFields();
 			var new_fields:Array<Field> = [];
 			
 			for (f in old_fields) {
 				var _name = f.name.toLowerCase();
-				var _core = null;
+				var _feature_name = null;
 				var _complex = null;
 				var _expr = null;
 				
@@ -222,30 +225,40 @@ class Customizr {
 				var _enum = f.kind.getName();
 				var _access = [APublic, AStatic];
 				
-				if (_enum == 'FProp' || _enum == 'FFun') {
+				/*if (_enum == 'FProp' || _enum == 'FFun') {
 					new_fields.push(f);
 					continue;
-				}
+				}*/
 				
 				for (meta in f.meta) {
+					
 					if (meta.name == ':feature_detect') {
+						
 						if (meta.params.length != 0) {
-							_core = meta.params[0].toString().toLowerCase().replace('"', '');
-							if (_core == 'null') _core = null;
+							
+							_feature_name = meta.params[0].toString().toLowerCase().replace('"', '');
+							
+							if (_feature_name == 'null') {
+								_feature_name = null;
+							}
+							
 						}
 						
-						if (_core == null) _core = _name;
+						if (_feature_name == null) {
+							_feature_name = _name;
+						}
 						
 						break;
 					}
+					
 				}
 				
-				var _func = Context.parse('Customizr.logField(${_name}, ${_core})', f.pos);
+				var _method = macro Customizr.logField($v{_name}, $v{_feature_name});
 				
 				var _field:Field = {
 					name:f.name,
 					access:_access,
-					kind:FVar(_complex, _func),
+					kind:FVar(_complex, _method),
 					pos:f.pos,
 					meta:f.meta,
 					doc:f.doc
@@ -257,8 +270,8 @@ class Customizr {
 			Context.onGenerate(izr_alpha);
 			
 			// This stops the class being generated. This needs to be done because Haxe
-			// sees it as a real class as it lacks 'extern'. Adding 'extern' kills the
-			// point of this.
+			// sees it as a real class as it lacks 'extern'. Adding 'extern' kills
+			// Customizr.
 			Compiler.exclude('Modernizr');
 			Compiler.exclude('modernizr.Defaultizr');
 			Compiler.exclude('modernizr.Customizr');
@@ -268,7 +281,7 @@ class Customizr {
 			Compiler.exclude('modernizr.InputAttributes');
 			
 			return new_fields;
-		}
+		//}
 		return Context.getBuildFields();
 	}
 	
@@ -293,7 +306,7 @@ class Customizr {
 						}
 					}
 					
-				default:
+				case _:
 					
 			}
 		}
@@ -301,10 +314,51 @@ class Customizr {
 		izr_omega(File.getContent(_path), tests, non_core);
 	}
 	
+	private static function izr_omega(source:String, tests:StringMap<Array<String>>, non_core:StringMap<Bool>):Void {
+		
+		tests = _check_dependencies(tests, non_core);
+		
+		var new_source:String = source;
+		var result:String = '/* Modernizr ' + _version + ' (Haxe Custom Build) http://haxe.org/ | MIT & BSD\n * Build: http://modernizr.com/download/#';
+		
+		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
+		
+		// If short hand ereg ~/.../m, it causes autocompletion issues.
+		var test:EReg = new EReg("^\\s*(?:tests\\[\')(\\w*)(?:\']\\s=\\s[\\w\\W]*?};)$", 'm');
+		
+		new_source = _strip_test(test, new_source, tests);
+		new_source = _strip_test(marker, new_source, tests);
+		
+		new_source = _check_prefix(new_source);
+		
+		new_source += _last_checks();
+		
+		for (ncore in non_core.keys()) {
+			new_source += _load_feature_detect(ncore.replace('"', ''));
+		}
+		
+		for (key in tests.keys()) {
+			result += '-' + key.replace('-', '_');
+		}
+		
+		for (key in non_core.keys()) {
+			result += '-' + key.replace('-', '_');
+		}
+		
+		result += (Defaultizr.prefixed ? '-cssclassprefix:' + Defaultizr.cssPrefix.replace('_', '!') : '');
+		result += new_source;
+		
+		var output:String = Compiler.getOutput();
+		output = output.substr(0, output.lastIndexOf('/'));
+		
+		File.saveContent(output + '/modernizr-' + _version + '.hx' + _ext, result);
+	}
+	
 	private static function _check_dependencies(tests:StringMap<Array<String>>, features:StringMap<Bool>):StringMap<Array<String>> {
 		var key:String = '';
 		
 		for (d in Reflect.fields(_dependencies)) {
+			
 			key = StringTools.replace(d, '_', '-').toLowerCase();
 			
 			if (features.exists(key)) {
@@ -331,46 +385,6 @@ class Customizr {
 		}
 		
 		return tests;
-	}
-	
-	private static function izr_omega(source:String, tests:StringMap<Array<String>>, non_core:StringMap<Bool>):Void {
-		
-		tests = _check_dependencies(tests, non_core);
-		
-		var new_source:String = source;
-		var result:String = '/* Modernizr ' + _version + ' (Haxe Custom Build) http://haxe.org/ | MIT & BSD\n * Build: http://modernizr.com/download/#';
-		
-		var marker:EReg = ~/^\s*\/\*>>(\w*)\*\/$(?:[\w\W]*?)^\s*\/\*>>(\1)\*\/$/m;
-		
-		// If short hand ereg ~/.../m, it causes autocompletion issues.
-		var test:EReg = new EReg('^\\s*(?:tests\\[\')(\\w*)(?:\']\\s=\\s[\\w\\W]*?};)$', 'm');
-		
-		new_source = _strip_test(test, new_source, tests);
-		new_source = _strip_test(marker, new_source, tests);
-		
-		new_source = _check_prefix(new_source);
-		
-		new_source += _last_checks();
-		
-		for (ncore in non_core.keys()) {
-			new_source += _load_feature_detect(ncore);
-		}
-		
-		for (key in tests.keys()) {
-			result += '-' + key.replace('-', '_');
-		}
-		
-		for (key in non_core.keys()) {
-			result += '-' + key.replace('-', '_');
-		}
-		
-		result += (Defaultizr.prefixed ? '-cssclassprefix:' + Defaultizr.cssPrefix.replace('_', '!') : '');
-		result += new_source;
-		
-		var output:String = Compiler.getOutput();
-		output = output.substr(0, output.lastIndexOf('/'));
-		
-		File.saveContent(output + '/modernizr-' + _version + '.hx' + _ext, result);
 	}
 	
 	private static function _strip_test(ereg:EReg, text:String, tests:StringMap<Array<String>>):String {

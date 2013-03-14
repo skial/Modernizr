@@ -1,6 +1,10 @@
 package ;
 
 import modernizr.Customizr;
+import modernizr.Audio;
+import modernizr.Video;
+import modernizr.InputTypes;
+import modernizr.InputAttributes;
 
 /**
  * ...
@@ -367,11 +371,11 @@ class Modernizr {
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-displayrunin.js
 	@:feature_detect('css-displayrunin')
-	public static inline var displayRunin:Bool = untyped __js__('Modernizr["display-runin"]');
+	public static var displayRunin:Bool = untyped __js__('Modernizr["display-runin"]');
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-displaytable.js
 	@:feature_detect('css-displaytable')
-	public static inline var displayTable:Bool = untyped __js__('Modernizr["display-table"]');
+	public static var displayTable:Bool = untyped __js__('Modernizr["display-table"]');
 	
 	@:feature_detect('css-filters')
 	public static var cssfilters:Bool;
@@ -397,7 +401,7 @@ class Modernizr {
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/css-objectfit.js
 	@:feature_detect('css-objectfit')
-	public static inline var objectFit:Bool = untyped __js__('Modernizr["object-fit"]');
+	public static var objectFit:Bool = untyped __js__('Modernizr["object-fit"]');
 	
 	@:feature_detect('css-overflow-scrolling')
 	public static var overflowscrolling:Bool;
@@ -455,7 +459,7 @@ class Modernizr {
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/dom-createElement-attrs.js
 	@:feature_detect('dom-createElement-attrs')
-	public static inline var createElementAttrs:Bool = untyped __js__('Modernizr["createelement-attrs"]');
+	public static var createElementAttrs:Bool = untyped __js__('Modernizr["createelement-attrs"]');
 	
 	@:feature_detect('dom-dataset')
 	public static var dataset:Bool;
@@ -507,7 +511,7 @@ class Modernizr {
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/exif-orientation.js
 	@:feature_detect('exif-orientation')
-	public static inline var exifOrientation:Bool = untyped __js__('Modernizr["exif-orientation"]');
+	public static var exifOrientation:Bool = untyped __js__('Modernizr["exif-orientation"]');
 	
 	@:feature_detect('file-api')
 	public static var fileReader:Bool;
@@ -559,7 +563,7 @@ class Modernizr {
 	
 	// https://github.com/Modernizr/Modernizr/blob/master/feature-detects/img-webp-lossless.js
 	@:feature_detect('img-webp-lossless')
-	public static inline var webpLossless:Bool = untyped __js__('Modernizr["webp-lossless"]');
+	public static var webpLossless:Bool = untyped __js__('Modernizr["webp-lossless"]');
 	
 	@:feature_detect('img-webp')
 	public static var webp:Bool;
@@ -637,30 +641,30 @@ class Modernizr {
 	public static var blobWorkers:Bool;
 	
 	@:feature_detect('workers-dataworkers')
-	public static inline var dataWorkers:Bool = untyped __js__('Modernizr.dataworkers');
+	public static var dataWorkers:Bool = untyped __js__('Modernizr.dataworkers');
 	
 	@:feature_detect('workers-sharedworkers')
-	public static inline var sharedWorkers:Bool = untyped __js__('Modernizr.sharedworkers');
+	public static var sharedWorkers:Bool = untyped __js__('Modernizr.sharedworkers');
 	#end
 }
 
-@:native('Modernizr.audio')
-private extern class Audio {
+/*@:native('Modernizr.audio')
+private class Audio {
 	public static var ogg:Bool;
 	public static var mp3:Bool;
 	public static var wav:Bool;
 	public static var m4a:Bool;
-}
+}*/
 
-@:native('Modernizr.video')
-private extern class Video {
+/*@:native('Modernizr.video')
+private class Video {
 	public static var ogg:Bool;
 	public static var webm:Bool;
 	public static var h264:Bool;
-}
+}*/
 
-@:native('Modernizr.inputtypes')
-private extern class InputTypes {
+/*@:native('Modernizr.inputtypes')
+private class InputTypes {
 	public static var search:Bool;
 	public static var tel:Bool;
 	public static var url:Bool;
@@ -670,15 +674,14 @@ private extern class InputTypes {
 	public static var month:Bool;
 	public static var week:Bool;
 	public static var time:Bool;
-	public static inline var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes["datetime-local"]');
+	public static var datetimelocal:Bool = untyped __js__('Modernizr.inputtypes["datetime-local"]');
 	public static var number:Bool;
 	public static var range:Bool;
 	public static var color:Bool;
-	
-}
+}*/
 
-@:native('Modernizr.input')
-private extern class InputAttributes {
+/*@:native('Modernizr.input')
+private class InputAttributes {
 	public static var autocomplete:Bool;
 	public static var autofocus:Bool;
 	public static var list:Bool;
@@ -689,4 +692,4 @@ private extern class InputAttributes {
 	public static var pattern:Bool;
 	public static var required:Bool;
 	public static var step:Bool;
-}
+}*/

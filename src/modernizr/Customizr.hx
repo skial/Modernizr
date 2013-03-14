@@ -1,23 +1,23 @@
 package modernizr;
 
-#if macro
-typedef StdType = Type;
+import haxe.ds.StringMap;
 
+#if macro
 import haxe.Http;
 import haxe.macro.Context;
 import haxe.macro.Compiler;
 
-import haxe.macro.Expr;
-import haxe.macro.Type;
-import sys.FileSystem;
 import sys.io.File;
+import sys.FileSystem;
+import haxe.macro.Type;
+import haxe.macro.Expr;
 import modernizr.Defaultizr;
-
 
 using Std;
 using Lambda;
 using StringTools;
-using tink.macro.tools.MacroTools;
+using haxe.EnumTools;
+using haxe.macro.ExprTools;
 #end
 
 /**
@@ -27,10 +27,11 @@ using tink.macro.tools.MacroTools;
 
 class Customizr {
 	
-	private static var tests:Hash<Array<String>> = new Hash<Array<String>>();
-	private static var non_core:Hash<Bool> = new Hash<Bool>();
 	
-	@:macro public static function logField(name:Expr, ?core:Expr = null) {
+	private static var tests:StringMap<Array<String>> = new StringMap<Array<String>>();
+	private static var non_core:StringMap<Bool> = new StringMap<Bool>();
+	
+	public static macro function logField(name:Expr, ?core:Expr = null) {
 		var _name = name.toString().replace(' ', '').replace('(', '').replace(')', '');
 		
 		if (core != null) {
@@ -40,11 +41,12 @@ class Customizr {
 		
 		if (!tests.exists(_name)) tests.set(_name, []);
 		
-		return Context.parse('untyped __js__("Modernizr[\'' + _name + '\']")', Context.currentPos());
+		//return Context.parse('untyped __js__("Modernizr[\'' + _name + '\']")', Context.currentPos());
+		return macro untyped __js__('Modernizr["$_name"]');
 	}
 	
+	#if macro
 	private static var _version:String = '2.6.2';
-	
 	private static var _base:String = 'http://modernizr.com/';	
 	private static var _name:String = 'modernizr-';
 	private static var _ext:String = '.js';
@@ -198,18 +200,27 @@ class Customizr {
       'pointerlock-api' : ['prefixed']
 	}
 	
-	@:macro public static function build():Array<Field> {
+	public static macro function build():Array<Field> {
 		if (Context.defined('dce')) {
-			var old_fields = Context.getBuildFields();
+			var old_fields:Array<Field> = Context.getBuildFields();
 			var new_fields:Array<Field> = [];
 			
 			for (f in old_fields) {
 				var _name = f.name.toLowerCase();
 				var _core = null;
-				var _complex = switch(f.kind) { case FVar(t, _): t; default: };
-				var _expr = switch(f.kind) { case FVar(_, e): e; default: };
-				var _enum = StdType.enumConstructor(f.kind);
-				var _access = [APublic, AStatic, AInline];
+				var _complex = null;
+				var _expr = null;
+				
+				switch (f.kind) {
+					case FVar(t, e):
+						_complex = t;
+						_expr = e;
+					case _:
+						
+				}
+				
+				var _enum = f.kind.getName();
+				var _access = [APublic, AStatic];
 				
 				if (_enum == 'FProp' || _enum == 'FFun') {
 					new_fields.push(f);
@@ -229,9 +240,9 @@ class Customizr {
 					}
 				}
 				
-				var _func = Context.parse('Customizr.logField(${_name}, ${_core})'.format(), f.pos);
+				var _func = Context.parse('Customizr.logField(${_name}, ${_core})', f.pos);
 				
-				var _field = {
+				var _field:Field = {
 					name:f.name,
 					access:_access,
 					kind:FVar(_complex, _func),
@@ -251,6 +262,10 @@ class Customizr {
 			Compiler.exclude('Modernizr');
 			Compiler.exclude('modernizr.Defaultizr');
 			Compiler.exclude('modernizr.Customizr');
+			Compiler.exclude('modernizr.Audio');
+			Compiler.exclude('modernizr.Video');
+			Compiler.exclude('modernizr.InputTypes');
+			Compiler.exclude('modernizr.InputAttributes');
 			
 			return new_fields;
 		}
@@ -263,7 +278,7 @@ class Customizr {
 		
 		for (t in types) {
 			switch(t) {
-				case TInst(type, params):
+				case TInst(type, _):
 					
 					var cls = type.get();
 					
@@ -286,7 +301,7 @@ class Customizr {
 		izr_omega(File.getContent(_path), tests, non_core);
 	}
 	
-	private static function _check_dependencies(tests:Hash<Array<String>>, features:Hash<Bool>):Hash<Array<String>> {
+	private static function _check_dependencies(tests:StringMap<Array<String>>, features:StringMap<Bool>):StringMap<Array<String>> {
 		var key:String = '';
 		
 		for (d in Reflect.fields(_dependencies)) {
@@ -318,7 +333,7 @@ class Customizr {
 		return tests;
 	}
 	
-	private static function izr_omega(source:String, tests:Hash<Array<String>>, non_core:Hash<Bool>):Void {
+	private static function izr_omega(source:String, tests:StringMap<Array<String>>, non_core:StringMap<Bool>):Void {
 		
 		tests = _check_dependencies(tests, non_core);
 		
@@ -358,7 +373,7 @@ class Customizr {
 		File.saveContent(output + '/modernizr-' + _version + '.hx' + _ext, result);
 	}
 	
-	private static function _strip_test(ereg:EReg, text:String, tests:Hash<Array<String>>):String {
+	private static function _strip_test(ereg:EReg, text:String, tests:StringMap<Array<String>>):String {
 		var result = '';
 		var matched = '';
 		
@@ -424,6 +439,6 @@ class Customizr {
 		
 		return result;
 	}
-	
+	#end
 	
 }

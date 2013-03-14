@@ -2,10 +2,8 @@
 
 import js.Lib;
 import Modernizr;
-
-import DOMTools;
-
-using DOMTools;
+import js.Browser;
+import haxe.ds.StringMap;
 
 /**
  * ...
@@ -15,7 +13,7 @@ using DOMTools;
 class Main {
 	
 	static function main() {
-		var hash:Hash<Bool> = new Hash<Bool>();
+		var hash:StringMap<Bool> = new StringMap<Bool>();
 		
 		hash.set('@font-face', Modernizr.fontface);
 		hash.set('Background Size', Modernizr.backgroundsize);
@@ -196,15 +194,15 @@ class Main {
 		hash.set('Shared Workers', Modernizr.sharedWorkers);
 		#end
 		
-		trace(Modernizr.prefixed('requestAnimationFrame', Lib.window));
+		trace(Modernizr.prefixed('requestAnimationFrame', Browser.window));
 		
-		var passed = Lib.document.getElementById('passed');
-		var failed = Lib.document.getElementById('failed');
+		var passed = Browser.document.getElementById('passed');
+		var failed = Browser.document.getElementById('failed');
 		var div;
 		
 		for (n in hash.keys()) {
 			
-			div = Lib.document.createElement('div');
+			div = Browser.document.createElement('div');
 			div.innerHTML = StringTools.htmlEscape(n);
 			
 			if (hash.get(n)) {
@@ -215,11 +213,11 @@ class Main {
 			
 		}
 		
-		var pc = '#passed'.find().find('h2');
-		var fc = '#failed'.find().find('h2');
+		var pc = Browser.document.querySelector('#passed').querySelector('h2');
+		var fc = Browser.document.querySelector('#failed').querySelector('h2');
 		
-		pc.setInnerHTML('#passed'.find().children().length + ' supported features');
-		fc.setInnerHTML('#failed'.find().children().length + ' unsupported features');
+		pc.innerHTML = Browser.document.querySelector('#passed').children.length + ' supported features';
+		fc.innerHTML = Browser.document.querySelector('#failed').children.length + ' unsupported features';
 		
 	}
 	

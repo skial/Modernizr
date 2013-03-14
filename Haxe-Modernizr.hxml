@@ -1,10 +1,6 @@
 -cp src
--lib tink_macros
--lib tink_lang
--lib domtools
--lib xirsys_stdjs
 -js bin/HaxeModernizr.js
 -D mnc
 -D dce
 -main Main
---dead-code-elimination
+-dce no
